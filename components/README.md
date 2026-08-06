@@ -16,3 +16,11 @@ Academy 표준 Component는 `academy.css`의 디자인 토큰과 A4 인쇄 규�
 | Best Practice | `best-practice` | 권장 운영 방식 |
 
 새로운 Chapter는 별도 시각 스타일을 만들지 않고 이 Component를 조합하여 작성합니다.
+
+## Component 구조 원칙
+
+- Workflow Card는 역할, 단계 번호, 제목과 설명 순서를 유지합니다.
+- Information, Tip, Warning은 공통 `callout` 구조에 의미별 Modifier만 적용합니다.
+- FAQ는 질문을 `summary`, 답변을 본문 단락으로 구성합니다.
+- Related Pages와 Previous / Next는 Chapter 마지막에서만 사용합니다.
+- Workflow Diagram은 HTML 목록과 CSS 연결선을 사용하며 외부 라이브러리에 의존하지 않습니다.
