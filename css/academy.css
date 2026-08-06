@@ -261,6 +261,36 @@ section { scroll-margin-top: 92px; }
 .chapter-pager strong { display: block; color: var(--navy-900); }
 .chapter-pager a:hover { border-color: #adc5df; box-shadow: 0 5px 16px rgba(23,32,51,.06); }
 
+.standard-chapter { --chapter-rule: #d7e1ec; }
+.chapter-header { padding-bottom: 30px; border-bottom: 2px solid var(--navy-900); }
+.chapter-header h2 { font-size: clamp(32px, 4vw, 44px); letter-spacing: -.04em; }
+.chapter-description { max-width: 780px; margin: 16px 0 0; color: var(--slate-700); font-size: 18px; line-height: 1.75; }
+.chapter-block { margin-top: 48px; }
+.chapter-block-heading { display: grid; grid-template-columns: 38px 1fr; gap: 14px; align-items: start; padding-bottom: 14px; border-bottom: 1px solid var(--chapter-rule); }
+.chapter-block-heading > span { width: 30px; height: 30px; display: grid; place-items: center; color: var(--blue-600); background: var(--blue-100); border-radius: 7px; font-size: 11px; font-weight: 800; }
+.chapter-block-heading h3 { margin: 0; font-size: 21px; }
+.chapter-block-heading p { margin: 3px 0 0; color: var(--slate-500); font-size: 14px; }
+.standard-workflow { margin: 22px 0 0; padding: 0; display: grid; list-style: none; background: var(--surface); border: 1px solid var(--slate-200); border-radius: 10px; overflow: hidden; }
+.standard-workflow.manager-flow { grid-template-columns: repeat(4, 1fr); }
+.standard-workflow.worker-flow { grid-template-columns: repeat(6, 1fr); }
+.standard-workflow li { position: relative; min-width: 0; padding: 22px 16px; border-right: 1px solid var(--slate-200); }
+.standard-workflow li:last-child { border-right: 0; }
+.standard-workflow li:not(:last-child)::after { content: ""; position: absolute; z-index: 2; top: 50%; right: -5px; width: 9px; height: 9px; background: var(--surface); border-top: 1px solid var(--slate-300); border-right: 1px solid var(--slate-300); transform: translateY(-50%) rotate(45deg); }
+.flow-index, .standard-workflow strong, .standard-workflow small { display: block; }
+.flow-index { color: var(--blue-600); font-size: 11px; font-weight: 800; letter-spacing: .08em; }
+.standard-workflow strong { margin-top: 8px; color: var(--navy-900); font-size: 15px; }
+.standard-workflow small { margin-top: 7px; color: var(--slate-500); font-size: 12px; line-height: 1.55; }
+.principle-grid { margin-top: 22px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.principle-grid article { min-width: 0; padding: 20px 17px; background: var(--surface); border: 1px solid var(--slate-200); border-radius: 9px; }
+.principle-grid span { color: var(--blue-600); font-size: 11px; font-weight: 800; }
+.principle-grid p { margin: 9px 0 0; color: var(--navy-900); font-size: 14px; font-weight: 700; line-height: 1.55; }
+.chapter-callout { margin-top: 42px; }
+.workflow-faq details { margin-top: 20px; background: var(--surface); border: 1px solid var(--slate-200); border-radius: 9px; }
+.workflow-faq summary { padding: 18px 20px; color: var(--navy-900); cursor: pointer; font-weight: 700; }
+.workflow-faq details p { margin: 0; padding: 0 20px 20px; color: var(--slate-700); }
+.standard-related { margin-top: 38px; padding-top: 20px; border-top: 1px solid var(--slate-200); }
+.standard-pager { margin-top: 38px; }
+
 .site-footer { margin-left: var(--sidebar-width); display: flex; justify-content: space-between; gap: 24px; padding: 24px 48px; color: var(--slate-500); background: var(--surface); border-top: 1px solid var(--slate-200); font-size: 12px; }
 .site-footer div { display: grid; }
 .site-footer strong { color: var(--navy-900); }
@@ -303,6 +333,13 @@ section { scroll-margin-top: 92px; }
   .search-panel { padding-top: 70px; }
   .search-layout { grid-template-columns: 1fr; }
   .chapter-pager { grid-template-columns: 1fr; }
+  .chapter-header h2 { font-size: 34px; }
+  .chapter-description { font-size: 16px; }
+  .standard-workflow.manager-flow, .standard-workflow.worker-flow { grid-template-columns: 1fr; }
+  .standard-workflow li { border-right: 0; border-bottom: 1px solid var(--slate-200); }
+  .standard-workflow li:last-child { border-bottom: 0; }
+  .standard-workflow li:not(:last-child)::after { top: auto; right: 22px; bottom: -5px; transform: rotate(135deg); }
+  .principle-grid { grid-template-columns: 1fr; }
   .site-footer dl { flex-wrap: wrap; }
   .site-footer { margin-left: 0; padding: 22px 20px; flex-direction: column; gap: 8px; }
 }
@@ -332,6 +369,11 @@ section { scroll-margin-top: 92px; }
   .workflow-diagram { grid-template-columns: repeat(3, 1fr); gap: 2mm; }
   .workflow-diagram li { border: .7pt solid #9aa9bb !important; border-radius: 0 !important; break-inside: avoid; }
   .workflow-diagram li::after { display: none !important; }
+  .standard-workflow.manager-flow, .standard-workflow.worker-flow { grid-template-columns: repeat(2, 1fr); }
+  .standard-workflow li { border: .7pt solid #9aa9bb; break-inside: avoid; }
+  .standard-workflow li::after { display: none; }
+  .principle-grid { grid-template-columns: repeat(2, 1fr); }
+  .principle-grid article, .workflow-faq details { border-color: #9aa9bb; border-radius: 0; break-inside: avoid; }
   .callout, .role-table, .release-entry { border-color: #9aa9bb; border-radius: 0; break-inside: avoid; }
   .guide-grid { grid-template-columns: 1fr; }
   .step-list.horizontal { grid-template-columns: repeat(2, 1fr); }

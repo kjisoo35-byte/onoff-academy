@@ -39,7 +39,7 @@
     <aside class="sidebar" id="academy-navigation" aria-label="Academy 탐색">
       <nav class="navigation">
         <details class="nav-group" open><summary>Getting Started</summary><a class="nav-link is-current" href="#home" aria-current="page">Platform Overview</a><a class="nav-link" href="#philosophy">Platform Philosophy</a></details>
-        <details class="nav-group" open><summary>Core Workflow</summary><a class="nav-link" href="#project">Project</a><a class="nav-link" href="#daily-work">Daily Work</a><a class="nav-link" href="#electronic-documents">Electronic Documents</a><a class="nav-link" href="#safety-start">Safety Start</a><a class="nav-link" href="#safety-report">Safety Report</a></details>
+        <details class="nav-group" open><summary>Core Workflow</summary><a class="nav-link" href="#workflow">Workflow Overview</a><a class="nav-link" href="#project">Project</a><a class="nav-link" href="#daily-work">Daily Work</a><a class="nav-link" href="#electronic-documents">Electronic Documents</a><a class="nav-link" href="#safety-start">Safety Start</a><a class="nav-link" href="#safety-report">Safety Report</a></details>
         <details class="nav-group" open><summary>Operations</summary><a class="nav-link" href="#dashboard">Dashboard</a><a class="nav-link" href="#administration">Administration</a><a class="nav-link" href="#user-management">User Management</a><a class="nav-link" href="#settings">Settings</a></details>
         <details class="nav-group" open><summary>Support</summary><a class="nav-link" href="#faq">FAQ</a><a class="nav-link" href="#release-notes">Release Notes</a></details>
       </nav>
@@ -49,7 +49,7 @@
       <nav class="breadcrumb" aria-label="현재 위치">
         <a href="#home">Home</a><span aria-hidden="true">›</span>
         <a href="#workflow">Workflow</a><span aria-hidden="true">›</span>
-        <span aria-current="page">Project</span>
+        <span aria-current="page">Overview</span>
       </nav>
 
       <article class="document">
@@ -76,17 +76,55 @@
           <aside class="callout info"><strong>INFO</strong><p>Safety Report는 매일 작성하는 문서가 아니라 사고, Near Miss, 위험제보, 개선제안 또는 종사자의견이 발생했을 때 사용하는 Event Workflow입니다.</p></aside>
         </section>
 
-        <section class="manual-section" id="workflow">
-          <header class="section-heading"><div><p class="eyebrow">END-TO-END FLOW</p><h2>Platform Workflow</h2></div><p>승인된 작업이 안전하게 시작되고 기록되는 과정입니다.</p></header>
-          <ol class="workflow-diagram" aria-label="Platform Workflow Diagram">
-            <li><span>01</span><strong>Project</strong><small>작업 정의 및 안전 승인</small></li>
-            <li><span>02</span><strong>Daily Work</strong><small>오늘 수행할 작업 선택</small></li>
-            <li><span>03</span><strong>Electronic Documents</strong><small>필요 문서 확인 및 서명</small></li>
-            <li><span>04</span><strong>Safety Start</strong><small>안전준비 확인 후 시작</small></li>
-            <li><span>05</span><strong>Work</strong><small>승인 범위 내 작업 수행</small></li>
-            <li><span>06</span><strong>Safety Report</strong><small>Event 발생 시 보고</small></li>
-          </ol>
-          <aside class="callout tip"><strong>TIP</strong><p>각 단계는 이전 단계의 데이터를 다시 입력하는 대신 연결된 작업 정보를 이어받는 것을 원칙으로 합니다.</p></aside>
+        <section class="manual-section standard-chapter" id="workflow">
+          <header class="chapter-header">
+            <p class="eyebrow">WORKFLOW · OVERVIEW</p>
+            <h2>Workflow Overview</h2>
+            <p class="chapter-description">ONOFF는 기능보다 Workflow를 먼저 설계합니다. 사용자는 메뉴를 찾는 것이 아니라 업무 Workflow를 따라 작업을 수행합니다.</p>
+          </header>
+
+          <section class="chapter-block" aria-labelledby="manager-workflow-title">
+            <header class="chapter-block-heading"><span>01</span><div><h3 id="manager-workflow-title">Manager Workflow</h3><p>작업의 기준을 정의하고 안전 승인 후 Worker에게 제공합니다.</p></div></header>
+            <ol class="standard-workflow manager-flow" aria-label="Manager Workflow Diagram">
+              <li><span class="flow-index">01</span><strong>작업 정의</strong><small>Project · 일반작업<br>본사작업 · 현장지원</small></li>
+              <li><span class="flow-index">02</span><strong>안전 승인</strong><small>작업 범위와 필수 안전문서 검토</small></li>
+              <li><span class="flow-index">03</span><strong>ACTIVE</strong><small>승인된 작업을 운영 가능한 상태로 전환</small></li>
+              <li><span class="flow-index">04</span><strong>작업 제공</strong><small>Worker의 오늘 작업 선택 대상으로 제공</small></li>
+            </ol>
+          </section>
+
+          <section class="chapter-block" aria-labelledby="worker-workflow-title">
+            <header class="chapter-block-heading"><span>02</span><div><h3 id="worker-workflow-title">Worker Workflow</h3><p>승인된 작업을 선택하고 필요한 안전 절차를 완료한 뒤 시작합니다.</p></div></header>
+            <ol class="standard-workflow worker-flow" aria-label="Worker Workflow Diagram">
+              <li><span class="flow-index">01</span><strong>오늘 작업 선택</strong><small>수행할 작업을 선택</small></li>
+              <li><span class="flow-index">02</span><strong>ACTIVE 확인</strong><small>안전 승인 상태 확인</small></li>
+              <li><span class="flow-index">03</span><strong>전자문서 확인</strong><small>TBM · 위험성평가<br>SOP · MDM</small></li>
+              <li><span class="flow-index">04</span><strong>전자서명</strong><small>문서 확인 기록</small></li>
+              <li><span class="flow-index">05</span><strong>Safety Start</strong><small>안전준비 최종 확인</small></li>
+              <li><span class="flow-index">06</span><strong>작업 시작</strong><small>승인 범위 내 수행</small></li>
+            </ol>
+          </section>
+
+          <section class="chapter-block" aria-labelledby="principle-title">
+            <header class="chapter-block-heading"><span>03</span><div><h3 id="principle-title">Key Principle</h3><p>Platform 전체에서 유지하는 핵심 운영 기준입니다.</p></div></header>
+            <div class="principle-grid">
+              <article><span>01</span><p>Project는 안전 승인을 받은 작업입니다.</p></article>
+              <article><span>02</span><p>Worker는 Project를 관리하지 않습니다.</p></article>
+              <article><span>03</span><p>Worker는 오늘 작업을 선택합니다.</p></article>
+              <article><span>04</span><p>필요한 전자문서는 자동으로 연결됩니다.</p></article>
+              <article><span>05</span><p>Safety Report는 Event Workflow입니다.</p></article>
+            </div>
+          </section>
+
+          <aside class="callout tip chapter-callout"><strong>TIP</strong><p>사용자는 문서를 직접 찾지 않습니다. 오늘 작업을 선택하면 필요한 전자문서가 자동으로 표시됩니다.</p></aside>
+
+          <section class="chapter-block workflow-faq" aria-labelledby="workflow-faq-title">
+            <header class="chapter-block-heading"><span>04</span><div><h3 id="workflow-faq-title">FAQ</h3><p>Workflow에서 자주 확인하는 기준입니다.</p></div></header>
+            <details open><summary>왜 TBM 메뉴가 따로 보이지 않나요?</summary><p>TBM은 독립 메뉴가 아니라 전자문서 자동 확인 단계에서 자동으로 표시됩니다.</p></details>
+          </section>
+
+          <nav class="related-pages standard-related" aria-label="Workflow Overview 관련 문서"><strong>Related Pages</strong><a href="#daily-work">Today's Work</a><a href="#electronic-documents">Electronic Documents</a><a href="#project">Project</a></nav>
+          <nav class="chapter-pager standard-pager" aria-label="Workflow Overview 이전 및 다음 문서"><a href="#philosophy">← Previous<strong>Platform Philosophy</strong></a><a href="#project">Next →<strong>Project</strong></a></nav>
         </section>
 
         <section class="manual-section" id="project">
@@ -159,6 +197,7 @@
 
         <section class="manual-section" id="release-notes">
           <header class="section-heading"><div><p class="eyebrow">RELEASE NOTES</p><h2>Release Notes</h2></div><p>Academy Documentation 변경 이력입니다.</p></header>
+          <article class="release-entry"><time datetime="2026-08-06">2026.08.06</time><div><h3>Sprint A-004 · Workflow Overview Standard</h3><p>Manager와 Worker Workflow Diagram, 핵심 원칙, FAQ, Related Pages 및 Chapter Navigation을 Academy 표준 Template로 확정했습니다.</p></div></article>
           <article class="release-entry"><time datetime="2026-08-06">2026.08.06</time><div><h3>Sprint A-002 · Official Manual</h3><p>공식 Navigation, Platform Workflow, 역할별 운영 가이드, 공통 안내 Component와 A4 Print Manual 구조를 추가했습니다.</p></div></article>
         </section>
 
