@@ -1,0 +1,16 @@
+{
+  "version": "2.0.0",
+  "tasks": [{
+    "label": "ONOFF Academy: Live Preview",
+    "type": "shell",
+    "command": "npm run dev",
+    "isBackground": true,
+    "problemMatcher": {
+      "owner": "academy",
+      "pattern": { "regexp": "^(.*)$", "file": 1, "location": 1, "message": 1 },
+      "background": { "activeOnStart": true, "beginsPattern": "^> onoff-academy", "endsPattern": "^ONOFF Academy:" }
+    },
+    "runOptions": { "runOn": "folderOpen" },
+    "presentation": { "reveal": "silent", "panel": "dedicated" }
+  }]
+}

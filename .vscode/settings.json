@@ -1,0 +1,10 @@
+{
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 500,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.port": 4174,
+  "liveServer.settings.wait": 100,
+  "liveServer.settings.fullReload": true,
+  "liveServer.settings.ignoreFiles": ["**/.git/**"],
+  "liveServer.settings.NoBrowser": false
+}
