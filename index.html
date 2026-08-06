@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ONOFF Safety Platform 공식 운영 매뉴얼">
+  <meta name="theme-color" content="#071a36">
+  <title>ONOFF Academy | Official Manual</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/academy.css">
+  <link rel="stylesheet" href="print.css" media="print">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+  <header class="site-header">
+    <button class="menu-toggle" type="button" aria-label="목차 열기" aria-controls="academy-navigation" aria-expanded="false">☰</button>
+    <a class="brand" href="#home" aria-label="ONOFF Academy 홈">
+      <span class="brand-mark" aria-hidden="true">O</span>
+      <span class="brand-copy"><strong>ONOFF Academy</strong><small>Official Platform Manual</small></span>
+    </a>
+    <nav class="header-breadcrumb" aria-label="상단 현재 위치"><a href="#home">Academy</a><span>›</span><span data-current-chapter>Getting Started</span></nav>
+    <div class="header-actions">
+      <button class="search-trigger" type="button" aria-controls="search-panel" aria-expanded="false">검색</button>
+      <button class="print-button" type="button">인쇄</button>
+      <button class="theme-button" type="button" aria-label="다크 모드 준비 중" title="다크 모드는 준비 중입니다" disabled>◐</button>
+    </div>
+  </header>
+
+  <section class="search-panel" id="search-panel" aria-label="Academy 검색" hidden>
+    <div class="search-dialog">
+      <div class="search-heading"><div><strong>Academy 검색</strong><p>문서 제목과 운영 주제를 검색합니다.</p></div><button class="search-close" type="button" aria-label="검색 닫기">×</button></div>
+      <label class="search-field"><span class="sr-only">검색어</span><input id="academy-search" type="search" placeholder="Project, 전자문서, 승인…" autocomplete="off"></label>
+      <div class="search-layout"><section><h2>최근 검색</h2><div class="recent-searches"><button type="button">Project 승인</button><button type="button">전자서명</button><button type="button">Safety Report</button></div></section><section><h2>검색 결과</h2><div class="search-results" aria-live="polite"><p>검색어를 입력하면 관련 Chapter가 표시됩니다.</p></div></section></div>
+    </div>
+  </section>
+
+  <div class="academy-shell">
+    <aside class="sidebar" id="academy-navigation" aria-label="Academy 탐색">
+      <nav class="navigation">
+        <details class="nav-group" open><summary>Getting Started</summary><a class="nav-link is-current" href="#home" aria-current="page">Platform Overview</a><a class="nav-link" href="#philosophy">Platform Philosophy</a></details>
+        <details class="nav-group" open><summary>Core Workflow</summary><a class="nav-link" href="#project">Project</a><a class="nav-link" href="#daily-work">Daily Work</a><a class="nav-link" href="#electronic-documents">Electronic Documents</a><a class="nav-link" href="#safety-start">Safety Start</a><a class="nav-link" href="#safety-report">Safety Report</a></details>
+        <details class="nav-group" open><summary>Operations</summary><a class="nav-link" href="#dashboard">Dashboard</a><a class="nav-link" href="#administration">Administration</a><a class="nav-link" href="#user-management">User Management</a><a class="nav-link" href="#settings">Settings</a></details>
+        <details class="nav-group" open><summary>Support</summary><a class="nav-link" href="#faq">FAQ</a><a class="nav-link" href="#release-notes">Release Notes</a></details>
+      </nav>
+    </aside>
+
+    <main class="content" id="main-content">
+      <nav class="breadcrumb" aria-label="현재 위치">
+        <a href="#home">Home</a><span aria-hidden="true">›</span>
+        <a href="#workflow">Workflow</a><span aria-hidden="true">›</span>
+        <span aria-current="page">Project</span>
+      </nav>
+
+      <article class="document">
+        <section class="manual-section welcome-section" id="home">
+          <header class="document-header">
+            <p class="eyebrow">ONOFF OFFICIAL MANUAL</p>
+            <h1>ONOFF Academy</h1>
+            <p class="lead">ONOFF Safety Platform의 업무 원칙과 운영 흐름을 한 가지 기준으로 설명하는 공식 Documentation입니다.</p>
+          </header>
+          <div class="intro-panel">
+            <div><p class="panel-kicker">ACADEMY INTRO</p><h2>현장의 안전 업무를 하나의 흐름으로 연결합니다</h2><p>프로젝트 승인, 오늘 작업, 전자문서, 작업 시작과 안전 보고까지 역할별 기준을 제공합니다.</p></div>
+            <span class="panel-index" aria-hidden="true">01</span>
+          </div>
+          <div class="card-grid">
+            <article class="info-card"><span class="card-number">01</span><h3>하나의 운영 기준</h3><p>관리자와 작업자가 같은 Workflow와 상태 기준을 사용합니다.</p></article>
+            <article class="info-card"><span class="card-number">02</span><h3>업무에 연결된 문서</h3><p>문서를 따로 찾지 않고 선택한 작업에 필요한 문서를 확인합니다.</p></article>
+            <article class="info-card"><span class="card-number">03</span><h3>검증 가능한 기록</h3><p>승인, 전자서명, 작업 시작과 Event Report를 명확히 기록합니다.</p></article>
+          </div>
+        </section>
+
+        <section class="manual-section" id="philosophy">
+          <header class="section-heading"><div><p class="eyebrow">PLATFORM PHILOSOPHY</p><h2>Platform 철학</h2></div><p>기능이 아니라 업무 흐름을 연결합니다.</p></header>
+          <div class="prose"><p>프로젝트는 단순한 작업 목록이 아니라 안전 승인을 받은 작업 단위입니다. 작업자는 프로젝트를 새로 만드는 대신 오늘 수행할 작업을 선택합니다. Safety Start는 작업 생성 기능이 아니라 준비된 작업을 시작하는 절차입니다.</p></div>
+          <aside class="callout info"><strong>INFO</strong><p>Safety Report는 매일 작성하는 문서가 아니라 사고, Near Miss, 위험제보, 개선제안 또는 종사자의견이 발생했을 때 사용하는 Event Workflow입니다.</p></aside>
+        </section>
+
+        <section class="manual-section" id="workflow">
+          <header class="section-heading"><div><p class="eyebrow">END-TO-END FLOW</p><h2>Platform Workflow</h2></div><p>승인된 작업이 안전하게 시작되고 기록되는 과정입니다.</p></header>
+          <ol class="workflow-diagram" aria-label="Platform Workflow Diagram">
+            <li><span>01</span><strong>Project</strong><small>작업 정의 및 안전 승인</small></li>
+            <li><span>02</span><strong>Daily Work</strong><small>오늘 수행할 작업 선택</small></li>
+            <li><span>03</span><strong>Electronic Documents</strong><small>필요 문서 확인 및 서명</small></li>
+            <li><span>04</span><strong>Safety Start</strong><small>안전준비 확인 후 시작</small></li>
+            <li><span>05</span><strong>Work</strong><small>승인 범위 내 작업 수행</small></li>
+            <li><span>06</span><strong>Safety Report</strong><small>Event 발생 시 보고</small></li>
+          </ol>
+          <aside class="callout tip"><strong>TIP</strong><p>각 단계는 이전 단계의 데이터를 다시 입력하는 대신 연결된 작업 정보를 이어받는 것을 원칙으로 합니다.</p></aside>
+        </section>
+
+        <section class="manual-section" id="project">
+          <header class="section-heading"><div><p class="eyebrow">PROJECT GUIDE</p><h2>Project</h2></div><p>안전 승인을 받은 작업의 기준 정보입니다.</p></header>
+          <div class="guide-grid">
+            <div><h3>승인 Workflow</h3><ol class="step-list"><li><b>생성</b><span>작업 범위와 기본 정보를 등록합니다.</span></li><li><b>안전문서 설정</b><span>SOP, 위험성평가 및 추가 안전서류를 지정합니다.</span></li><li><b>안전관리 검토</b><span>관리자가 작업 조건과 준비 문서를 확인합니다.</span></li><li><b>ACTIVE</b><span>승인 완료 후 오늘 작업에서 선택할 수 있습니다.</span></li></ol></div>
+            <aside class="callout note"><strong>NOTE</strong><p>ACTIVE 이전 프로젝트는 Daily Work의 작업 대상으로 사용하지 않습니다.</p></aside>
+          </div>
+        </section>
+
+        <section class="manual-section" id="daily-work">
+          <header class="section-heading"><div><p class="eyebrow">DAILY WORK GUIDE</p><h2>Daily Work</h2></div><p>작업자가 오늘 수행할 작업을 시작하는 흐름입니다.</p></header>
+          <ol class="step-list horizontal"><li><b>오늘 작업 선택</b><span>ACTIVE 작업에서 실제 수행 대상을 선택합니다.</span></li><li><b>필요 문서 확인</b><span>작업 기준에 따라 전자문서가 자동 제시됩니다.</span></li><li><b>전자서명</b><span>작업자가 문서 내용을 확인하고 서명합니다.</span></li><li><b>Safety Start</b><span>안전준비 사항을 최종 확인하고 작업을 시작합니다.</span></li></ol>
+          <aside class="callout warning"><strong>WARNING</strong><p>필수 문서 확인이나 안전준비 절차가 완료되지 않은 경우 작업 시작 단계로 진행하지 않습니다.</p></aside>
+        </section>
+
+        <section class="manual-section" id="safety-start">
+          <header class="section-heading"><div><p class="eyebrow">WORK START</p><h2>Safety Start</h2></div><p>필수 안전준비를 확인한 뒤 오늘 작업을 시작합니다.</p></header>
+          <div class="prose"><h3>개요와 목적</h3><p>Safety Start는 새로운 작업을 만드는 기능이 아닙니다. Daily Work에서 선택한 작업의 프로젝트 정보, 필수 전자문서와 안전준비 체크리스트를 최종 확인하는 시작 절차입니다.</p></div>
+          <ol class="step-list horizontal"><li><b>작업 확인</b><span>선택한 작업과 작업 위치를 확인합니다.</span></li><li><b>문서 확인</b><span>필수 문서와 전자서명 완료 여부를 확인합니다.</span></li><li><b>안전준비 확인</b><span>SOP, 위험성평가와 추가 항목을 확인합니다.</span></li><li><b>등록 및 검토</b><span>제출 후 Manager의 기존 승인 Workflow를 따릅니다.</span></li></ol>
+          <aside class="callout tip"><strong>TIP</strong><p>등록 전에 Project와 작업 위치가 오늘 수행할 업무와 일치하는지 확인합니다.</p></aside>
+          <div class="best-practice"><strong>BEST PRACTICE</strong><p>현장에서 확인한 사실을 기준으로 작성하고, 이전 작업의 내용을 그대로 반복 입력하지 않습니다.</p></div>
+          <nav class="related-pages" aria-label="Safety Start 관련 문서"><strong>Related Pages</strong><a href="#daily-work">Daily Work</a><a href="#electronic-documents">Electronic Documents</a><a href="#safety-report">Safety Report</a></nav>
+        </section>
+
+        <section class="manual-section" id="electronic-documents">
+          <header class="section-heading"><div><p class="eyebrow">DOCUMENT ENGINE</p><h2>Electronic Documents</h2></div><p>작업 조건에 따라 필요한 문서를 자동으로 연결합니다.</p></header>
+          <div class="role-table" role="table" aria-label="전자문서 역할 비교">
+            <div class="role-row role-head" role="row"><span>구분</span><span>Worker</span><span>Manager</span></div>
+            <div class="role-row" role="row"><strong>문서 확인</strong><span>선택한 작업에 필요한 문서 확인</span><span>Template 및 대상 현황 확인</span></div>
+            <div class="role-row" role="row"><strong>처리</strong><span>내용 입력 및 전자서명 후 제출</span><span>제출 상태와 서명 여부 확인</span></div>
+            <div class="role-row" role="row"><strong>기록</strong><span>본인 제출 문서 조회</span><span>전체 진행 현황 및 완료 기록 확인</span></div>
+          </div>
+          <aside class="callout info"><strong>INFO</strong><p>MDM, TBM, 위험성평가, SOP, 교육, PPE 문서는 동일한 Electronic Document Engine을 사용합니다.</p></aside>
+        </section>
+
+        <section class="manual-section" id="safety-report">
+          <header class="section-heading"><div><p class="eyebrow">EVENT WORKFLOW</p><h2>Safety Report</h2></div><p>작업 중 발생한 안전 Event를 기록하고 조치합니다.</p></header>
+          <div class="event-grid">
+            <article><strong>사고</strong><p>인적·물적 피해가 발생한 사건</p></article><article><strong>Near Miss</strong><p>피해 없이 종료되었지만 사고 가능성이 있었던 상황</p></article><article><strong>위험제보</strong><p>현장에서 발견한 위험 상태 또는 행동</p></article><article><strong>개선제안</strong><p>안전성과 업무 품질을 높이기 위한 제안</p></article><article><strong>종사자의견</strong><p>작업자가 전달하는 안전 관련 의견</p></article>
+          </div>
+          <aside class="callout note"><strong>NOTE</strong><p>Safety Report는 정기 Daily Workflow가 아닙니다. Event가 발생한 시점에 등록하고 기존 검토·조치 Workflow에 따라 처리합니다.</p></aside>
+        </section>
+
+        <section class="manual-section" id="dashboard">
+          <header class="section-heading"><div><p class="eyebrow">OPERATIONS</p><h2>Dashboard</h2></div><p>운영 현황, 최근 활동과 빠른 작업을 확인합니다.</p></header>
+          <div class="card-grid"><article class="info-card"><h3>운영 현황</h3><p>Safety Start와 Safety Report의 주요 상태를 확인합니다.</p></article><article class="info-card"><h3>최근 운영 데이터</h3><p>최근 등록된 작업과 Event의 상태를 확인합니다.</p></article><article class="info-card"><h3>Quick Action</h3><p>자주 사용하는 Safety Start와 Safety Report로 이동합니다.</p></article></div>
+        </section>
+
+        <section class="manual-section" id="administration">
+          <header class="section-heading"><div><p class="eyebrow">ADMINISTRATION</p><h2>Administration</h2></div><p>현장 운영과 안전 검토 기준을 관리합니다.</p></header>
+          <ul class="check-list"><li>승인 대기 및 검토 중 작업 확인</li><li>Project 안전준비 체크리스트 검토</li><li>Safety Start 승인 또는 반려</li><li>Safety Report 조치 상태 확인</li><li>전자문서 제출 및 서명 현황 확인</li></ul>
+        </section>
+
+        <section class="manual-section" id="user-management">
+          <header class="section-heading"><div><p class="eyebrow">ADMINISTRATION</p><h2>User Management</h2></div><p>사용자 정보, 역할과 사용 상태를 관리합니다.</p></header>
+          <ul class="check-list"><li>사용자 및 권한 상태 확인</li><li>Project 운영 기준 관리</li><li>전체 Safety Workflow 모니터링</li><li>전자문서 Template 및 완료 현황 확인</li><li>운영 장애와 데이터 연결 상태 확인</li></ul>
+        </section>
+
+        <section class="manual-section" id="settings">
+          <header class="section-heading"><div><p class="eyebrow">ADMINISTRATION</p><h2>Settings</h2></div><p>Platform 운영 기준과 환경 정보를 확인합니다.</p></header>
+          <div class="prose"><h3>운영 원칙</h3><p>설정은 전체 Workflow에 영향을 줄 수 있으므로 변경 전 영향 범위를 확인합니다. Production 환경 설정은 승인된 배포 절차를 통해서만 변경합니다.</p></div>
+          <aside class="callout warning"><strong>WARNING</strong><p>권한, 데이터 저장소 또는 Worker 연결 설정을 변경할 때 Preview와 Production 환경을 명확히 구분합니다.</p></aside>
+        </section>
+
+        <section class="manual-section" id="faq">
+          <header class="section-heading"><div><p class="eyebrow">SUPPORT</p><h2>FAQ</h2></div><p>자주 확인하는 운영 기준입니다.</p></header>
+          <div class="faq-list"><details open><summary>Project와 Daily Work의 차이는 무엇인가요?</summary><p>Project는 승인된 작업 기준이고 Daily Work는 그중 오늘 수행할 작업을 선택하는 절차입니다.</p></details><details><summary>전자문서를 직접 찾아야 하나요?</summary><p>아니요. 선택한 작업의 기준에 따라 필요한 문서가 자동으로 제시되는 구조입니다.</p></details><details><summary>Safety Report는 매일 작성하나요?</summary><p>아니요. 사고, Near Miss, 위험제보, 개선제안 또는 종사자의견이 발생한 경우 작성합니다.</p></details></div>
+        </section>
+
+        <section class="manual-section" id="release-notes">
+          <header class="section-heading"><div><p class="eyebrow">RELEASE NOTES</p><h2>Release Notes</h2></div><p>Academy Documentation 변경 이력입니다.</p></header>
+          <article class="release-entry"><time datetime="2026-08-06">2026.08.06</time><div><h3>Sprint A-002 · Official Manual</h3><p>공식 Navigation, Platform Workflow, 역할별 운영 가이드, 공통 안내 Component와 A4 Print Manual 구조를 추가했습니다.</p></div></article>
+        </section>
+
+        <nav class="chapter-pager" aria-label="문서 순서"><a href="#faq">← Previous <strong>FAQ</strong></a><a href="#home">Next → <strong>Platform Overview</strong></a></nav>
+      </article>
+    </main>
+  </div>
+
+  <footer class="site-footer"><div><strong>ONOFF Academy</strong><span>Official Platform Documentation</span></div><dl><div><dt>Version</dt><dd>1.0.0</dd></div><div><dt>Build</dt><dd>A-003</dd></div><div><dt>Last Updated</dt><dd>2026.08.06</dd></div></dl><a href="https://github.com/onoffsystem/onoff-academy">GitHub Repository</a><p>© 2026 ONOFF SYSTEM Co., Ltd.</p></footer>
+  <div class="drawer-backdrop" hidden></div>
+  <script src="academy.js" defer></script>
+</body>
+</html>

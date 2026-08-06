@@ -1,0 +1,31 @@
+(() => {
+  'use strict';
+  const chapters = [...document.querySelectorAll('.manual-section[id]')];
+  const links = [...document.querySelectorAll('.nav-link[href^="#"]')];
+  const sidebar = document.querySelector('.sidebar');
+  const menuButton = document.querySelector('.menu-toggle');
+  const backdrop = document.querySelector('.drawer-backdrop');
+  const searchPanel = document.querySelector('#search-panel');
+  const searchInput = document.querySelector('#academy-search');
+  const searchResults = document.querySelector('.search-results');
+  const searchTrigger = document.querySelector('.search-trigger');
+  const chapterIndex = chapters.map((chapter) => ({ id: chapter.id, title: chapter.querySelector('h1,h2')?.textContent.trim() || chapter.id, description: chapter.querySelector('.lead,.section-heading>p')?.textContent.trim() || '' }));
+  const closeDrawer = () => { sidebar?.classList.remove('is-open'); menuButton?.setAttribute('aria-expanded', 'false'); if (backdrop) backdrop.hidden = true; };
+  menuButton?.addEventListener('click', () => { const open = !sidebar?.classList.contains('is-open'); sidebar?.classList.toggle('is-open', open); menuButton.setAttribute('aria-expanded', String(open)); if (backdrop) backdrop.hidden = !open; });
+  backdrop?.addEventListener('click', closeDrawer);
+  links.forEach((link) => link.addEventListener('click', closeDrawer));
+  const observer = new IntersectionObserver((entries) => { const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]; if (!visible) return; links.forEach((link) => { const active = link.hash === `#${visible.target.id}`; link.classList.toggle('is-current', active); active ? link.setAttribute('aria-current', 'page') : link.removeAttribute('aria-current'); }); const label = document.querySelector('[data-current-chapter]'); if (label) label.textContent = chapterIndex.find((item) => item.id === visible.target.id)?.title || 'Academy'; }, { rootMargin: '-18% 0px -68% 0px', threshold: [0, .2, .5] });
+  chapters.forEach((chapter) => observer.observe(chapter));
+  if (sidebar) { sidebar.scrollTop = Number(sessionStorage.getItem('academy-navigation-scroll') || 0); sidebar.addEventListener('scroll', () => sessionStorage.setItem('academy-navigation-scroll', String(sidebar.scrollTop)), { passive: true }); }
+  document.querySelectorAll('.nav-group').forEach((group, index) => { const key = `academy-nav-group-${index}`; const saved = sessionStorage.getItem(key); if (saved !== null) group.open = saved === 'true'; group.addEventListener('toggle', () => sessionStorage.setItem(key, String(group.open))); });
+  const setSearchOpen = (open) => { if (!searchPanel) return; searchPanel.hidden = !open; searchTrigger?.setAttribute('aria-expanded', String(open)); if (open) searchInput?.focus(); };
+  searchTrigger?.addEventListener('click', () => setSearchOpen(true));
+  document.querySelector('.search-close')?.addEventListener('click', () => setSearchOpen(false));
+  searchPanel?.addEventListener('click', (event) => { if (event.target === searchPanel) setSearchOpen(false); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { setSearchOpen(false); closeDrawer(); } });
+  const renderResults = (query) => { if (!searchResults) return; const value = query.trim().toLocaleLowerCase('ko'); const results = value ? chapterIndex.filter((item) => `${item.title} ${item.description}`.toLocaleLowerCase('ko').includes(value)) : []; searchResults.innerHTML = !value ? '<p>검색어를 입력하면 관련 Chapter가 표시됩니다.</p>' : results.length ? results.map((item) => `<a href="#${item.id}"><strong>${item.title}</strong><span>${item.description}</span></a>`).join('') : '<p>일치하는 문서를 찾지 못했습니다.</p>'; };
+  searchInput?.addEventListener('input', (event) => renderResults(event.target.value));
+  document.querySelectorAll('.recent-searches button').forEach((button) => button.addEventListener('click', () => { if (searchInput) { searchInput.value = button.textContent.trim(); renderResults(searchInput.value); searchInput.focus(); } }));
+  searchResults?.addEventListener('click', () => setSearchOpen(false));
+  document.querySelector('.print-button')?.addEventListener('click', () => window.print());
+})();
