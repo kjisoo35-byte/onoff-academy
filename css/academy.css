@@ -191,6 +191,9 @@ section { scroll-margin-top: 92px; }
 .info-card p { margin: 0; color: var(--slate-700); font-size: 14px; }
 .card-number { color: var(--blue-600); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
 .home-block { margin-top: 52px; }
+.home-priority { margin-top: 30px; }
+.home-start-tip { margin-top: 18px; }
+.home-start-flow { margin-top: 20px; }
 .home-block-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; padding-bottom: 15px; border-bottom: 1px solid var(--slate-200); }
 .home-block-heading > p { margin: 0; color: var(--slate-500); font-size: 14px; }
 .quick-start-grid { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }

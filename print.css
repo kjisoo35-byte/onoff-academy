@@ -6,7 +6,7 @@
   .manual-section { padding-top: 0; break-before: page; page-break-before: always; }
   .manual-section:first-child { break-before: auto; page-break-before: auto; }
   .document-header, .section-heading, h2, h3 { break-after: avoid; page-break-after: avoid; }
-  .workflow-hero, .hero-workflow, .info-card, .workflow-diagram li, .standard-workflow li, .principle-grid article, .workflow-faq details, .callout, .step-list li, .role-row, .event-grid article, .best-practice, .related-pages, .release-entry { break-inside: avoid; page-break-inside: avoid; }
+  .workflow-hero, .hero-workflow, .home-priority, .info-card, .workflow-diagram li, .standard-workflow li, .principle-grid article, .workflow-faq details, .callout, .step-list li, .role-row, .event-grid article, .best-practice, .related-pages, .release-entry { break-inside: avoid; page-break-inside: avoid; }
   .workflow-diagram { grid-template-columns: repeat(3, 1fr); }
   .step-list.horizontal { grid-template-columns: repeat(2, 1fr); }
   .standard-chapter { break-before: page; }
