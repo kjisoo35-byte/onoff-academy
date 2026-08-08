@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "hierarchy": ["academy", "library", "book", "table-of-contents", "chapter", "read", "learn", "practice", "complete"],
+  "chapterRequiredFields": ["id", "bookId", "title", "description", "learningInfo", "scenes"],
+  "learningInfoRequiredFields": ["duration", "difficulty", "audience", "relatedWork", "relatedBook", "relatedWorkflow"],
+  "blocks": {
+    "hero": { "class": "ak-hero", "fields": ["eyebrow", "title", "description"] },
+    "bookCover": { "class": "ak-book-cover", "fields": ["category", "title", "edition"] },
+    "learningInfo": { "class": "ak-learning-info", "fields": ["duration", "difficulty", "audience", "relatedWork", "relatedBook", "relatedWorkflow"] },
+    "tableOfContents": { "class": "ak-toc", "fields": ["index", "title", "description", "duration", "target"] },
+    "chapterHeader": { "class": "ak-chapter-header", "fields": ["eyebrow", "title", "description"] },
+    "scene": { "class": "ak-scene", "variants": ["why", "case", "workflow", "tip", "practice", "complete"], "fields": ["id", "type", "title", "blocks"] },
+    "step": { "class": "ak-step-block", "fields": ["index", "title", "body"] },
+    "workflow": { "class": "ak-workflow", "fields": ["steps"] },
+    "media": { "class": "ak-media", "variants": ["image", "illustration", "screenshot", "video"], "fields": ["src", "alt", "caption"] },
+    "callout": { "class": "ak-callout", "variants": ["info", "tip", "warning", "note"], "fields": ["label", "body"] },
+    "faq": { "class": "ak-faq", "fields": ["question", "answer"] },
+    "quiz": { "class": "ak-quiz", "fields": ["question", "choices", "answer"] },
+    "practice": { "class": "ak-practice", "fields": ["objective", "steps", "completion"] },
+    "relatedLearning": { "class": "ak-related", "fields": ["items"] },
+    "continueLearning": { "class": "ak-continue", "fields": ["title", "target"] },
+    "nextChapter": { "class": "ak-next-chapter", "fields": ["title", "target"] },
+    "callToAction": { "class": "ak-cta", "fields": ["title", "label", "target"] },
+    "platformLink": { "class": "ak-platform-link", "fields": ["title", "label", "target"] },
+    "footer": { "class": "ak-footer", "fields": ["book", "chapter", "updated"] }
+  },
+  "templates": {
+    "workflow": ["chapterHeader", "learningInfo", "workflow", "step", "callout", "faq", "practice", "relatedLearning", "nextChapter", "platformLink", "footer"],
+    "sop": ["chapterHeader", "learningInfo", "callout", "step", "media", "callout", "practice", "quiz", "nextChapter", "footer"],
+    "education": ["chapterHeader", "learningInfo", "media", "step", "quiz", "faq", "relatedLearning", "nextChapter", "footer"],
+    "incidentCase": ["chapterHeader", "learningInfo", "media", "workflow", "callout", "practice", "relatedLearning", "footer"],
+    "equipment": ["chapterHeader", "learningInfo", "media", "step", "callout", "practice", "platformLink", "footer"],
+    "guide": ["chapterHeader", "learningInfo", "step", "callout", "faq", "continueLearning", "nextChapter", "footer"]
+  },
+  "validationScenario": {
+    "title": "네이버웍스 Drive에서 양식 작성",
+    "template": "guide",
+    "blocks": ["chapterHeader", "learningInfo", "step", "media", "callout", "practice", "faq", "relatedLearning", "nextChapter", "platformLink", "footer"],
+    "requiresNewComponent": false
+  }
+}
