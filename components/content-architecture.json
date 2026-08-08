@@ -1,6 +1,22 @@
 {
-  "version": "1.0",
-  "hierarchy": ["academy", "library", "book", "table-of-contents", "chapter", "read", "learn", "practice", "complete"],
+  "version": "2.0",
+  "hierarchy": ["academy", "library", "handbook", "part", "chapter", "lesson", "complete"],
+  "libraryArchitecture": {
+    "entrance": "home",
+    "handbooks": [
+      { "id": "platform", "title": "Platform Handbook", "chapters": ["platform-philosophy", "workflow", "todays-work", "electronic-documents", "safety-report"] },
+      { "id": "tbm", "title": "TBM Handbook", "chapters": ["purpose", "nine-steps", "scenario", "life-safety-rules"] },
+      { "id": "sop", "title": "SOP Handbook", "chapters": ["purpose", "authoring", "cases"] },
+      { "id": "risk-assessment", "title": "Risk Assessment Handbook", "chapters": ["purpose", "s-tra", "hazards", "incident-types", "safety-measures"] },
+      { "id": "special-safety-education", "title": "Special Safety Education Handbook", "chapters": ["cargo-handling-machinery", "regulated-hazardous-substances", "live-work-over-75v", "robot-work"] },
+      { "id": "equipment", "title": "Equipment Handbook", "chapters": ["equipment-inspection", "preventive-inspection", "standards"] },
+      { "id": "emergency", "title": "Emergency Handbook", "chapters": ["emergency-response", "evacuation", "first-aid"] },
+      { "id": "accident-case", "title": "Accident Case Handbook", "chapters": ["accident-cases", "near-miss", "improvement-cases"] }
+    ]
+  },
+  "entryFlow": ["home", "library", "handbook", "table-of-contents", "chapter", "complete"],
+  "contentSharing": "Every handbook reuses the locked Academy components and navigation structure.",
+  "chapterFlow": ["why", "workflow", "action", "screen", "help"],
   "chapterRequiredFields": ["id", "bookId", "title", "description", "learningInfo", "scenes"],
   "learningInfoRequiredFields": ["duration", "difficulty", "audience", "relatedWork", "relatedBook", "relatedWorkflow"],
   "blocks": {

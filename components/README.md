@@ -10,6 +10,15 @@ Academy 콘텐츠는 페이지별 스타일을 새로 만들지 않고 공통 Co
 - `content-architecture.json`: Block 계약, Chapter 필수 정보와 Template Recipe
 - `index.html`: 실제 콘텐츠를 조립하는 소비자
 
+## Learning Mode Framework
+
+Book Architecture의 기준 계층은 `Book → Part → Chapter → Scene`입니다. Safety Handbook은 3개 Part, 5개 Chapter, 20개 Scene으로 구성하며 모든 Chapter는 `WHY → CASE → WORKFLOW → TIP` Scene 패턴을 공유합니다.
+
+- `Book Mode`: Library에서 진입하는 스크롤 기반 학습입니다. `WHY → CASE → WORKFLOW → TIP → PRACTICE → COMPLETE` 순서로 읽습니다.
+- `Action Mode`: Platform Help에서 진입하는 현장형 표현입니다. 동일한 Scene 원본을 한 화면·한 행동 단위로 제공합니다.
+- 두 Mode는 콘텐츠를 복제하지 않습니다. Chapter와 Scene 데이터는 공유하고 Presentation만 분리합니다.
+- Chapter의 기본 설명 순서는 `WHY → WORKFLOW → ACTION → SCREEN → HELP`입니다.
+
 ## Component Contract
 
 | Block | Class | 역할 |
