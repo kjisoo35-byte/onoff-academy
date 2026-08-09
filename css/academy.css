@@ -126,6 +126,119 @@ body.is-lesson-view .standard-workflow li:nth-child(3) .flow-index { color: var(
   body.is-lesson-view .chapter-reading-nav span { padding-inline: 8px; font-size: 11px; }
 }
 
+/* PLATFORM-CH02: preserve complete lesson images on narrow mobile viewports. */
+body.is-lesson-view #workflow .platform-summary,
+body.is-lesson-view #workflow .workflow-group-visual {
+  width: 100%;
+  margin-inline: auto;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  box-shadow: none;
+}
+
+body.is-lesson-view #workflow .platform-summary {
+  max-width: 1120px;
+}
+
+body.is-lesson-view #workflow .workflow-group-visual {
+  max-width: 680px;
+}
+
+body.is-lesson-view #workflow .platform-summary img,
+body.is-lesson-view #workflow .workflow-group-visual img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 719px) {
+  body.is-lesson-view #workflow .platform-summary,
+  body.is-lesson-view #workflow .workflow-group-visual {
+    max-width: 100%;
+    margin-block: 0 18px;
+    border-radius: 8px;
+  }
+}
+
+/* PLATFORM-CH03: TBM Golden Reference page composition. */
+body.is-lesson-view #daily-work .daily-work-lesson {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 46%);
+  gap: 18px 24px;
+  margin-top: 0;
+  padding: 22px;
+  border: 1px solid var(--slate-200);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: 0 10px 28px rgba(15, 35, 65, .06);
+}
+
+body.is-lesson-view #daily-work .daily-work-lesson > .chapter-block-heading,
+body.is-lesson-view #daily-work .daily-work-lesson > .callout {
+  grid-column: 1 / -1;
+}
+
+body.is-lesson-view #daily-work .daily-work-photo {
+  grid-column: 2;
+  grid-row: 2;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  overflow: visible;
+  background: transparent;
+}
+
+body.is-lesson-view #daily-work .daily-work-photo img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+  object-fit: contain;
+}
+
+body.is-lesson-view #daily-work .daily-work-lesson > .prose {
+  grid-column: 1;
+  max-width: none;
+  margin: 0;
+}
+
+body.is-lesson-view #daily-work #daily-work-summary {
+  grid-template-columns: 1fr;
+}
+
+body.is-lesson-view #daily-work #daily-work-summary > .daily-work-photo,
+body.is-lesson-view #daily-work #daily-work-summary > .prose {
+  grid-column: 1;
+  grid-row: auto;
+}
+
+body.is-lesson-view #daily-work #daily-work-summary > .daily-work-photo {
+  max-width: 1180px;
+}
+
+@media (max-width: 719px) {
+  body.is-lesson-view #daily-work .daily-work-lesson {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+  body.is-lesson-view #daily-work .daily-work-lesson > .chapter-block-heading,
+  body.is-lesson-view #daily-work .daily-work-photo,
+  body.is-lesson-view #daily-work .daily-work-lesson > .prose,
+  body.is-lesson-view #daily-work .daily-work-lesson > .callout {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  body.is-lesson-view #daily-work .daily-work-photo {
+    max-width: 100%;
+  }
+}
+
 /* Common Handbook reading controls */
 body.is-lesson-view .lesson-sticky-stack {
   position: sticky;
@@ -226,7 +339,7 @@ body.is-lesson-view .document {
   width: 100%;
   min-height: 0;
   margin-inline: auto;
-  padding: 20px 0 52px;
+  padding: 20px 0 calc(96px + env(safe-area-inset-bottom));
   overflow-y: auto;
   overscroll-behavior-y: contain;
   scrollbar-gutter: stable;
@@ -2121,6 +2234,31 @@ body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .callout::before {
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .08em;
+}
+
+/* Golden Reference v1: Safety Report assets are chapter-local. */
+body.is-lesson-view #safety-report .safety-report-lesson > .tbm-scenario-photo {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  margin-inline: auto;
+  overflow: visible;
+  aspect-ratio: auto;
+  background: transparent;
+}
+
+/* UX Final Fix: match the CH03 Golden Reference start rhythm locally. */
+body.is-lesson-view #safety-report .safety-report-lesson {
+  margin-top: 0;
+}
+
+body.is-lesson-view #safety-report .safety-report-lesson > .tbm-scenario-photo img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  margin-inline: auto;
+  object-fit: contain;
 }
 
 @media (max-width: 719px) {

@@ -29,10 +29,9 @@
   document.querySelectorAll('.academy-hero,.home-discovery,.library-section,.book-overview,.learning-mode-section,.book-complete-view,.book-platform-link,.my-academy-card').forEach((element) => element.remove());
   const bookChapterForm = [
     { id: 'philosophy', book: 'platform', part: '01', partTitle: 'Platform', chapter: '01', title: 'Platform Philosophy', next: 'workflow' },
-    { id: 'workflow', book: 'platform', chapter: '02', title: 'Workflow', previous: 'philosophy', next: 'daily-work' },
-    { id: 'daily-work', book: 'platform', part: '02', partTitle: 'Daily Safety', chapter: '03', title: "Today's Work", previous: 'workflow', next: 'electronic-documents' },
-    { id: 'electronic-documents', book: 'platform', chapter: '04', title: 'Electronic Documents', previous: 'daily-work', next: 'safety-report' },
-    { id: 'safety-report', book: 'platform', part: '03', partTitle: 'Safety Operation', chapter: '05', title: 'Safety Report', previous: 'electronic-documents' },
+    { id: 'workflow', book: 'platform', chapter: '02', title: '전체 Workflow', previous: 'philosophy', next: 'daily-work' },
+    { id: 'daily-work', book: 'platform', part: '02', partTitle: 'Daily Safety', chapter: '03', title: "Today's Work", previous: 'workflow', next: 'safety-report' },
+    { id: 'safety-report', book: 'platform', part: '03', partTitle: 'Safety Operation', chapter: '04', title: 'Safety Report', previous: 'daily-work' },
     { id: 'tbm-purpose', book: 'tbm', chapter: '01', title: 'TBM이란 무엇인가?' },
     { id: 'tbm-nine-steps', book: 'tbm', chapter: '02', title: 'TBM 진행 9단계' },
     { id: 'tbm-scenario', book: 'tbm', chapter: '03', title: 'TBM 진행 시나리오' },
@@ -50,21 +49,168 @@
     start.innerHTML = `<p>CHAPTER ${item.chapter}</p><h1>${item.title}</h1><span>${description}</span>`;
     chapter.insertAdjacentElement('afterbegin', start);
   });
+  const workflowChapter = document.getElementById('workflow');
+  const workflowChapterStart = workflowChapter?.querySelector('.book-chapter-start');
+  if (workflowChapter && workflowChapterStart) {
+    [...workflowChapter.children].forEach((child) => {
+      if (child !== workflowChapterStart) child.remove();
+    });
+    workflowChapter.insertAdjacentHTML('beforeend', `
+      <section class="chapter-block workflow-summary-lesson" aria-labelledby="workflow-summary-title">
+        <header class="chapter-block-heading"><span>01</span><div><h3 id="workflow-summary-title">Workflow Summary</h3><p>작업 준비부터 완료까지 이어지는 9단계를 한눈에 이해합니다.</p></div></header>
+        <div class="prose"><h3>WHY</h3><p>ONOFF Workflow는 각각의 기능을 따로 사용하는 절차가 아닙니다. 앞 단계의 확인 결과가 다음 단계로 연결되어 누락 없이 안전한 작업을 시작하고 완료하도록 돕는 하나의 흐름입니다.</p></div>
+        <figure class="image-block platform-summary"><img src="assets/platform/chapter-02-workflow-summary.png" alt="작업 정의부터 작업 완료까지 연결되는 ONOFF 9단계 Workflow Summary"></figure>
+        <ol class="standard-workflow" aria-label="ONOFF Platform 9단계 Workflow">
+          <li><span class="flow-index">01</span><strong>작업 정의</strong><small>작업 내용과 범위를 명확히 정합니다.</small></li><li><span class="flow-index">02</span><strong>안전 승인</strong><small>안전 조건과 준비 상태를 확인합니다.</small></li><li><span class="flow-index">03</span><strong>전자문서 자동 호출</strong><small>작업에 필요한 문서를 연결합니다.</small></li><li><span class="flow-index">04</span><strong>전자문서 확인</strong><small>필수 안전사항을 빠짐없이 확인합니다.</small></li><li><span class="flow-index">05</span><strong>전자서명</strong><small>확인 완료 사실을 기록합니다.</small></li><li><span class="flow-index">06</span><strong>Safety Start</strong><small>최종 안전 상태를 확인합니다.</small></li><li><span class="flow-index">07</span><strong>작업 수행</strong><small>승인된 범위에서 작업합니다.</small></li><li><span class="flow-index">08</span><strong>Safety Report</strong><small>위험과 개선사항을 기록합니다.</small></li><li><span class="flow-index">09</span><strong>작업 완료</strong><small>결과를 확인하고 작업을 종료합니다.</small></li>
+        </ol>
+        <ul class="check-list"><li>단계는 순서대로 진행하며 이전 단계가 완료되어야 다음 단계로 이동합니다.</li><li>역할과 권한에 따라 표시되는 Action은 달라도 Workflow 순서는 동일합니다.</li><li>모든 기록은 작업 상태와 연결되어 완료 시점까지 추적됩니다.</li></ul>
+        <aside class="callout tip"><strong>TIP</strong><p>화면의 메뉴보다 현재 Workflow 단계와 Primary Action을 먼저 확인하세요. 지금 해야 할 행동이 다음 단계로 이어지는 기준입니다.</p></aside>
+      </section>
+      <section class="chapter-block workflow-preparation-lesson" aria-labelledby="workflow-preparation-title"><header class="chapter-block-heading"><span>GROUP 01</span><div><h3 id="workflow-preparation-title">준비 단계</h3><p>작업 정의부터 전자문서 자동 호출까지 준비 기준을 확인합니다.</p></div></header><div class="prose"><h3>WHY</h3><p>작업을 시작하기 전에 무엇을, 어디에서, 누가 수행하는지 확정해야 안전 승인과 필수 문서가 정확하게 연결됩니다. 준비 정보가 틀리면 이후 확인 절차도 실제 현장과 달라질 수 있습니다.</p></div><ol class="step-list horizontal" aria-label="GROUP 01 준비 단계"><li><b>작업 정의</b><span>작업 범위, 장소, 담당자와 수행 조건을 명확히 합니다.</span></li><li><b>안전 승인</b><span>위험요인과 안전조치를 검토하고 수행 가능 상태를 승인합니다.</span></li><li><b>전자문서 자동 호출</b><span>승인된 작업 정보에 따라 필요한 문서를 자동으로 연결합니다.</span></li></ol><h3>CHECK POINT</h3><ul class="check-list"><li>작업 범위와 실제 현장이 일치하는지 확인합니다.</li><li>안전 승인이 완료되기 전에는 작업을 시작하지 않습니다.</li><li>작업 유형에 필요한 TBM, SOP, 위험성평가 등이 모두 연결되었는지 확인합니다.</li></ul><div class="prose"><h3>현장 설명</h3><p>현장에서는 작업명이 비슷해도 위치나 설비가 다르면 위험요인과 필수 문서가 달라집니다. 오늘 수행할 작업 정보가 정확한지 먼저 확인해야 합니다.</p></div><aside class="callout tip"><strong>TIP</strong><p>자동 호출된 문서가 실제 작업과 다르면 임의로 진행하지 말고 Supervisor에게 작업 정보와 승인 상태를 다시 확인합니다.</p></aside></section>
+      <section class="chapter-block workflow-confirmation-lesson" aria-labelledby="workflow-confirmation-title"><header class="chapter-block-heading"><span>GROUP 02</span><div><h3 id="workflow-confirmation-title">확인 단계</h3><p>전자문서 확인부터 Safety Start까지 시작 조건을 완성합니다.</p></div></header><div class="prose"><h3>WHY</h3><p>전자문서 확인과 전자서명은 형식적인 기록이 아니라 작업자가 위험요인과 안전조치를 이해했다는 증거입니다. 모든 확인이 완료되어야 Safety Start로 이동할 수 있습니다.</p></div><ol class="step-list horizontal" aria-label="GROUP 02 확인 단계"><li><b>전자문서 확인</b><span>TBM, SOP, 위험성평가 등 모든 필수 항목을 확인합니다.</span></li><li><b>전자서명</b><span>내용을 이해한 작업자가 본인의 확인을 기록합니다.</span></li><li><b>Safety Start</b><span>보호구, 비상연락, 작업조건을 최종 확인하고 시작합니다.</span></li></ol><h3>CHECK POINT</h3><ul class="check-list"><li>모든 필수 문서를 끝까지 확인합니다.</li><li>서명은 본인이 직접 수행하며 대리 서명하지 않습니다.</li><li>보호구와 현장 조건이 확인 내용과 일치하는지 점검합니다.</li></ul><div class="prose"><h3>현장 설명</h3><p>작업이 급하거나 반복 작업이라는 이유로 확인 단계를 생략하면 변경된 위험을 놓칠 수 있습니다. 설비나 작업 조건이 바뀌었다면 처음부터 다시 확인합니다.</p></div><aside class="callout tip"><strong>TIP</strong><p>이해하기 어려운 항목은 넘어가지 말고 Supervisor에게 문의한 뒤 확인과 서명을 완료하세요.</p></aside></section>
+      <section class="chapter-block workflow-execution-lesson" aria-labelledby="workflow-execution-title"><header class="chapter-block-heading"><span>GROUP 03</span><div><h3 id="workflow-execution-title">실행 및 완료 단계</h3><p>작업 수행부터 Safety Report와 작업 완료까지 결과를 기록합니다.</p></div></header><div class="prose"><h3>WHY</h3><p>안전한 수행과 정확한 종료 기록은 다음 작업의 안전 기준이 됩니다. 작업 중 발생한 Event와 개선사항을 남겨야 같은 위험의 반복을 예방할 수 있습니다.</p></div><ol class="step-list horizontal" aria-label="GROUP 03 실행 및 완료 단계"><li><b>작업 수행</b><span>승인 범위와 안전수칙을 지키며 작업을 진행합니다.</span></li><li><b>Safety Report</b><span>사고, Near Miss, 위험제보와 개선사항을 즉시 기록합니다.</span></li><li><b>작업 완료</b><span>결과와 특이사항을 확인하고 종료 상태로 전환합니다.</span></li></ol><h3>CHECK POINT</h3><ul class="check-list"><li>작업 중 조건이 달라지면 멈추고 다시 확인합니다.</li><li>작은 이상이나 Near Miss도 Safety Report에 기록합니다.</li><li>잔류 위험과 현장 정리 상태를 확인한 뒤 작업을 완료합니다.</li></ul><div class="prose"><h3>현장 설명</h3><p>완료 버튼을 먼저 누르고 결과를 나중에 기록하면 실제 작업 이력과 시스템 상태가 달라집니다. 현장 확인과 필요한 보고를 모두 마친 뒤 종료해야 합니다.</p></div><aside class="callout tip"><strong>TIP</strong><p>특이사항이 있다면 작업 완료 전에 Safety Report로 연결하고, 처리에 필요한 정보를 구체적으로 남기세요.</p></aside></section>`);
+  }
+  [
+    ['.workflow-preparation-lesson', 'LESSON 02', 'GROUP 01 · 작업 정의부터 전자문서 자동 호출까지 준비 기준을 확인합니다.'],
+    ['.workflow-confirmation-lesson', 'LESSON 03', 'GROUP 02 · 전자문서 확인부터 Safety Start까지 시작 조건을 완성합니다.'],
+    ['.workflow-execution-lesson', 'LESSON 04', 'GROUP 03 · 작업 수행부터 Safety Report와 작업 완료까지 결과를 기록합니다.']
+  ].forEach(([selector, lessonLabel, description]) => {
+    const lessonPage = workflowChapter?.querySelector(selector);
+    if (!lessonPage) return;
+    lessonPage.hidden = true;
+    const heading = lessonPage.querySelector(':scope > .chapter-block-heading');
+    if (heading) {
+      heading.querySelector(':scope > span').textContent = lessonLabel;
+      heading.querySelector('p').textContent = description;
+    }
+  });
+  const workflowSummaryHeading = workflowChapter?.querySelector('.workflow-summary-lesson > .chapter-block-heading');
+  if (workflowSummaryHeading) workflowSummaryHeading.querySelector(':scope > span').textContent = 'LESSON 01';
+  const workflowSummaryPage = workflowChapter?.querySelector('.workflow-summary-lesson');
+  if (workflowSummaryPage) {
+    workflowSummaryPage.id = 'workflow-summary';
+    workflowSummaryPage.classList.add('tbm-scenario-lesson');
+    workflowSummaryPage.querySelector('.standard-workflow')?.remove();
+    const summaryCheckList = workflowSummaryPage.querySelector('.check-list');
+    const summaryFigure = workflowSummaryPage.querySelector('.platform-summary');
+    const summaryProse = workflowSummaryPage.querySelector('.prose');
+    const summaryImage = summaryFigure?.querySelector('img');
+    if (summaryImage) {
+      summaryImage.src = 'assets/platform/chapter-02/page-01-workflow-summary.png';
+      summaryImage.alt = 'S자 흐름으로 작업 정의부터 작업 완료까지 연결되는 9단계 Workflow Summary';
+    }
+    if (summaryProse && summaryCheckList) {
+      summaryProse.insertAdjacentHTML('beforeend', '<h3>CHECK POINT</h3>');
+      summaryProse.append(summaryCheckList);
+    }
+    if (summaryFigure && summaryProse) summaryProse.insertAdjacentElement('beforebegin', summaryFigure);
+  }
+  [
+    ['.workflow-preparation-lesson', 'workflow-preparation', 'assets/platform/chapter-02/page-02-preparation.png', 'GROUP 01 준비 단계: 작업 정의, 안전 승인, 전자문서 자동 호출'],
+    ['.workflow-confirmation-lesson', 'workflow-confirmation', 'assets/platform/chapter-02/page-03-confirmation.png', 'GROUP 02 확인 단계: 전자문서 확인, 전자서명, Safety Start'],
+    ['.workflow-execution-lesson', 'workflow-execution', 'assets/platform/chapter-02/page-04-execution.png', 'GROUP 03 실행 및 완료 단계: 작업 수행, Safety Report, 작업 완료']
+  ].forEach(([selector, pageId, imageSource, imageAlt]) => {
+    const page = workflowChapter?.querySelector(selector);
+    if (!page) return;
+    page.id = pageId;
+    page.classList.add('tbm-scenario-lesson');
+    const header = page.querySelector(':scope > .chapter-block-heading');
+    const why = page.querySelector(':scope > .prose');
+    const workflowVisual = page.querySelector(':scope > .step-list');
+    const checkTitle = page.querySelector(':scope > h3');
+    const checkList = page.querySelector(':scope > .check-list');
+    const fieldExplanation = page.querySelectorAll(':scope > .prose')[1];
+    const tip = page.querySelector(':scope > .callout');
+    if (workflowVisual) {
+      const figure = document.createElement('figure');
+      figure.className = 'tbm-scenario-photo workflow-group-visual';
+      workflowVisual.insertAdjacentElement('beforebegin', figure);
+      figure.innerHTML = `<img src="${imageSource}" alt="${imageAlt}" loading="lazy">`;
+      workflowVisual.remove();
+    }
+    if (why) {
+      if (checkTitle) why.append(checkTitle);
+      if (checkList) why.append(checkList);
+      if (fieldExplanation) {
+        [...fieldExplanation.children].forEach((child) => why.append(child));
+        fieldExplanation.remove();
+      }
+    }
+    [header, page.querySelector(':scope > .tbm-scenario-photo'), why, tip].forEach((block) => {
+      if (block) page.append(block);
+    });
+  });
+  const dailyWorkChapter = document.getElementById('daily-work');
+  const dailyWorkChapterStart = dailyWorkChapter?.querySelector('.book-chapter-start');
+  if (dailyWorkChapter && dailyWorkChapterStart) {
+    [...dailyWorkChapter.children].forEach((child) => {
+      if (child !== dailyWorkChapterStart) child.remove();
+    });
+    const dailyWorkPages = [
+      { id: 'daily-work-summary', number: '01', title: 'Worker Workflow Summary', description: "Today's Work에서 Safety Start까지 전체 흐름을 한눈에 확인합니다.", image: 'assets/platform/chapter-03/page-01-summary.png', alt: "오늘 작업 선택, 안전 확인, 전자서명, Safety Start, 작업 시작으로 이어지는 Worker Workflow Summary", why: "Today's Work는 작업자가 오늘 수행할 작업을 선택하고 필요한 안전 절차를 순서대로 완료하도록 안내하는 시작점입니다.", explanation: '전체 흐름을 먼저 이해하면 현재 단계와 다음 Action을 놓치지 않고 안전하게 작업을 시작할 수 있습니다.', checks: ['오늘 수행할 작업과 작업 상태를 확인합니다.', '전자문서 확인과 전자서명이 완료되어야 다음 단계로 이동합니다.', '안전 준비가 완료된 뒤에만 작업을 시작합니다.'], field: '현장에서는 화면의 메뉴보다 현재 Workflow 단계와 다음 Action을 먼저 확인합니다.', tip: '각 단계의 완료 기록은 다음 단계의 시작 조건이므로 순서를 건너뛰지 않습니다.' },
+      { id: 'daily-work-selection', number: '02', title: '오늘 작업 선택', description: '오늘 수행할 작업을 선택하고 작업 정보를 확인합니다.', image: 'assets/platform/chapter-03/page-02-todays-work.png', alt: "Today's Work 목록에서 ACTIVE 작업을 선택하고 상세 정보를 확인하는 화면", why: '작업 장소와 내용이 정확해야 이후 호출되는 전자문서와 안전 절차가 실제 현장 조건에 맞게 연결됩니다.', explanation: '배정된 ACTIVE 작업을 선택한 뒤 작업명, 장소, 담당자, 요청 일시와 상태를 확인합니다.', checks: ['작업명과 작업 위치가 실제 수행 대상과 일치하는지 확인합니다.', '작업 상태가 수행 가능한 ACTIVE인지 확인합니다.', '담당자와 요청 일시 등 기본 정보를 확인합니다.'], field: '비슷한 작업명이 여러 개라면 위치와 설비 정보를 기준으로 정확한 작업을 선택합니다.', tip: '작업 정보가 다르면 다음 단계로 이동하지 말고 Supervisor에게 확인합니다.' },
+      { id: 'daily-work-safety-check', number: '03', title: '안전 확인', description: '자동으로 제공된 필수 전자문서의 내용을 확인합니다.', image: 'assets/platform/chapter-03/page-03-safety-check.png', alt: 'TBM, SOP, 위험성평가 등 자동 제공된 전자문서 목록과 상세 확인 화면', why: '전자문서는 작업자가 오늘 작업의 위험요인과 안전조치를 이해하도록 제공되는 필수 확인 자료입니다.', explanation: 'TBM, SOP, 위험성평가 등 작업 조건에 따라 자동 호출된 문서를 하나씩 열어 내용을 확인합니다.', checks: ['모든 필수 문서가 확인 완료 상태인지 확인합니다.', '작업 위험요인과 안전조치를 실제 현장과 비교합니다.', '이해하지 못한 내용은 확인 처리하지 않습니다.'], field: '반복 작업이라도 작업 조건과 문서 내용은 변경될 수 있으므로 매 작업마다 다시 확인합니다.', tip: '문서 내용이 현장과 다르면 Supervisor에게 알리고 수정된 기준을 확인합니다.' },
+      { id: 'daily-work-signature', number: '04', title: '전자서명', description: '모든 문서를 확인한 뒤 본인이 직접 전자서명합니다.', image: 'assets/platform/chapter-03/page-04-signature.png', alt: '필수 문서 확인 완료 후 작업자가 직접 전자서명하는 화면', why: '전자서명은 필수 안전사항을 이해하고 확인했다는 작업자 본인의 기록입니다.', explanation: '확인 대상 문서가 모두 완료되면 서명 화면에서 본인이 직접 서명하고 저장합니다.', checks: ['모든 필수 문서가 확인 완료 상태인지 확인합니다.', '서명자 정보가 로그인 사용자와 일치하는지 확인합니다.', '대리 서명이나 미리 작성한 서명을 사용하지 않습니다.'], field: '서명 후에는 확인 내용과 시간이 작업 기록에 남으므로 내용을 충분히 이해한 뒤 진행합니다.', tip: '서명 전 마지막으로 작업명과 필수 문서 목록을 다시 확인합니다.' },
+      { id: 'daily-work-safety-start', number: '05', title: 'Safety Start', description: '안전 준비 완료 상태를 확인하고 작업을 시작합니다.', image: 'assets/platform/chapter-03/page-05-safety-start.png', alt: '안전 준비 완료 후 Safety Start로 작업을 시작하는 화면', why: 'Safety Start는 문서 확인과 서명이 모두 완료된 작업만 실제 수행 단계로 전환하는 최종 안전 확인입니다.', explanation: '작업명, 장소, 작업자와 시작 시간을 확인하고 현장 준비 상태에 이상이 없을 때 작업을 시작합니다.', checks: ['보호구와 작업 구역의 안전 상태를 최종 확인합니다.', '작업 정보와 실제 수행 대상이 일치하는지 확인합니다.', '이상이 있으면 시작하지 않고 Supervisor에게 보고합니다.'], field: 'Safety Start 이후에는 승인된 작업 범위와 안전수칙을 준수하며 작업을 수행합니다.', tip: '작업 완료 후에는 반드시 종료 절차와 필요한 Safety Report를 수행합니다.' }
+    ];
+    dailyWorkPages.forEach((page, index) => {
+      dailyWorkChapter.insertAdjacentHTML('beforeend', `<section class="chapter-block tbm-scenario-lesson daily-work-lesson" id="${page.id}" aria-labelledby="${page.id}-title"${index ? ' hidden' : ''}><header class="chapter-block-heading"><span>PAGE ${page.number}</span><div><h3 id="${page.id}-title">${page.title}</h3><p>${page.description}</p></div></header><figure class="tbm-scenario-photo daily-work-photo"><img src="${page.image}" alt="${page.alt}"${index ? ' loading="lazy"' : ''}></figure><div class="prose"><h3>WHY</h3><p>${page.why}</p><p>${page.explanation}</p><h3>CHECK POINT</h3><ul>${page.checks.map((item) => `<li>${item}</li>`).join('')}</ul><h3>현장 적용</h3><p>${page.field}</p></div><aside class="callout tip"><strong>TIP</strong><p>${page.tip}</p></aside></section>`);
+    });
+  }
+  const safetyReportChapter = document.getElementById('safety-report');
+  const safetyReportChapterStart = safetyReportChapter?.querySelector('.book-chapter-start');
+  if (safetyReportChapter && safetyReportChapterStart) {
+    [...safetyReportChapter.children].forEach((child) => {
+      if (child !== safetyReportChapterStart) child.remove();
+    });
+    const safetyReportPages = [
+      { id: 'safety-report-summary', number: '01', title: 'Safety Report Summary', description: '5가지 Safety Report 유형과 기록 목적을 한눈에 확인합니다.', image: 'assets/platform/chapter-04/page-01-summary.png', alt: '사고, Near Miss, 위험제보, 개선제안, 종사자의견으로 구성된 Safety Report Summary', why: 'Safety Report는 현장의 위험과 개선 의견을 기록하여 같은 문제가 반복되지 않도록 관리하는 공통 창구입니다.', explanation: '사건의 성격에 맞는 유형을 선택하면 필요한 정보가 정확하게 기록되고 후속 검토와 개선으로 연결됩니다.', checks: ['보고하려는 내용과 가장 가까운 유형을 선택합니다.', '발생 시점과 장소, 구체적인 상황을 사실대로 기록합니다.', '사진이나 관련 자료가 있으면 함께 첨부합니다.'], field: '현장에서는 위험을 발견하거나 개선 의견이 생긴 즉시 가장 적합한 Report 유형으로 기록합니다.', tip: '유형을 고민하느라 보고를 미루지 말고, 판단이 어렵다면 Supervisor에게 확인한 뒤 등록합니다.' },
+      { id: 'safety-report-accident', number: '02', title: '사고 (Accident)', description: '사고 발생 사실과 피해 내용을 신속하고 정확하게 기록합니다.', image: 'assets/platform/chapter-04/page-02-accident.png', alt: '사고 발생 일시와 장소, 피해 내용, 원인 및 사진을 등록하는 사고 Report 화면', why: '사고 기록은 즉각적인 대응과 원인 조사, 재발 방지대책 수립의 출발점입니다.', explanation: '발생 일시와 장소, 작업 내용, 피해 상황과 현장 사진을 사실 중심으로 등록합니다.', checks: ['인명과 설비의 긴급 안전조치를 먼저 수행합니다.', '발생 일시와 장소를 정확히 입력합니다.', '피해 내용과 사고 원인을 추측 없이 기록합니다.'], field: '현장 보존이 필요한 경우 임의로 정리하지 말고 책임자의 지시에 따라 사진과 증거를 확보합니다.', tip: '보고서 작성보다 인명 구조와 추가 사고 방지가 우선입니다.' },
+      { id: 'safety-report-near-miss', number: '03', title: 'Near Miss', description: '사고로 이어질 뻔한 상황을 공유하여 같은 위험을 예방합니다.', image: 'assets/platform/chapter-04/page-03-near-miss.png', alt: 'Near Miss 발생 일시와 장소, 상황, 위험요인과 조치사항을 등록하는 화면', why: 'Near Miss는 피해가 없었더라도 동일 조건에서 실제 사고로 이어질 수 있는 중요한 사전 신호입니다.', explanation: '발생 상황, 위험요인, 즉시 조치와 개선 의견을 구체적으로 기록합니다.', checks: ['누가 잘못했는지가 아니라 어떤 조건이 위험했는지 기록합니다.', '즉시 조치한 내용을 함께 남깁니다.', '유사 작업에 적용할 예방대책을 제안합니다.'], field: '작은 이상이나 순간적인 위험도 반복 가능성이 있다면 Near Miss로 공유합니다.', tip: '피해가 없었다는 이유로 지나치지 않는 것이 사고 예방의 가장 빠른 방법입니다.' },
+      { id: 'safety-report-hazard', number: '04', title: '위험제보', description: '현장에서 발견한 위험요인을 제보하여 사고를 사전에 차단합니다.', image: 'assets/platform/chapter-04/page-04-hazard-report.png', alt: '위험요인의 위치와 수준, 사진 및 개선 요청을 등록하는 위험제보 화면', why: '위험제보는 사고가 발생하기 전에 불안전한 상태와 행동을 발견하고 제거하기 위한 예방 활동입니다.', explanation: '발견 위치, 위험요인, 위험 수준과 필요한 개선사항을 사진과 함께 등록합니다.', checks: ['접근 통제나 표지 등 즉시 가능한 조치를 실시합니다.', '위험 위치를 다른 사람이 찾을 수 있도록 구체적으로 적습니다.', '위험 수준은 실제 노출 가능성을 기준으로 선택합니다.'], field: '즉시 제거할 수 없는 위험은 주변 작업자에게 알리고 접근하지 못하도록 조치한 뒤 제보합니다.', tip: '위험제보는 책임 추궁이 아니라 모두의 사고 예방을 위한 기록입니다.' },
+      { id: 'safety-report-improvement', number: '05', title: '개선제안', description: '더 안전하고 효율적인 현장을 위한 아이디어를 제안합니다.', image: 'assets/platform/chapter-04/page-05-improvement.png', alt: '제안 제목과 문제점, 개선 방법, 기대 효과를 등록하는 개선제안 화면', why: '현장을 가장 잘 아는 작업자의 작은 아이디어가 안전성과 작업 효율을 함께 높일 수 있습니다.', explanation: '현재 문제점과 개선 방법, 기대 효과를 이해하기 쉽게 작성하고 필요한 자료를 첨부합니다.', checks: ['문제점과 제안 내용을 구분해 작성합니다.', '실행 가능한 개선 방법을 구체적으로 적습니다.', '안전과 품질, 효율에 미치는 효과를 설명합니다.'], field: '반복되는 불편이나 위험을 발견하면 개인적인 해결에 그치지 말고 표준 개선으로 연결합니다.', tip: '완성된 아이디어가 아니어도 현장의 문제와 개선 방향이 명확하면 제안할 수 있습니다.' },
+      { id: 'safety-report-opinion', number: '06', title: '종사자의견', description: '현장의 의견과 건의사항을 전달하여 더 나은 근무환경을 만듭니다.', image: 'assets/platform/chapter-04/page-06-worker-opinion.png', alt: '의견 유형과 내용, 관련 부서 및 익명 여부를 선택하는 종사자의견 화면', why: '현장의 목소리는 정책과 작업 기준이 실제 업무에 맞게 개선되도록 하는 중요한 데이터입니다.', explanation: '의견 유형과 내용, 관련 부서를 선택하고 필요하면 익명으로 제출합니다.', checks: ['사실과 의견을 구분하여 작성합니다.', '개선이 필요한 이유와 기대 결과를 함께 설명합니다.', '개인정보나 불필요한 비방을 포함하지 않습니다.'], field: '작업환경, 제도, 의사소통과 관련된 의견을 구체적인 사례와 함께 전달합니다.', tip: '익명 제출 여부와 관계없이 개선에 필요한 핵심 사실을 명확하게 작성합니다.' }
+    ];
+    safetyReportPages.forEach((page, index) => {
+      safetyReportChapter.insertAdjacentHTML('beforeend', `<section class="chapter-block tbm-scenario-lesson safety-report-lesson" id="${page.id}" aria-labelledby="${page.id}-title"${index ? ' hidden' : ''}><header class="chapter-block-heading"><span>PAGE ${page.number}</span><div><h3 id="${page.id}-title">${page.title}</h3><p>${page.description}</p></div></header><figure class="tbm-scenario-photo"><img src="${page.image}" alt="${page.alt}"${index ? ' loading="lazy"' : ''}></figure><div class="prose"><h3>WHY</h3><p>${page.why}</p><p>${page.explanation}</p><h3>CHECK POINT</h3><ul>${page.checks.map((item) => `<li>${item}</li>`).join('')}</ul><h3>현장 적용</h3><p>${page.field}</p></div><aside class="callout tip"><strong>TIP</strong><p>${page.tip}</p></aside></section>`);
+    });
+  }
+  document.getElementById('electronic-documents')?.remove();
+  document.querySelectorAll('a[href="#electronic-documents"]').forEach((link) => {
+    const navigationItem = link.closest('.knowledge-navigation');
+    const tocItem = link.closest('.book-chapters li');
+    if (navigationItem || tocItem) {
+      (tocItem || link).remove();
+      return;
+    }
+    link.setAttribute('href', '#safety-report');
+    if (link.textContent.trim() === 'Electronic Documents') link.textContent = 'Safety Report';
+  });
+  const safetyReportToc = document.querySelector('.book-chapters a[href="#safety-report"]');
+  const safetyReportNumber = safetyReportToc?.querySelector(':scope > span');
+  if (safetyReportNumber) safetyReportNumber.textContent = '04';
+  const platformSummaryAssets = [
+    { id: 'philosophy', src: 'assets/platform/chapter-01-philosophy-summary.png', alt: 'ONOFF Safety Platform 철학과 주요 안전활동을 한눈에 보여주는 Summary' },
+    { id: 'workflow', src: 'assets/platform/chapter-02-workflow-summary.png', alt: 'Project부터 작업 완료까지 ONOFF 전체 Workflow를 한눈에 보여주는 Summary' },
+  ];
+  platformSummaryAssets.forEach(({ id, src, alt }) => {
+    const chapter = document.getElementById(id);
+    if (!chapter || chapter.querySelector('.platform-summary')) return;
+    const anchors = {
+      philosophy: '.prose',
+      workflow: '#scene-case',
+      'daily-work': '.section-heading',
+      'electronic-documents': '.section-heading',
+      'safety-report': '.section-heading'
+    };
+    const anchor = chapter.querySelector(anchors[id]);
+    if (!anchor) return;
+    anchor.insertAdjacentHTML('afterend', `<figure class="image-block platform-summary"><img src="${src}" alt="${alt}"><figcaption>${alt}</figcaption></figure>`);
+  });
   const chapterSectionHeadings = [
     ['#philosophy .prose', 'WHY'],
+    ['#philosophy .platform-summary', 'SUMMARY'],
     ['#philosophy .callout', 'TIP'],
-    ['#workflow #scene-why', 'WHY'],
-    ['#workflow #scene-case', 'CASE'],
-    ['#workflow #scene-workflow .chapter-block:nth-of-type(1)', 'WORKFLOW'],
-    ['#workflow #scene-workflow .chapter-block:nth-of-type(2)', 'WORKFLOW'],
-    ['#workflow .chapter-block[aria-labelledby="principle-title"]', 'TIP'],
-    ['#workflow #scene-tip', 'TIP'],
-    ['#daily-work .step-list', 'WORKFLOW'],
-    ['#daily-work .callout', 'TIP'],
-    ['#electronic-documents .role-table', 'WORKFLOW'],
-    ['#electronic-documents .callout', 'TIP'],
-    ['#safety-report .event-grid', 'CASE'],
-    ['#safety-report .callout', 'TIP'],
     ['#tbm-purpose .prose', 'WHY'],
     ['#tbm-purpose .callout', 'TIP'],
     ['#tbm-nine-steps .tbm-nine-step-summary', 'SUMMARY'],
@@ -101,12 +247,21 @@
   document.querySelector('#workflow .chapter-block[aria-labelledby="principle-title"]')?.remove();
   const lessonCatalog = [
     { chapter: 'philosophy', key: 'why', title: 'WHY', selector: '.prose' },
-    { chapter: 'workflow', key: 'why', title: 'WHY', selector: '#scene-why' },
-    { chapter: 'workflow', key: 'case', title: 'CASE', selector: '#scene-case' },
-    { chapter: 'workflow', key: 'workflow', title: 'WORKFLOW', selector: '#scene-workflow .chapter-block:first-of-type' },
-    { chapter: 'daily-work', key: 'workflow', title: 'WORKFLOW', selector: '.step-list' },
-    { chapter: 'electronic-documents', key: 'workflow', title: 'WORKFLOW', selector: '.role-table' },
-    { chapter: 'safety-report', key: 'case', title: 'CASE', selector: '.event-grid' },
+    { chapter: 'workflow', key: 'summary', title: 'Workflow Summary', selector: '#workflow-summary' },
+    { chapter: 'workflow', key: 'preparation', title: '준비 단계', selector: '#workflow-preparation' },
+    { chapter: 'workflow', key: 'confirmation', title: '확인 단계', selector: '#workflow-confirmation' },
+    { chapter: 'workflow', key: 'execution', title: '실행 및 완료 단계', selector: '#workflow-execution' },
+    { chapter: 'daily-work', key: 'summary', title: 'Worker Workflow Summary', selector: '#daily-work-summary' },
+    { chapter: 'daily-work', key: 'selection', title: '오늘 작업 선택', selector: '#daily-work-selection' },
+    { chapter: 'daily-work', key: 'safety-check', title: '안전 확인', selector: '#daily-work-safety-check' },
+    { chapter: 'daily-work', key: 'signature', title: '전자서명', selector: '#daily-work-signature' },
+    { chapter: 'daily-work', key: 'safety-start', title: 'Safety Start', selector: '#daily-work-safety-start' },
+    { chapter: 'safety-report', key: 'summary', title: 'Safety Report Summary', selector: '#safety-report-summary' },
+    { chapter: 'safety-report', key: 'accident', title: '사고', selector: '#safety-report-accident' },
+    { chapter: 'safety-report', key: 'near-miss', title: 'Near Miss', selector: '#safety-report-near-miss' },
+    { chapter: 'safety-report', key: 'hazard', title: '위험제보', selector: '#safety-report-hazard' },
+    { chapter: 'safety-report', key: 'improvement', title: '개선제안', selector: '#safety-report-improvement' },
+    { chapter: 'safety-report', key: 'opinion', title: '종사자의견', selector: '#safety-report-opinion' },
     { chapter: 'tbm-purpose', book: 'tbm', key: 'why', title: 'WHY', selector: '.prose' },
     { chapter: 'tbm-nine-steps', book: 'tbm', key: 'summary', title: 'SUMMARY', selector: '.tbm-nine-step-summary' },
     { chapter: 'tbm-scenario', book: 'tbm', key: 'attendance', title: '참석 확인', selector: '#tbm-scenario-attendance' },
@@ -135,11 +290,8 @@
     if (!chapter.querySelector('.chapter-reading-nav')) chapter.insertAdjacentHTML('beforeend', '<nav class="chapter-reading-nav" aria-label="Lesson 이동"></nav>');
   });
   [
+    ['philosophy', 'why', '.platform-summary'],
     ['philosophy', 'why', '.callout'],
-    ['workflow', 'workflow', '#scene-tip'],
-    ['daily-work', 'workflow', '.callout'],
-    ['electronic-documents', 'workflow', '.callout'],
-    ['safety-report', 'case', '.callout'],
     ['tbm-purpose', 'why', '.callout'],
     ['tbm-life-rules', 'action', '.callout']
   ].forEach(([chapterId, lessonKey, selector]) => {
@@ -187,7 +339,7 @@
   document.body.append(floatingLessonNavigation);
   let floatingLessonEnabled = false;
   const updateFloatingLessonNavigation = () => {
-    floatingLessonNavigation.hidden = !floatingLessonEnabled || (documentScroller?.scrollTop || window.scrollY) < 420;
+    floatingLessonNavigation.hidden = !floatingLessonEnabled;
   };
   floatingLessonNavigation.addEventListener('click', (event) => {
     const topLink = event.target.closest('[data-lesson-top]');
@@ -246,7 +398,7 @@
       const previousItem = previous ? `<a href="#${previous.route}">← 이전 Lesson</a>` : '<span aria-disabled="true">← 이전 Lesson</span>';
       const isLastLesson = handbookLessons.at(-1) === selectedLesson;
       const nextItem = isLastLesson
-        ? '<span class="handbook-complete" aria-current="step">Handbook Complete</span>'
+        ? '<a class="handbook-complete" href="#home">처음으로(Home)</a>'
         : `<a href="#${next.route}">다음 Lesson →</a>`;
       const lessonNavigation = document.querySelector(`#${selectedLesson.chapter} .chapter-reading-nav`);
       const tocTarget = selectedLesson.book === 'tbm' ? 'tbm-book-toc' : 'safety-book-toc';
@@ -260,12 +412,9 @@
       const handbookChapters = bookChapterForm.filter((chapter) => chapter.book === selectedLesson.book);
       const chapterProgressIndex = handbookChapters.findIndex((chapter) => chapter.id === selectedLesson.chapter) + 1;
       chapterHeader?.insertAdjacentHTML('beforeend', `<div class="lesson-progress-indicator"><span>Chapter Progress</span><strong>${chapterProgressIndex} / ${handbookChapters.length}</strong></div>`);
-      if (selectedLesson.chapter === 'tbm-purpose' || selectedLesson.chapter === 'tbm-nine-steps') {
-        floatingLessonEnabled = true;
-        const floatingNext = next ? `<a href="#${next.route}">다음 Lesson</a>` : '<span aria-disabled="true">Handbook Complete</span>';
-        floatingLessonNavigation.innerHTML = `<a href="#${selectedLesson.route}" data-lesson-top>↑ 맨 위</a><a href="#${tocTarget}">목차</a>${floatingNext}`;
-        updateFloatingLessonNavigation();
-      }
+      floatingLessonEnabled = true;
+      floatingLessonNavigation.innerHTML = `${previousItem}<a href="#${tocTarget}">목차</a>${nextItem}`;
+      updateFloatingLessonNavigation();
       const chapterLessons = lessonsByChapter.get(selectedLesson.chapter) || [];
       const completeLabel = document.querySelector(`#${selectedLesson.chapter} .chapter-complete-label`);
       if (completeLabel) {
