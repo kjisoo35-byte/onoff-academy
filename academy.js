@@ -20,6 +20,12 @@
   const modeName = document.querySelector('[data-selected-learning-mode]');
   const modeDescription = document.querySelector('[data-selected-mode-description]');
   const globalPager = document.querySelector('.document > .chapter-pager');
+  const lessonStickyStack = document.createElement('div');
+  lessonStickyStack.className = 'lesson-sticky-stack';
+  lessonStickyStack.hidden = true;
+  breadcrumb?.insertAdjacentElement('beforebegin', lessonStickyStack);
+  if (breadcrumb) lessonStickyStack.append(breadcrumb);
+  let activeStickyChapterHeader = null;
   document.querySelectorAll('.academy-hero,.home-discovery,.library-section,.book-overview,.learning-mode-section,.book-complete-view,.book-platform-link,.my-academy-card').forEach((element) => element.remove());
   const bookChapterForm = [
     { id: 'philosophy', book: 'platform', part: '01', partTitle: 'Platform', chapter: '01', title: 'Platform Philosophy', next: 'workflow' },
@@ -61,10 +67,7 @@
     ['#safety-report .callout', 'TIP'],
     ['#tbm-purpose .prose', 'WHY'],
     ['#tbm-purpose .callout', 'TIP'],
-    ['#tbm-nine-steps .tbm-nine-step-flow', 'WORKFLOW'],
-    ['#tbm-nine-steps .callout', 'NOTE'],
-    ['#tbm-scenario .step-list', 'CASE'],
-    ['#tbm-scenario .callout', 'TIP'],
+    ['#tbm-nine-steps .tbm-nine-step-summary', 'SUMMARY'],
     ['#tbm-life-rules .step-list', 'ACTION'],
     ['#tbm-life-rules .callout', 'WARNING']
   ];
@@ -105,8 +108,16 @@
     { chapter: 'electronic-documents', key: 'workflow', title: 'WORKFLOW', selector: '.role-table' },
     { chapter: 'safety-report', key: 'case', title: 'CASE', selector: '.event-grid' },
     { chapter: 'tbm-purpose', book: 'tbm', key: 'why', title: 'WHY', selector: '.prose' },
-    { chapter: 'tbm-nine-steps', book: 'tbm', key: 'workflow', title: 'WORKFLOW', selector: '.tbm-nine-step-flow' },
-    { chapter: 'tbm-scenario', book: 'tbm', key: 'case', title: 'CASE', selector: '.step-list' },
+    { chapter: 'tbm-nine-steps', book: 'tbm', key: 'summary', title: 'SUMMARY', selector: '.tbm-nine-step-summary' },
+    { chapter: 'tbm-scenario', book: 'tbm', key: 'attendance', title: '참석 확인', selector: '#tbm-scenario-attendance' },
+    { chapter: 'tbm-scenario', book: 'tbm', key: 'health', title: '건강 상태 확인', selector: '#tbm-scenario-health' },
+    { chapter: 'tbm-scenario', book: 'tbm', key: 'warmup', title: '준비운동', selector: '#tbm-scenario-warmup' },
+    { chapter: 'tbm-scenario', book: 'tbm', key: 'ppe', title: '보호구 점검', selector: '#tbm-scenario-ppe' },
+    { chapter: 'tbm-scenario', book: 'tbm', key: 'hazard', title: '유해·위험요인 발표', selector: '#tbm-scenario-hazard' },
+    { chapter: 'tbm-scenario', book: 'tbm', key: 'case', title: '주요 사고사례 공유', selector: '#tbm-scenario-case' },
+    { chapter: 'tbm-scenario', book: 'tbm', key: 'emergency', title: '비상대응 및 연락체계', selector: '#tbm-scenario-emergency' },
+    { chapter: 'tbm-scenario', book: 'tbm', key: 'role', title: '작업 간 역할 분담', selector: '#tbm-scenario-role' },
+    { chapter: 'tbm-scenario', book: 'tbm', key: 'final', title: '최종 확인 및 작업 시작', selector: '#tbm-scenario-final' },
     { chapter: 'tbm-life-rules', book: 'tbm', key: 'action', title: 'ACTION', selector: '.step-list' }
   ].map((lesson) => ({ ...lesson, book: lesson.book || 'platform', route: `${lesson.chapter}-${lesson.key}` }));
   const lessonsByChapter = lessonCatalog.reduce((groups, lesson) => {
@@ -130,8 +141,6 @@
     ['electronic-documents', 'workflow', '.callout'],
     ['safety-report', 'case', '.callout'],
     ['tbm-purpose', 'why', '.callout'],
-    ['tbm-nine-steps', 'workflow', '.callout'],
-    ['tbm-scenario', 'case', '.callout'],
     ['tbm-life-rules', 'action', '.callout']
   ].forEach(([chapterId, lessonKey, selector]) => {
     const block = document.querySelector(`#${chapterId} ${selector}`);
@@ -148,13 +157,45 @@
     const firstLesson = lessonsByChapter.get(chapterId)?.[0];
     if (firstLesson) link.hash = firstLesson.route;
   });
+  [
+    ['#safety-book .book-chapters', 'platform'],
+    ['#tbm-book .book-chapters', 'tbm']
+  ].forEach(([selector, book]) => {
+    const toc = document.querySelector(selector);
+    const firstLesson = lessonCatalog.find((lesson) => lesson.book === book);
+    if (toc && firstLesson) toc.insertAdjacentHTML('beforeend', `<a class="toc-start-learning" href="#${firstLesson.route}"><span>처음부터 학습하기</span><b aria-hidden="true">→</b></a>`);
+  });
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const documentScroller = document.querySelector('.document');
   const resetViewScroll = () => {
     window.scrollTo(0, 0);
-    requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo(0, 0)));
-    window.setTimeout(() => window.scrollTo(0, 0), 120);
+    if (documentScroller) documentScroller.scrollTop = 0;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      if (documentScroller) documentScroller.scrollTop = 0;
+    }));
+    window.setTimeout(() => {
+      window.scrollTo(0, 0);
+      if (documentScroller) documentScroller.scrollTop = 0;
+    }, 120);
   };
   let selectedLearningMode = sessionStorage.getItem('academy-learning-mode') || 'book';
+  const floatingLessonNavigation = document.createElement('nav');
+  floatingLessonNavigation.className = 'chapter-reading-nav floating-lesson-navigation';
+  floatingLessonNavigation.setAttribute('aria-label', 'Floating Lesson 이동');
+  floatingLessonNavigation.hidden = true;
+  document.body.append(floatingLessonNavigation);
+  let floatingLessonEnabled = false;
+  const updateFloatingLessonNavigation = () => {
+    floatingLessonNavigation.hidden = !floatingLessonEnabled || (documentScroller?.scrollTop || window.scrollY) < 420;
+  };
+  floatingLessonNavigation.addEventListener('click', (event) => {
+    const topLink = event.target.closest('[data-lesson-top]');
+    if (!topLink) return;
+    event.preventDefault();
+    (documentScroller || window).scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  (documentScroller || window).addEventListener('scroll', updateFloatingLessonNavigation, { passive: true });
 
   const applyLearningMode = (mode) => {
     selectedLearningMode = mode === 'action' ? 'action' : 'book';
@@ -171,6 +212,14 @@
     const selectedLesson = lessonCatalog.find((lesson) => lesson.route === route)
       || lessonsByChapter.get(route)?.[0]
       || null;
+    if (activeStickyChapterHeader) {
+      document.getElementById(activeStickyChapterHeader.dataset.chapterOwner)?.insertAdjacentElement('afterbegin', activeStickyChapterHeader);
+      activeStickyChapterHeader = null;
+    }
+    lessonStickyStack.hidden = !selectedLesson;
+    floatingLessonEnabled = false;
+    floatingLessonNavigation.hidden = true;
+    document.querySelectorAll('.lesson-progress-indicator').forEach((indicator) => indicator.remove());
     document.body.classList.toggle('is-lesson-view', Boolean(selectedLesson));
     document.body.classList.toggle('is-toc-view', route.endsWith('-book-toc'));
     document.body.dataset.lessonType = selectedLesson?.title.toLowerCase() || '';
@@ -202,6 +251,21 @@
       const lessonNavigation = document.querySelector(`#${selectedLesson.chapter} .chapter-reading-nav`);
       const tocTarget = selectedLesson.book === 'tbm' ? 'tbm-book-toc' : 'safety-book-toc';
       if (lessonNavigation) lessonNavigation.innerHTML = `${previousItem}<a href="#${tocTarget}">목차</a>${nextItem}`;
+      const chapterHeader = document.querySelector(`#${selectedLesson.chapter} .book-chapter-start`);
+      if (chapterHeader) {
+        chapterHeader.dataset.chapterOwner = selectedLesson.chapter;
+        lessonStickyStack.append(chapterHeader);
+        activeStickyChapterHeader = chapterHeader;
+      }
+      const handbookChapters = bookChapterForm.filter((chapter) => chapter.book === selectedLesson.book);
+      const chapterProgressIndex = handbookChapters.findIndex((chapter) => chapter.id === selectedLesson.chapter) + 1;
+      chapterHeader?.insertAdjacentHTML('beforeend', `<div class="lesson-progress-indicator"><span>Chapter Progress</span><strong>${chapterProgressIndex} / ${handbookChapters.length}</strong></div>`);
+      if (selectedLesson.chapter === 'tbm-purpose' || selectedLesson.chapter === 'tbm-nine-steps') {
+        floatingLessonEnabled = true;
+        const floatingNext = next ? `<a href="#${next.route}">다음 Lesson</a>` : '<span aria-disabled="true">Handbook Complete</span>';
+        floatingLessonNavigation.innerHTML = `<a href="#${selectedLesson.route}" data-lesson-top>↑ 맨 위</a><a href="#${tocTarget}">목차</a>${floatingNext}`;
+        updateFloatingLessonNavigation();
+      }
       const chapterLessons = lessonsByChapter.get(selectedLesson.chapter) || [];
       const completeLabel = document.querySelector(`#${selectedLesson.chapter} .chapter-complete-label`);
       if (completeLabel) {

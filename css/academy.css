@@ -126,6 +126,292 @@ body.is-lesson-view .standard-workflow li:nth-child(3) .flow-index { color: var(
   body.is-lesson-view .chapter-reading-nav span { padding-inline: 8px; font-size: 11px; }
 }
 
+/* Common Handbook reading controls */
+body.is-lesson-view .lesson-sticky-stack {
+  position: sticky;
+  z-index: 24;
+  top: var(--header-height);
+  max-width: 720px;
+  margin: 0 auto 20px;
+  padding: 11px 18px 0;
+  background: rgba(255,255,255,.97);
+  border-bottom: 1px solid var(--slate-200);
+  box-shadow: 0 10px 24px rgba(15,35,65,.06);
+  backdrop-filter: blur(14px);
+}
+
+body.is-lesson-view .lesson-sticky-stack[hidden] { display: none !important; }
+
+body.is-lesson-view .lesson-sticky-stack .breadcrumb {
+  width: 100%;
+  max-width: none;
+  margin: 0 0 8px;
+}
+
+body.is-lesson-view .lesson-sticky-stack .book-chapter-start {
+  position: static;
+  margin: 0;
+  padding: 0 0 13px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+body.is-lesson-view .lesson-sticky-stack .book-chapter-start h1 {
+  margin-top: 6px;
+  font-size: clamp(25px,3vw,32px);
+}
+
+body.is-lesson-view .lesson-sticky-stack .book-chapter-start > span {
+  margin-top: 5px;
+  font-size: 14px;
+  line-height: 1.42;
+}
+
+body.is-toc-view .book-chapters > .toc-start-learning {
+  min-height: 58px;
+  margin-top: 20px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #fff;
+  background: var(--navy-900);
+  border: 1px solid var(--navy-900);
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* Lesson shell: navigation context remains fixed; only lesson content scrolls. */
+body.is-lesson-view {
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+body.is-lesson-view .site-header { flex: 0 0 auto; }
+
+body.is-lesson-view .academy-shell {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  overflow: hidden;
+}
+
+body.is-lesson-view .content {
+  height: 100%;
+  min-height: 0;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+body.is-lesson-view .lesson-sticky-stack {
+  position: relative;
+  top: auto;
+  flex: 0 0 auto;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+body.is-lesson-view .document {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  margin-inline: auto;
+  padding: 20px 0 52px;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+}
+
+body.is-toc-view .book-chapters > .toc-start-learning:hover {
+  padding-inline: 20px;
+  background: var(--blue-700);
+}
+
+body.is-toc-view .book-chapters > .toc-start-learning > span {
+  color: inherit;
+  font-size: inherit;
+}
+
+body.is-toc-view .book-chapters > .toc-start-learning > b { font-size: 20px; }
+
+@media (max-width: 719px) {
+  body.is-lesson-view .lesson-sticky-stack {
+    top: auto;
+    margin-bottom: 14px;
+    padding: 8px 18px 0;
+  }
+  body.is-lesson-view .lesson-sticky-stack .breadcrumb { margin-bottom: 6px; }
+  body.is-lesson-view .lesson-sticky-stack .book-chapter-start h1 { font-size: 25px; }
+  body.is-lesson-view .lesson-sticky-stack .book-chapter-start > span {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 13px;
+  }
+}
+
+/* TBM-004 · Chapter 01/02 reading refinement */
+body[data-academy-view^="tbm-purpose-"] #tbm-purpose .book-chapter-start,
+body[data-academy-view^="tbm-nine-steps-"] #tbm-nine-steps .book-chapter-start {
+  position: sticky;
+  z-index: 12;
+  top: var(--header-height);
+  margin-inline: -18px;
+  padding: 15px 18px 14px;
+  background: rgba(255,255,255,.97);
+  border-bottom: 1px solid var(--slate-200);
+  box-shadow: 0 8px 20px rgba(15,35,65,.05);
+  backdrop-filter: blur(14px);
+}
+
+body[data-academy-view^="tbm-purpose-"] #tbm-purpose .book-chapter-start h1,
+body[data-academy-view^="tbm-nine-steps-"] #tbm-nine-steps .book-chapter-start h1 {
+  margin-top: 7px;
+  font-size: clamp(25px,3vw,32px);
+}
+
+body[data-academy-view^="tbm-purpose-"] #tbm-purpose .book-chapter-start > span,
+body[data-academy-view^="tbm-nine-steps-"] #tbm-nine-steps .book-chapter-start > span {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.lesson-progress-indicator {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--slate-500);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .04em;
+}
+
+.lesson-progress-indicator::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  bottom: -1px;
+  left: 18px;
+  height: 2px;
+  background: linear-gradient(90deg,var(--blue-600) 0 48%,var(--slate-200) 48% 100%);
+}
+
+.lesson-progress-indicator strong { color: var(--navy-900); }
+
+body[data-academy-view^="tbm-purpose-"] #tbm-purpose > .prose {
+  max-width: none;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+}
+
+body[data-academy-view^="tbm-purpose-"] #tbm-purpose > .prose > .image-block {
+  width: 74%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  box-shadow: none;
+}
+
+body[data-academy-view^="tbm-purpose-"] #tbm-purpose > .prose > .image-block img {
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+}
+
+body[data-academy-view^="tbm-purpose-"] #tbm-purpose > .prose > .image-block figcaption {
+  padding: 7px 3px 4px;
+  color: var(--slate-500);
+  font-size: 12px;
+}
+
+body[data-academy-view^="tbm-nine-steps-"] #tbm-nine-steps .tbm-nine-step-summary {
+  max-width: 920px;
+  margin-inline: auto;
+}
+
+.floating-lesson-navigation {
+  position: fixed;
+  z-index: 28;
+  right: 50%;
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  width: min(680px,calc(100vw - 32px));
+  margin: 0;
+  padding: 8px;
+  transform: translateX(50%);
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 8px;
+  border: 1px solid var(--slate-200);
+  border-radius: 12px;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 16px 42px rgba(7,30,62,.2);
+  backdrop-filter: blur(16px);
+}
+
+.floating-lesson-navigation[hidden] { display: none !important; }
+
+body.is-lesson-view .floating-lesson-navigation > :is(a,span) {
+  min-height: 46px;
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--navy-900);
+  background: #fff;
+  border: 1px solid var(--slate-200);
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 750;
+  text-align: center;
+  text-decoration: none;
+}
+
+body.is-lesson-view .floating-lesson-navigation > :last-child {
+  color: #fff;
+  background: var(--navy-900);
+  border-color: var(--navy-900);
+}
+
+@media (max-width: 719px) {
+  body[data-academy-view^="tbm-purpose-"] #tbm-purpose .book-chapter-start,
+  body[data-academy-view^="tbm-nine-steps-"] #tbm-nine-steps .book-chapter-start {
+    top: 64px;
+    margin-inline: -4px;
+    padding: 12px 4px 11px;
+  }
+  body[data-academy-view^="tbm-purpose-"] #tbm-purpose .book-chapter-start h1,
+  body[data-academy-view^="tbm-nine-steps-"] #tbm-nine-steps .book-chapter-start h1 {
+    font-size: 25px;
+  }
+  body[data-academy-view^="tbm-purpose-"] #tbm-purpose .book-chapter-start > span,
+  body[data-academy-view^="tbm-nine-steps-"] #tbm-nine-steps .book-chapter-start > span {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 13px;
+  }
+  body[data-academy-view^="tbm-purpose-"] #tbm-purpose > .prose > .image-block { width: 74%; }
+  .floating-lesson-navigation { bottom: calc(10px + env(safe-area-inset-bottom)); }
+}
+
 /* ADS-004 Revision: established Hero and physical Book Cover treatment. */
 body[data-academy-view="home"] .landing-primary-action {
   width: fit-content;
@@ -1715,4 +2001,145 @@ body[data-academy-view="home"] .academy-home-library p {
   body[data-academy-view="home"] .academy-home-library .book-symbol { bottom: 15px; left: 30px; font-size: 14px; }
   body[data-academy-view="home"] .academy-home-library strong { font-size: 17px; }
   body[data-academy-view="home"] .academy-home-library p { margin-top: 6px; font-size: 10px; }
+}
+
+/* TBM Handbook · Chapter 03 reference composition */
+body.is-lesson-view #tbm-scenario .tbm-scenario-lesson {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 34%);
+  gap: 18px 22px;
+  margin-top: 0;
+  padding: 22px;
+  border: 1px solid var(--slate-200);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: 0 10px 28px rgba(15, 35, 65, .06);
+}
+
+body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .chapter-block-heading {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--slate-200);
+}
+
+body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .chapter-block-heading > span {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--navy-900);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .chapter-block-heading h3 {
+  font-size: 24px;
+}
+
+body.is-lesson-view #tbm-scenario .tbm-scenario-photo {
+  grid-column: 2;
+  grid-row: 2 / span 2;
+  align-self: stretch;
+  min-height: 300px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--slate-100);
+}
+
+body.is-lesson-view #tbm-scenario .tbm-scenario-photo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .prose {
+  grid-column: 1;
+  max-width: none;
+  margin: 0;
+  display: grid;
+  gap: 9px;
+}
+
+body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .prose > p:has(> strong) {
+  width: fit-content;
+  margin-top: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--navy-900);
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: .02em;
+}
+
+body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .prose > p:has(> strong) + p {
+  padding: 11px 14px;
+  border-radius: 8px;
+  background: var(--slate-100);
+  color: var(--navy-900);
+  font-weight: 650;
+}
+
+body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .prose h3 {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: 8px 8px 0 0;
+  background: var(--navy-900);
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: .06em;
+}
+
+body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .prose ul {
+  margin: -9px 0 0;
+  padding: 14px 18px 14px 34px;
+  border: 1px solid var(--slate-200);
+  border-top: 0;
+  border-radius: 0 0 8px 8px;
+  background: #fff;
+}
+
+body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .callout {
+  grid-column: 1;
+  margin: 0;
+  border-left: 4px solid #e6a000;
+  background: #fff8e9;
+}
+
+body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .callout::before {
+  content: "TIP";
+  display: block;
+  margin-bottom: 5px;
+  color: #a55b08;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+@media (max-width: 719px) {
+  body.is-lesson-view #tbm-scenario .tbm-scenario-lesson {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+  body.is-lesson-view #tbm-scenario .tbm-scenario-photo,
+  body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .prose,
+  body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .callout {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  body.is-lesson-view #tbm-scenario .tbm-scenario-photo {
+    min-height: 0;
+    aspect-ratio: 3 / 2;
+  }
+  body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .chapter-block-heading h3 {
+    font-size: 21px;
+  }
 }
