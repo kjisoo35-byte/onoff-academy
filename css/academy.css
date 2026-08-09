@@ -2252,6 +2252,182 @@ body.is-lesson-view #safety-report .safety-report-lesson {
   margin-top: 0;
 }
 
+/* New Handbook production baseline: fixed navigation only and Golden Reference start rhythm. */
+body.is-lesson-view #risk-assessment-purpose .tbm-scenario-lesson {
+  margin-top: 0;
+}
+
+body.is-lesson-view #risk-assessment-structure .tbm-scenario-lesson {
+  margin-top: 0;
+}
+
+body.is-lesson-view #risk-assessment-stra .tbm-scenario-lesson {
+  margin-top: 0;
+}
+
+body.is-lesson-view #risk-assessment-daily-safety .tbm-scenario-lesson {
+  margin-top: 0;
+}
+
+/* Risk Assessment CH05: match the approved CH04 chapter-to-content rhythm locally. */
+body.is-lesson-view #risk-assessment-platform .tbm-scenario-lesson {
+  margin-top: 0;
+}
+
+/* SOP CH01 production: inherit the approved handbook start rhythm locally. */
+body.is-lesson-view #sop-purpose .tbm-scenario-lesson {
+  margin-top: 0;
+}
+
+/* SOP CH02 production: inherit the approved SOP chapter rhythm locally. */
+body.is-lesson-view #sop-reading .tbm-scenario-lesson {
+  margin-top: 0;
+}
+
+/* SOP mobile text containment: preserve the approved grid and allow text children to shrink. */
+body.is-lesson-view :is(#sop-purpose, #sop-reading, #sop-structure, #sop-platform) .academy-lesson :is(.chapter-block-heading > div, .prose, .callout) {
+  min-width: 0;
+  max-width: 100%;
+}
+
+body.is-lesson-view :is(#sop-purpose, #sop-reading, #sop-structure, #sop-platform) .academy-lesson :is(p, li, strong, small) {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* SOP CH03 production: local educational cards only; shared handbook rules stay locked. */
+body.is-lesson-view #sop-structure .tbm-scenario-lesson {
+  margin-top: 0;
+}
+body.is-lesson-view #sop-platform .tbm-scenario-lesson {
+  margin-top: 0;
+}
+
+body.is-lesson-view #sop-practice .tbm-scenario-lesson { margin-top: 0; }
+
+#sop-structure .sop-step-comparison,
+#sop-structure .sop-support-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+#sop-structure .sop-step-comparison article,
+#sop-structure .sop-support-grid article { min-width: 0; padding: 18px; border: 1px solid var(--slate-200); border-radius: 12px; background: #f7f9fc; }
+#sop-structure .sop-step-comparison article { display: grid; gap: 8px; }
+#sop-structure .sop-step-comparison article > span { color: var(--blue-700); font-size: 12px; font-weight: 800; letter-spacing: .06em; }
+#sop-structure .sop-step-comparison article > strong,
+#sop-structure .sop-support-grid strong { color: var(--navy-900); }
+#sop-structure .sop-step-comparison p { margin: 0; }
+#sop-structure .sop-support-grid article { display: flex; flex-direction: column; gap: 6px; }
+
+#risk-assessment-daily-safety .daily-safety-paths { margin-top: 22px; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+#risk-assessment-daily-safety .daily-safety-paths > div { padding: 18px; display: grid; gap: 8px; background: #f5f8fc; border: 1px solid var(--slate-200); border-radius: 10px; }
+#risk-assessment-daily-safety .daily-safety-paths strong { color: var(--navy-900); font-size: 16px; }
+#risk-assessment-daily-safety .daily-safety-paths > p { grid-column: 1/-1; margin: 0; padding: 16px; display: flex; justify-content: center; align-items: center; gap: 12px; background: #eef4fb; border-radius: 10px; }
+#risk-assessment-daily-safety .daily-risk-options { margin: 22px 0 0; padding: 18px; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; border: 1px solid var(--slate-200); border-radius: 10px; }
+#risk-assessment-daily-safety .daily-risk-options legend { padding: 0 8px; color: var(--navy-900); font-weight: 800; }
+#risk-assessment-daily-safety .daily-risk-options label { min-height: 44px; padding: 9px 10px; display: flex; align-items: center; gap: 9px; background: #f8fafc; border-radius: 7px; }
+#risk-assessment-daily-safety .daily-risk-options input { width: 19px; height: 19px; accent-color: var(--blue-700); }
+#risk-assessment-daily-safety .daily-risk-control-state { margin-top: 22px; }
+#risk-assessment-daily-safety .daily-risk-empty { margin: 0; padding: 18px; color: var(--slate-600); background: #f5f8fc; border: 1px solid var(--slate-200); border-radius: 10px; }
+#risk-assessment-daily-safety .daily-risk-control-state .daily-risk-options { margin-top: 0; }
+#risk-assessment-daily-safety .daily-risk-control-copy { min-width: 0; display: grid; gap: 3px; }
+#risk-assessment-daily-safety .daily-risk-control-copy strong { color: var(--navy-900); font-size: 14px; }
+#risk-assessment-daily-safety .daily-risk-control-copy small { color: var(--slate-500); font-size: 11px; line-height: 1.4; }
+@media (max-width: 700px) {
+  body.is-lesson-view :is(#philosophy, #workflow, #daily-work, #safety-report, #risk-assessment-purpose, #risk-assessment-structure, #risk-assessment-stra, #risk-assessment-daily-safety, #risk-assessment-platform) > .academy-lesson { width: auto; margin-right: -13px; margin-left: 2px; }
+  body.is-lesson-view #sop-purpose > .academy-lesson { width: auto; margin-right: -13px; margin-left: 2px; }
+  body.is-lesson-view #sop-reading > .academy-lesson { width: auto; margin-right: -13px; margin-left: 2px; }
+  body.is-lesson-view #sop-structure > .academy-lesson { width: auto; margin-right: -13px; margin-left: 2px; }
+  body.is-lesson-view #sop-platform > .academy-lesson { width: auto; margin-right: -13px; margin-left: 2px; }
+  #sop-structure .sop-step-comparison,
+  #sop-structure .sop-support-grid { grid-template-columns: 1fr; }
+  #risk-assessment-daily-safety .daily-safety-paths, #risk-assessment-daily-safety .daily-risk-options { grid-template-columns: 1fr; }
+  #risk-assessment-daily-safety .daily-safety-paths > p { grid-column: auto; flex-wrap: wrap; }
+  body.is-lesson-view .standard-workflow li:not(:last-child)::after { content: "↓"; left: 10px; bottom: -11px; width: 15px; height: 20px; display: grid; place-items: center; color: #7089a6; background: #fff; border: 0; transform: none; font-size: 15px; line-height: 1; }
+}
+
+#risk-stra-practice .risk-practice-visual { margin: 24px 0; overflow: visible; }
+#risk-stra-practice .risk-practice-visual img { width: 100%; height: auto; display: block; border-radius: 12px; }
+#risk-stra-practice .risk-practice-visual figcaption { margin-top: 10px; color: var(--slate-500); font-size: 13px; }
+#risk-stra-practice .risk-practice-conditions { margin: 0 0 18px; padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 8px 14px; background: #f3f7fc; border: 1px solid var(--slate-200); border-radius: 10px; }
+#risk-stra-practice .risk-practice-conditions strong { width: 100%; color: var(--navy-900); }
+#risk-stra-practice .risk-practice-step { margin: 0; padding: 20px; border: 1px solid var(--slate-200); border-radius: 12px; }
+#risk-stra-practice .risk-practice-step:not(.is-active) { display: none; }
+#risk-stra-practice .risk-practice-step legend { padding: 0 6px; color: var(--navy-900); font-size: 18px; font-weight: 800; }
+#risk-stra-practice .risk-practice-step legend span { margin-right: 8px; padding: 5px 8px; color: #fff; background: var(--navy-900); border-radius: 5px; font-size: 12px; }
+#risk-stra-practice .risk-practice-step > label, #risk-stra-practice .practice-levels label { min-height: 46px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #e5eaf0; }
+#risk-stra-practice input[type="checkbox"], #risk-stra-practice input[type="radio"] { width: 20px; height: 20px; flex: 0 0 auto; accent-color: var(--blue-700); }
+#risk-stra-practice input[type="number"], #risk-stra-practice select { min-height: 44px; margin-left: 8px; padding: 8px 12px; border: 1px solid var(--slate-300); border-radius: 7px; font: inherit; }
+#risk-stra-practice button { min-height: 46px; padding: 10px 18px; border: 1px solid var(--navy-900); border-radius: 7px; font: inherit; font-weight: 750; cursor: pointer; }
+#risk-stra-practice .practice-check, #risk-stra-practice .practice-submit { width: 100%; margin-top: 16px; color: #fff; background: var(--navy-900); }
+#risk-stra-practice .practice-submit:disabled { cursor: not-allowed; opacity: .42; }
+#risk-stra-practice .practice-hint-toggle { margin-top: 14px; color: var(--navy-900); background: #fff; }
+#risk-stra-practice .practice-hint { margin-top: 12px; padding: 14px; background: #f3f7fc; border-radius: 8px; }
+#risk-stra-practice .practice-hint p { margin: 4px 0; }
+#risk-stra-practice .practice-feedback { min-height: 24px; margin: 12px 0 0; color: #9b3f18; font-weight: 700; }
+#risk-stra-practice .practice-feedback.is-correct { color: #14723c; }
+#risk-stra-practice .risk-practice-result { padding: 24px; background: #f0f8f3; border: 1px solid #b9dcc5; border-radius: 12px; }
+#risk-stra-practice .risk-practice-result h3 { margin: 6px 0 12px; color: var(--navy-900); }
+#risk-stra-practice .risk-practice-result li { margin: 7px 0; }
+#risk-stra-practice .practice-restart { width: 100%; margin-top: 16px; color: var(--navy-900); background: #fff; }
+#risk-stra-practice .risk-practice-achievement { margin-top: 18px; padding: 20px; background: linear-gradient(135deg,#eef6ff,#f5fbf7); border: 1px solid #b8cce6; border-radius: 12px; }
+#risk-stra-practice .risk-practice-achievement > div { display: flex; align-items: center; gap: 14px; }
+#risk-stra-practice .risk-practice-achievement > div > span { font-size: 34px; line-height: 1; }
+#risk-stra-practice .risk-practice-achievement strong { display: block; color: var(--navy-900); font-size: 18px; }
+#risk-stra-practice .risk-practice-achievement p { margin: 4px 0; }
+#risk-stra-practice .risk-practice-achievement small { color: var(--slate-500); }
+#risk-stra-practice .risk-practice-achievement small b { color: #14723c; }
+@media (max-width: 640px) { #risk-stra-practice .risk-practice-step { padding: 16px 12px; } #risk-stra-practice .risk-practice-step legend { font-size: 16px; } }
+
+/* SOP PRACTICE 01: reuse the approved Practice interaction form in local scope. */
+#sop-reader-practice .risk-practice-conditions { margin: 0 0 18px; padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 8px 14px; background: #f3f7fc; border: 1px solid var(--slate-200); border-radius: 10px; }
+#sop-reader-practice .risk-practice-conditions strong { width: 100%; color: var(--navy-900); }
+#sop-reader-practice .risk-practice-step { min-width: 0; margin: 0; padding: 20px; border: 1px solid var(--slate-200); border-radius: 12px; }
+#sop-reader-practice .risk-practice-step:not(.is-active) { display: none; }
+#sop-reader-practice .risk-practice-step legend { max-width: 100%; padding: 0 6px; color: var(--navy-900); font-size: 18px; font-weight: 800; white-space: normal; }
+#sop-reader-practice .risk-practice-step legend span { margin-right: 8px; padding: 5px 8px; color: #fff; background: var(--navy-900); border-radius: 5px; font-size: 12px; }
+#sop-reader-practice .risk-practice-step > label { min-width: 0; min-height: 46px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #e5eaf0; white-space: normal; overflow-wrap: anywhere; }
+#sop-reader-practice input[type="checkbox"], #sop-reader-practice input[type="radio"] { width: 20px; height: 20px; flex: 0 0 auto; accent-color: var(--blue-700); }
+#sop-reader-practice button { min-height: 46px; padding: 10px 18px; border: 1px solid var(--navy-900); border-radius: 7px; font: inherit; font-weight: 750; cursor: pointer; }
+#sop-reader-practice .practice-check, #sop-reader-practice .practice-submit { width: 100%; margin-top: 16px; color: #fff; background: var(--navy-900); }
+#sop-reader-practice .practice-submit:disabled { cursor: not-allowed; opacity: .42; }
+#sop-reader-practice .practice-hint-toggle { margin-top: 14px; color: var(--navy-900); background: #fff; }
+#sop-reader-practice .practice-hint { margin-top: 12px; padding: 14px; background: #f3f7fc; border-radius: 8px; }
+#sop-reader-practice .practice-hint p { margin: 4px 0; }
+#sop-reader-practice .practice-feedback { min-height: 24px; margin: 12px 0 0; color: #9b3f18; font-weight: 700; }
+#sop-reader-practice .practice-feedback.is-correct { color: #14723c; }
+#sop-reader-practice .sop-version-options { margin-bottom: 16px; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+#sop-reader-practice .sop-version-options article { min-width: 0; padding: 16px; display: grid; gap: 5px; background: #f3f7fc; border: 1px solid var(--slate-200); border-radius: 9px; }
+#sop-reader-practice .sop-version-options small { color: var(--slate-500); }
+#sop-reader-practice .sop-version-options strong { color: var(--navy-900); }
+#sop-reader-practice .risk-practice-result { padding: 24px; background: #f0f8f3; border: 1px solid #b9dcc5; border-radius: 12px; }
+#sop-reader-practice .risk-practice-result h3 { margin: 6px 0 12px; color: var(--navy-900); }
+#sop-reader-practice .risk-practice-result li { margin: 7px 0; }
+#sop-reader-practice .practice-restart { width: 100%; margin-top: 16px; color: var(--navy-900); background: #fff; }
+#sop-reader-practice .risk-practice-achievement { margin-top: 18px; padding: 20px; background: linear-gradient(135deg,#eef6ff,#f5fbf7); border: 1px solid #b8cce6; border-radius: 12px; }
+#sop-reader-practice .risk-practice-achievement > div { min-width: 0; display: flex; align-items: center; gap: 14px; }
+#sop-reader-practice .risk-practice-achievement > div > span { font-size: 34px; line-height: 1; }
+#sop-reader-practice .risk-practice-achievement strong { display: block; color: var(--navy-900); font-size: 18px; }
+#sop-reader-practice .risk-practice-achievement p { margin: 4px 0; }
+#sop-reader-practice .risk-practice-achievement small { color: var(--slate-500); }
+#sop-reader-practice .risk-practice-achievement small b { color: #14723c; }
+@media (max-width: 700px) { body.is-lesson-view #sop-practice > .academy-lesson { width: auto; margin-right: -13px; margin-left: 2px; } #sop-reader-practice .risk-practice-step { padding: 16px 12px; } #sop-reader-practice .risk-practice-step legend { font-size: 16px; } #sop-reader-practice .sop-version-options { grid-template-columns: 1fr; } }
+
+body.is-lesson-view #risk-assessment-purpose #risk-assessment-why > .tbm-scenario-photo {
+  width: 100%;
+  margin-inline: auto;
+  overflow: visible;
+}
+
+body.is-lesson-view #risk-assessment-purpose #risk-assessment-why > .tbm-scenario-photo img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+  object-fit: contain;
+}
+
 body.is-lesson-view #safety-report .safety-report-lesson > .tbm-scenario-photo img {
   width: 100%;
   height: auto;

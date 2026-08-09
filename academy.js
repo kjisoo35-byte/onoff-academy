@@ -35,7 +35,17 @@
     { id: 'tbm-purpose', book: 'tbm', chapter: '01', title: 'TBM이란 무엇인가?' },
     { id: 'tbm-nine-steps', book: 'tbm', chapter: '02', title: 'TBM 진행 9단계' },
     { id: 'tbm-scenario', book: 'tbm', chapter: '03', title: 'TBM 진행 시나리오' },
-    { id: 'tbm-life-rules', book: 'tbm', chapter: '04', title: '생명안전수칙 10' }
+    { id: 'tbm-life-rules', book: 'tbm', chapter: '04', title: '생명안전수칙 10' },
+    { id: 'sop-purpose', book: 'sop', chapter: '01', title: 'SOP란 무엇인가?', progressTotal: 4 },
+    { id: 'sop-reading', book: 'sop', chapter: '02', title: 'SOP 읽는 방법', progressTotal: 4 },
+    { id: 'sop-structure', book: 'sop', chapter: '03', title: 'SOP 구성과 작성 구조', progressTotal: 4 },
+    { id: 'sop-practice', book: 'sop', chapter: 'PRACTICE', label: 'PRACTICE 01', title: '작업순서와 Safety Step 찾아보기', progressTotal: 4, countInProgress: false },
+    { id: 'sop-platform', book: 'sop', part: '2', chapter: '04', title: 'Platform에서 SOP 활용', progressTotal: 4 },
+    { id: 'risk-assessment-purpose', book: 'risk', part: '1', chapter: '01', title: '위험성평가란 무엇인가?', progressTotal: 4 },
+    { id: 'risk-assessment-structure', book: 'risk', part: '1', chapter: '02', title: '위험성평가 구성 이해', progressTotal: 5 },
+    { id: 'risk-assessment-stra', book: 'risk', part: '1', chapter: '03', title: 'S-TRA 위험성 판단 이해', progressTotal: 5 },
+    { id: 'risk-assessment-daily-safety', book: 'risk', part: '2', chapter: '04', title: 'Daily Safety', progressTotal: 5 },
+    { id: 'risk-assessment-platform', book: 'risk', part: '2', chapter: '05', title: 'Platform에서 위험성평가 활용', progressTotal: 5 }
   ];
   bookChapterForm.forEach((item) => {
     const chapter = document.getElementById(item.id);
@@ -46,7 +56,8 @@
     const description = sourceHeading?.querySelector('p:last-child')?.textContent.trim() || 'Chapter의 핵심 Workflow를 학습합니다.';
     const start = document.createElement('header');
     start.className = 'book-chapter-start';
-    start.innerHTML = `<p>CHAPTER ${item.chapter}</p><h1>${item.title}</h1><span>${description}</span>`;
+    const chapterLabel = item.label || (item.part ? `PART ${item.part} · CHAPTER ${item.chapter}` : `CHAPTER ${item.chapter}`);
+    start.innerHTML = `<p>${chapterLabel}</p><h1>${item.title}</h1><span>${description}</span>`;
     chapter.insertAdjacentElement('afterbegin', start);
   });
   const workflowChapter = document.getElementById('workflow');
@@ -274,6 +285,55 @@
     { chapter: 'tbm-scenario', book: 'tbm', key: 'role', title: '작업 간 역할 분담', selector: '#tbm-scenario-role' },
     { chapter: 'tbm-scenario', book: 'tbm', key: 'final', title: '최종 확인 및 작업 시작', selector: '#tbm-scenario-final' },
     { chapter: 'tbm-life-rules', book: 'tbm', key: 'action', title: 'ACTION', selector: '.step-list' }
+    ,{ chapter: 'sop-purpose', book: 'sop', key: 'why', title: '왜 SOP가 필요한가?', selector: '#sop-purpose-why' }
+    ,{ chapter: 'sop-purpose', book: 'sop', key: 'flow', title: 'SOP의 핵심', selector: '#sop-purpose-flow' }
+    ,{ chapter: 'sop-purpose', book: 'sop', key: 'safety', title: 'Safety Mark', selector: '#sop-purpose-safety' }
+    ,{ chapter: 'sop-purpose', book: 'sop', key: 'risk-link', title: 'SOP와 위험성평가', selector: '#sop-purpose-risk-link' }
+    ,{ chapter: 'sop-purpose', book: 'sop', key: 'version', title: 'Version과 개정이력', selector: '#sop-purpose-version' }
+    ,{ chapter: 'sop-reading', book: 'sop', key: 'step', title: '먼저 작업단계를 찾습니다', selector: '#sop-reading-step' }
+    ,{ chapter: 'sop-reading', book: 'sop', key: 'order', title: '작업내용은 순서대로 읽습니다', selector: '#sop-reading-order' }
+    ,{ chapter: 'sop-reading', book: 'sop', key: 'point', title: '중요 POINT를 확인합니다', selector: '#sop-reading-point' }
+    ,{ chapter: 'sop-reading', book: 'sop', key: 'safety', title: '[S] Safety Mark를 확인합니다', selector: '#sop-reading-safety' }
+    ,{ chapter: 'sop-reading', book: 'sop', key: 'risk', title: '위험도와 안전대책을 함께 봅니다', selector: '#sop-reading-risk' }
+    ,{ chapter: 'sop-reading', book: 'sop', key: 'version', title: '최신 Version인지 확인합니다', selector: '#sop-reading-version' }
+    ,{ chapter: 'sop-structure', book: 'sop', key: 'map', title: 'SOP 전체 구조', selector: '#sop-structure-map' }
+    ,{ chapter: 'sop-structure', book: 'sop', key: 'flow', title: '작업 Flow가 중심입니다', selector: '#sop-structure-flow' }
+    ,{ chapter: 'sop-structure', book: 'sop', key: 'step', title: '한 Step은 명확해야 합니다', selector: '#sop-structure-step' }
+    ,{ chapter: 'sop-structure', book: 'sop', key: 'support', title: 'Supporting Information', selector: '#sop-structure-support' }
+    ,{ chapter: 'sop-structure', book: 'sop', key: 'version', title: 'Version과 개정이력', selector: '#sop-structure-version' }
+    ,{ chapter: 'sop-structure', book: 'sop', key: 'cycle', title: 'SOP와 위험성평가 개선 Cycle', selector: '#sop-structure-cycle' }
+    ,{ chapter: 'sop-practice', book: 'sop', key: 'reader', title: 'PRACTICE 01', selector: '#sop-reader-practice' }
+    ,{ chapter: 'sop-platform', book: 'sop', key: 'today', title: '오늘 작업의 SOP 확인', selector: '#sop-platform-today' }
+    ,{ chapter: 'sop-platform', book: 'sop', key: 'safety', title: '최소 안전확인', selector: '#sop-platform-safety' }
+    ,{ chapter: 'sop-platform', book: 'sop', key: 'signature', title: '전자서명', selector: '#sop-platform-signature' }
+    ,{ chapter: 'sop-platform', book: 'sop', key: 'version', title: '변경된 SOP라면?', selector: '#sop-platform-version' }
+    ,{ chapter: 'risk-assessment-purpose', book: 'risk', key: 'why', title: 'WHY', selector: '#risk-assessment-why' }
+    ,{ chapter: 'risk-assessment-purpose', book: 'risk', key: 'workflow', title: 'WORKFLOW', selector: '#risk-assessment-workflow' }
+    ,{ chapter: 'risk-assessment-purpose', book: 'risk', key: 'onoff', title: 'ONOFF 연결', selector: '#risk-assessment-onoff' }
+    ,{ chapter: 'risk-assessment-purpose', book: 'risk', key: 'complete', title: 'COMPLETE', selector: '#risk-assessment-complete' }
+    ,{ chapter: 'risk-assessment-structure', book: 'risk', key: 'summary', title: 'SUMMARY', selector: '#risk-structure-summary' }
+    ,{ chapter: 'risk-assessment-structure', book: 'risk', key: 'table', title: '실제 평가표 읽기', selector: '#risk-structure-table' }
+    ,{ chapter: 'risk-assessment-structure', book: 'risk', key: 'case', title: '하나의 사례로 따라가기', selector: '#risk-structure-case' }
+    ,{ chapter: 'risk-assessment-structure', book: 'risk', key: 'checkpoint', title: 'CHECK POINT', selector: '#risk-structure-checkpoint' }
+    ,{ chapter: 'risk-assessment-stra', book: 'risk', key: 'possibility', title: '가능성(F)', selector: '#risk-stra-possibility' }
+    ,{ chapter: 'risk-assessment-stra', book: 'risk', key: 'severity', title: '중대성(S)', selector: '#risk-stra-severity' }
+    ,{ chapter: 'risk-assessment-stra', book: 'risk', key: 'initial', title: '최초 위험성', selector: '#risk-stra-initial' }
+    ,{ chapter: 'risk-assessment-stra', book: 'risk', key: 'matrix', title: '위험성 판단 Matrix', selector: '#risk-stra-matrix' }
+    ,{ chapter: 'risk-assessment-stra', book: 'risk', key: 'controls', title: '안전조치 우선순위', selector: '#risk-stra-controls' }
+    ,{ chapter: 'risk-assessment-stra', book: 'risk', key: 'reevaluation', title: '안전조치 후 재평가', selector: '#risk-stra-reevaluation' }
+    ,{ chapter: 'risk-assessment-stra', book: 'risk', key: 'practice', title: 'PRACTICE 01', selector: '#risk-stra-practice' }
+    ,{ chapter: 'risk-assessment-daily-safety', book: 'risk', key: 'why', title: '왜 Daily Safety가 필요한가?', selector: '#risk-daily-why' }
+    ,{ chapter: 'risk-assessment-daily-safety', book: 'risk', key: 'linked', title: '위험성평가가 있는 작업', selector: '#risk-daily-linked' }
+    ,{ chapter: 'risk-assessment-daily-safety', book: 'risk', key: 'unlinked', title: '위험성평가가 없는 작업', selector: '#risk-daily-unlinked' }
+    ,{ chapter: 'risk-assessment-daily-safety', book: 'risk', key: 'check', title: 'Daily Risk Check', selector: '#risk-daily-check' }
+    ,{ chapter: 'risk-assessment-daily-safety', book: 'risk', key: 'controls', title: '안전조치 확인', selector: '#risk-daily-controls' }
+    ,{ chapter: 'risk-assessment-daily-safety', book: 'risk', key: 'change', title: '작업조건 변경', selector: '#risk-daily-change' }
+    ,{ chapter: 'risk-assessment-daily-safety', book: 'risk', key: 'repeat', title: '반복 작업 표준화', selector: '#risk-daily-repeat' }
+    ,{ chapter: 'risk-assessment-platform', book: 'risk', key: 'role', title: 'Academy와 Platform 역할', selector: '#risk-platform-role' }
+    ,{ chapter: 'risk-assessment-platform', book: 'risk', key: 'formal', title: '정식 위험성평가', selector: '#risk-platform-formal' }
+    ,{ chapter: 'risk-assessment-platform', book: 'risk', key: 'sop', title: 'SOP와 위험성평가', selector: '#risk-platform-sop' }
+    ,{ chapter: 'risk-assessment-platform', book: 'risk', key: 'daily', title: 'Daily Work 연결', selector: '#risk-platform-daily' }
+    ,{ chapter: 'risk-assessment-platform', book: 'risk', key: 'cycle', title: '작업 현장 순환', selector: '#risk-platform-cycle' }
   ].map((lesson) => ({ ...lesson, book: lesson.book || 'platform', route: `${lesson.chapter}-${lesson.key}` }));
   const lessonsByChapter = lessonCatalog.reduce((groups, lesson) => {
     const group = groups.get(lesson.chapter) || [];
@@ -287,8 +347,305 @@
     if (!chapter || !block) return;
     block.classList.add('academy-lesson');
     block.dataset.lesson = lesson.key;
-    if (!chapter.querySelector('.chapter-reading-nav')) chapter.insertAdjacentHTML('beforeend', '<nav class="chapter-reading-nav" aria-label="Lesson 이동"></nav>');
+    // TBM Golden Reference retains its legacy structure; Platform uses the fixed navigation only.
+    if (lesson.book === 'tbm' && !chapter.querySelector('.chapter-reading-nav')) {
+      chapter.insertAdjacentHTML('beforeend', '<nav class="chapter-reading-nav" aria-label="Lesson 이동"></nav>');
+    }
   });
+
+  const dailyRiskCheck = document.querySelector('#risk-daily-check');
+  const dailyRiskControls = document.querySelector('#risk-daily-controls');
+  if (dailyRiskCheck && dailyRiskControls) {
+    const controlsByRisk = {
+      fall: { label: '고소작업 / 추락', controls: ['안전대 착용 확인', '안전대 체결점 확인', '사다리 / 작업발판 상태 확인', '하부 작업구역 통제', '작업 주변 장애물 확인'] },
+      electrical: { label: '전기 / 감전', controls: ['전원 차단 여부 확인', '무전압 상태 확인', 'LOTO 필요 여부 확인', '절연 보호구 / 공구 확인', '주변 충전부 접근 위험 확인'] },
+      caught: { label: '끼임 / 협착', controls: ['설비 정지 확인', '불시 가동 가능성 확인', '잔류에너지 확인', 'LOTO 필요 여부 확인', '작업구역 접근 통제'] },
+      heavy: { label: '중량물', controls: ['중량 및 무게중심 확인', '적절한 운반/인양 방법 확인', '인양구 및 보조장비 상태 확인', '작업 반경 접근 통제'] },
+      falling: { label: '낙하 / 비래', controls: ['낙하 가능 자재/공구 확인', '공구 및 자재 고정', '하부 작업구역 통제', '필요한 보호구 확인'] },
+      chemical: { label: '화학물질', controls: ['취급물질/SDS 확인', '필요한 보호구 확인', '환기 상태 확인', '누출/비상대응 방법 확인'] },
+      fire: { label: '화재 / 고온', controls: ['화기/고온부 확인', '주변 가연물 확인', '소화설비 확인', '필요한 화상/열 보호구 확인', '작업구역 통제'] },
+      other: { label: '기타', controls: ['기타 위험을 확인했습니다.', '관리자/리더와 필요한 안전조치를 확인하세요.'] }
+    };
+    const riskInputs = [...dailyRiskCheck.querySelectorAll('input[name="daily-risk"]')];
+    const emptyState = dailyRiskControls.querySelector('.daily-risk-empty');
+    const controlGroups = dailyRiskControls.querySelector('.daily-risk-control-groups');
+    const renderDailyRiskControls = () => {
+      const selected = riskInputs.filter((input) => input.checked).map((input) => controlsByRisk[input.value]).filter(Boolean);
+      const uniqueControls = new Map();
+      selected.forEach((risk) => risk.controls.forEach((control) => {
+        const item = uniqueControls.get(control) || { control, risks: [] };
+        if (!item.risks.includes(risk.label)) item.risks.push(risk.label);
+        uniqueControls.set(control, item);
+      }));
+      controlGroups.replaceChildren();
+      emptyState.hidden = selected.length > 0;
+      if (!selected.length) return;
+      const fieldset = document.createElement('fieldset');
+      fieldset.className = 'daily-risk-options daily-risk-generated';
+      const legend = document.createElement('legend');
+      legend.textContent = '선택한 위험의 핵심 안전조치';
+      fieldset.append(legend);
+      uniqueControls.forEach(({ control, risks }, index) => {
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.name = 'daily-control';
+        input.value = `control-${index + 1}`;
+        const copy = document.createElement('span');
+        copy.className = 'daily-risk-control-copy';
+        const title = document.createElement('strong');
+        title.textContent = control;
+        const source = document.createElement('small');
+        source.textContent = `관련 위험: ${risks.join(' · ')}`;
+        copy.append(title, source);
+        label.append(input, copy);
+        fieldset.append(label);
+      });
+      controlGroups.append(fieldset);
+    };
+    riskInputs.forEach((input) => input.addEventListener('change', renderDailyRiskControls));
+    renderDailyRiskControls();
+  }
+
+  const riskPractice = document.querySelector('#risk-stra-practice');
+  if (riskPractice) {
+    const practiceForm = riskPractice.querySelector('.risk-practice-form');
+    const practiceSteps = [...riskPractice.querySelectorAll('.risk-practice-step')];
+    const practiceSubmit = riskPractice.querySelector('.practice-submit');
+    const practiceResult = riskPractice.querySelector('.risk-practice-result');
+    const practiceRestart = riskPractice.querySelector('.practice-restart');
+    const practiceAchievement = riskPractice.querySelector('.risk-practice-achievement');
+    const achievementStorageKey = 'onoff-academy-achievements';
+    const achievementId = 'risk-assessment-basic';
+    const showPracticeStep = (index) => {
+      practiceSteps.forEach((step, stepIndex) => {
+        step.classList.toggle('is-active', stepIndex === index);
+        step.disabled = stepIndex > index;
+      });
+    };
+    const setPracticeFeedback = (step, message, correct = false) => {
+      const feedback = step.querySelector('.practice-feedback');
+      feedback.textContent = message;
+      feedback.classList.toggle('is-correct', correct);
+    };
+    const readAchievements = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem(achievementStorageKey) || '{}');
+        return saved && typeof saved === 'object' ? saved : {};
+      } catch {
+        return {};
+      }
+    };
+    const showAchievement = (achievement) => {
+      if (!achievement || achievement.status !== 'completed') return;
+      const completedDate = achievement.completedAt
+        ? new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(achievement.completedAt))
+        : '';
+      practiceAchievement.querySelector('time').dateTime = achievement.completedAt || '';
+      practiceAchievement.querySelector('time').textContent = completedDate;
+      practiceAchievement.hidden = false;
+    };
+    const saveAchievement = () => {
+      const achievement = {
+        achievementId,
+        status: 'completed',
+        completedAt: new Date().toISOString(),
+        version: 1
+      };
+      const achievements = readAchievements();
+      achievements[achievementId] = achievement;
+      try {
+        localStorage.setItem(achievementStorageKey, JSON.stringify(achievements));
+      } catch {
+        // Completion remains visible for this session when browser storage is unavailable.
+      }
+      showAchievement(achievement);
+      return achievement;
+    };
+    const resetPractice = () => {
+      practiceForm.reset();
+      practiceSteps.forEach((step) => setPracticeFeedback(step, ''));
+      const hint = riskPractice.querySelector('.practice-hint');
+      const hintToggle = riskPractice.querySelector('.practice-hint-toggle');
+      hint.hidden = true;
+      hintToggle.setAttribute('aria-expanded', 'false');
+      hintToggle.textContent = '힌트 보기';
+      practiceSubmit.disabled = true;
+      practiceForm.hidden = false;
+      practiceResult.hidden = true;
+      showPracticeStep(0);
+      riskPractice.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
+    const validatePracticeStep = (stepNumber) => {
+      const step = practiceSteps[stepNumber - 1];
+      if (stepNumber === 1) {
+        const selected = [...step.querySelectorAll('input[name="hazard"]:checked')].map((input) => input.value);
+        const correctCount = selected.filter((value) => value !== 'documents').length;
+        if (selected.includes('documents')) return setPracticeFeedback(step, '작업 장면에서 직접 확인할 수 있는 현장 위험요인을 다시 살펴보세요.'), false;
+        if (correctCount < 2) return setPracticeFeedback(step, '사다리뿐 아니라 작업자와 주변 환경도 함께 관찰해보세요.'), false;
+        setPracticeFeedback(step, '✓ 작업 장면의 위험요인을 확인했습니다.', true);
+      }
+      if (stepNumber === 2) {
+        const value = step.querySelector('input[name="accident"]:checked')?.value;
+        if (value !== 'fall') return setPracticeFeedback(step, '작업자의 위치와 사다리 사용 상태를 다시 확인해보세요.'), false;
+        setPracticeFeedback(step, '✓ 가장 우선적인 재해형태를 확인했습니다.', true);
+      }
+      if (stepNumber === 3) {
+        if (step.querySelector('input[name="frequency"]').value !== '2') return setPracticeFeedback(step, '사고이력과 작업빈도를 더한 뒤 2로 나누어보세요.'), false;
+        setPracticeFeedback(step, '✓ 가능성 F = 2', true);
+      }
+      if (stepNumber === 4) {
+        if (step.querySelector('select[name="severity"]').value !== '2') return setPracticeFeedback(step, '문제 조건에 제공된 예상 중대성 값을 다시 확인해보세요.'), false;
+        setPracticeFeedback(step, '✓ 중대성 S = 2', true);
+      }
+      if (stepNumber === 5) {
+        const riskValue = step.querySelector('input[name="risk"]').value;
+        const levelValue = step.querySelector('input[name="level"]:checked')?.value;
+        if (riskValue !== '4') return setPracticeFeedback(step, '중대성 2와 가능성 2를 곱해보세요.'), false;
+        if (levelValue !== 'yellow') return setPracticeFeedback(step, '위험성 Matrix에서 값 4의 색상과 허용기준을 다시 확인해보세요.'), false;
+        setPracticeFeedback(step, '✓ 최초 위험성 4 · 노랑 · 허용가능', true);
+      }
+      if (stepNumber === 6) {
+        const selected = [...step.querySelectorAll('input[name="control"]:checked')].map((input) => input.value);
+        if (!selected.length || selected.includes('none')) return setPracticeFeedback(step, '위험을 낮출 수 있는 실제 안전조치를 다시 선택해보세요.'), false;
+        if (selected.length === 1 && selected[0] === 'ppe') return setPracticeFeedback(step, '보호구보다 먼저 제거·대체·공학적·관리적 조치를 검토해보세요.'), false;
+        setPracticeFeedback(step, '✓ 적용 가능한 안전조치를 선택했습니다.', true);
+        practiceSubmit.disabled = false;
+        return true;
+      }
+      showPracticeStep(stepNumber);
+      practiceSteps[stepNumber]?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      return true;
+    };
+    riskPractice.querySelector('.practice-hint-toggle')?.addEventListener('click', (event) => {
+      const hint = riskPractice.querySelector('.practice-hint');
+      hint.hidden = !hint.hidden;
+      event.currentTarget.setAttribute('aria-expanded', String(!hint.hidden));
+      event.currentTarget.textContent = hint.hidden ? '힌트 보기' : '힌트 닫기';
+    });
+    practiceSteps.forEach((step, index) => step.querySelector('.practice-check')?.addEventListener('click', () => validatePracticeStep(index + 1)));
+    practiceSubmit?.addEventListener('click', () => {
+      if (practiceSubmit.disabled) return;
+      saveAchievement();
+      practiceForm.hidden = true;
+      practiceResult.hidden = false;
+      practiceResult.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    });
+    practiceRestart?.addEventListener('click', resetPractice);
+    showAchievement(readAchievements()[achievementId]);
+  }
+
+  const sopPractice = document.querySelector('#sop-reader-practice');
+  if (sopPractice) {
+    const practiceForm = sopPractice.querySelector('.risk-practice-form');
+    const practiceSteps = [...sopPractice.querySelectorAll('.risk-practice-step')];
+    const practiceSubmit = sopPractice.querySelector('.practice-submit');
+    const practiceResult = sopPractice.querySelector('.risk-practice-result');
+    const practiceRestart = sopPractice.querySelector('.practice-restart');
+    const practiceAchievement = sopPractice.querySelector('.risk-practice-achievement');
+    const achievementStorageKey = 'onoff-academy-achievements';
+    const achievementId = 'sop-reader-basic';
+    const showPracticeStep = (index) => {
+      practiceSteps.forEach((step, stepIndex) => {
+        step.classList.toggle('is-active', stepIndex === index);
+        step.disabled = stepIndex > index;
+      });
+    };
+    const setPracticeFeedback = (step, message, correct = false) => {
+      const feedback = step.querySelector('.practice-feedback');
+      feedback.textContent = message;
+      feedback.classList.toggle('is-correct', correct);
+    };
+    const readAchievements = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem(achievementStorageKey) || '{}');
+        return saved && typeof saved === 'object' ? saved : {};
+      } catch {
+        return {};
+      }
+    };
+    const showAchievement = (achievement) => {
+      if (!achievement || achievement.status !== 'completed') return;
+      const completedDate = achievement.completedAt
+        ? new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(achievement.completedAt))
+        : '';
+      practiceAchievement.querySelector('time').dateTime = achievement.completedAt || '';
+      practiceAchievement.querySelector('time').textContent = completedDate;
+      practiceAchievement.hidden = false;
+    };
+    const saveAchievement = () => {
+      const achievements = readAchievements();
+      const achievement = achievements[achievementId]?.status === 'completed'
+        ? achievements[achievementId]
+        : { achievementId, status: 'completed', completedAt: new Date().toISOString(), version: 1 };
+      achievements[achievementId] = achievement;
+      try {
+        localStorage.setItem(achievementStorageKey, JSON.stringify(achievements));
+      } catch {
+        // Completion remains visible for this session when browser storage is unavailable.
+      }
+      showAchievement(achievement);
+    };
+    const resetPractice = () => {
+      practiceForm.reset();
+      practiceSteps.forEach((step) => setPracticeFeedback(step, ''));
+      const hint = sopPractice.querySelector('.practice-hint');
+      const hintToggle = sopPractice.querySelector('.practice-hint-toggle');
+      hint.hidden = true;
+      hintToggle.setAttribute('aria-expanded', 'false');
+      hintToggle.textContent = '힌트 보기';
+      practiceSubmit.disabled = true;
+      practiceForm.hidden = false;
+      practiceResult.hidden = true;
+      showPracticeStep(0);
+      sopPractice.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
+    const validatePracticeStep = (stepNumber) => {
+      const step = practiceSteps[stepNumber - 1];
+      if (stepNumber === 1) {
+        if (step.querySelector('input[name="sop-flow"]:checked')?.value !== 'correct') return setPracticeFeedback(step, '작업을 시작하기 전에 무엇을 먼저 확인해야 할까요? 힌트를 확인하고 다시 시도하세요.'), false;
+        setPracticeFeedback(step, '✓ 준비작업 → 본작업 → 마무리작업 Flow를 확인했습니다.', true);
+      }
+      if (stepNumber === 2) {
+        if (step.querySelector('input[name="sop-order"]:checked')?.value !== 'correct') return setPracticeFeedback(step, '작업 전 상태와 준비물을 확인한 뒤 점검하고 원상복구하는 순서를 다시 생각해보세요.'), false;
+        setPracticeFeedback(step, '✓ 작업순서를 올바르게 판단했습니다.', true);
+      }
+      if (stepNumber === 3) {
+        if (step.querySelector('input[name="sop-safety-step"]:checked')?.value !== 'hazard') return setPracticeFeedback(step, '별도의 위험 확인과 안전조치가 필요한 행동을 다시 찾아보세요.'), false;
+        setPracticeFeedback(step, '✓ [S] SAFETY STEP · 위험이 존재하는 Step의 안전정보를 확인합니다.', true);
+      }
+      if (stepNumber === 4) {
+        const selected = [...step.querySelectorAll('input[name="sop-control"]:checked')].map((input) => input.value);
+        if (!selected.length || selected.includes('none')) return setPracticeFeedback(step, '아무 확인 없이 작업을 진행할 수 없습니다. 위험 Step에 필요한 조치를 다시 선택하세요.'), false;
+        setPracticeFeedback(step, '✓ 위험이 있는 Step에서 필요한 안전조치를 확인했습니다.', true);
+      }
+      if (stepNumber === 5) {
+        if (step.querySelector('input[name="sop-version"]:checked')?.value !== '2.2') return setPracticeFeedback(step, '개정일과 Version을 비교해 현재 유효한 최신 SOP를 선택하세요.'), false;
+        setPracticeFeedback(step, '✓ 최신 Version 2.2를 확인했습니다.', true);
+        practiceSubmit.disabled = false;
+        return true;
+      }
+      showPracticeStep(stepNumber);
+      practiceSteps[stepNumber]?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      return true;
+    };
+    sopPractice.querySelector('.practice-hint-toggle')?.addEventListener('click', (event) => {
+      const hint = sopPractice.querySelector('.practice-hint');
+      hint.hidden = !hint.hidden;
+      event.currentTarget.setAttribute('aria-expanded', String(!hint.hidden));
+      event.currentTarget.textContent = hint.hidden ? '힌트 보기' : '힌트 닫기';
+    });
+    practiceSteps.forEach((step, index) => step.querySelector('.practice-check')?.addEventListener('click', () => validatePracticeStep(index + 1)));
+    practiceSubmit?.addEventListener('click', () => {
+      if (practiceSubmit.disabled) return;
+      saveAchievement();
+      practiceForm.hidden = true;
+      practiceResult.hidden = false;
+      practiceResult.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    });
+    practiceRestart?.addEventListener('click', resetPractice);
+    showAchievement(readAchievements()[achievementId]);
+  }
   [
     ['philosophy', 'why', '.platform-summary'],
     ['philosophy', 'why', '.callout'],
@@ -311,7 +668,8 @@
   });
   [
     ['#safety-book .book-chapters', 'platform'],
-    ['#tbm-book .book-chapters', 'tbm']
+    ['#tbm-book .book-chapters', 'tbm'],
+    ['#risk-book .book-chapters', 'risk']
   ].forEach(([selector, book]) => {
     const toc = document.querySelector(selector);
     const firstLesson = lessonCatalog.find((lesson) => lesson.book === book);
@@ -376,7 +734,7 @@
     document.body.classList.toggle('is-toc-view', route.endsWith('-book-toc'));
     document.body.dataset.lessonType = selectedLesson?.title.toLowerCase() || '';
     const chapterRoute = selectedLesson?.chapter || (route === 'workflow-action' || route.startsWith('scene-') ? 'workflow' : route);
-    const homeRoutes = new Set(['home', 'library', 'safety-book', 'safety-book-mode', 'safety-book-toc', 'safety-book-complete', 'tbm-book-toc', 'continue-reading', 'my-academy']);
+    const homeRoutes = new Set(['home', 'library', 'safety-book', 'safety-book-mode', 'safety-book-toc', 'safety-book-complete', 'tbm-book-toc', 'risk-book-toc', 'sop-book-toc', 'continue-reading', 'my-academy']);
     const isHomeRoute = homeRoutes.has(route);
     if (route === 'workflow-action') applyLearningMode('action');
     const actionPresentation = selectedLearningMode === 'action' && (route === 'workflow-action' || route.startsWith('scene-'));
@@ -401,7 +759,10 @@
         ? '<a class="handbook-complete" href="#home">처음으로(Home)</a>'
         : `<a href="#${next.route}">다음 Lesson →</a>`;
       const lessonNavigation = document.querySelector(`#${selectedLesson.chapter} .chapter-reading-nav`);
-      const tocTarget = selectedLesson.book === 'tbm' ? 'tbm-book-toc' : 'safety-book-toc';
+      const tocTarget = selectedLesson.book === 'tbm' ? 'tbm-book-toc'
+        : selectedLesson.book === 'risk' ? 'risk-book-toc'
+        : selectedLesson.book === 'sop' ? 'sop-book-toc'
+        : 'safety-book-toc';
       if (lessonNavigation) lessonNavigation.innerHTML = `${previousItem}<a href="#${tocTarget}">목차</a>${nextItem}`;
       const chapterHeader = document.querySelector(`#${selectedLesson.chapter} .book-chapter-start`);
       if (chapterHeader) {
@@ -409,9 +770,10 @@
         lessonStickyStack.append(chapterHeader);
         activeStickyChapterHeader = chapterHeader;
       }
-      const handbookChapters = bookChapterForm.filter((chapter) => chapter.book === selectedLesson.book);
+      const handbookChapters = bookChapterForm.filter((chapter) => chapter.book === selectedLesson.book && chapter.countInProgress !== false);
       const chapterProgressIndex = handbookChapters.findIndex((chapter) => chapter.id === selectedLesson.chapter) + 1;
-      chapterHeader?.insertAdjacentHTML('beforeend', `<div class="lesson-progress-indicator"><span>Chapter Progress</span><strong>${chapterProgressIndex} / ${handbookChapters.length}</strong></div>`);
+      const chapterProgressTotal = handbookChapters.find((chapter) => chapter.id === selectedLesson.chapter)?.progressTotal || handbookChapters.length;
+      chapterHeader?.insertAdjacentHTML('beforeend', `<div class="lesson-progress-indicator"><span>Chapter Progress</span><strong>${chapterProgressIndex} / ${chapterProgressTotal}</strong></div>`);
       floatingLessonEnabled = true;
       floatingLessonNavigation.innerHTML = `${previousItem}<a href="#${tocTarget}">목차</a>${nextItem}`;
       updateFloatingLessonNavigation();
@@ -430,6 +792,8 @@
     const visiblePart = route === 'library' ? 'library'
       : ['safety-book', 'safety-book-mode', 'safety-book-toc', 'safety-book-complete'].includes(route) ? 'safety-book'
       : route === 'tbm-book-toc' ? 'tbm-book'
+      : route === 'risk-book-toc' ? 'risk-book'
+      : route === 'sop-book-toc' ? 'sop-book'
       : route === 'my-academy' ? 'my-academy'
       : 'home';
     [...homeSection.children].forEach((child) => {
