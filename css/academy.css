@@ -126,6 +126,71 @@ body.is-lesson-view .standard-workflow li:nth-child(3) .flow-index { color: var(
   body.is-lesson-view .chapter-reading-nav span { padding-inline: 8px; font-size: 11px; }
 }
 
+/* Special Safety Education CH07: Daily Work connection and handbook completion. */
+body.is-lesson-view #special-daily-work .tbm-scenario-lesson { margin-top: 0; }
+#special-daily-work .special-platform-lesson,
+#special-daily-work .special-platform-lesson :is(article,section,div) { min-width: 0; }
+#special-daily-work .special-platform-lesson :is(p,li,strong,small,h3,h4,blockquote) {
+  max-width: 100%;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+#special-daily-work :is(.special-platform-part-grid,.special-platform-status-grid,.special-platform-final-flow) {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px;
+}
+#special-daily-work :is(.special-platform-link-grid,.special-platform-role-grid) {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 12px;
+}
+#special-daily-work :is(.special-platform-part-grid,.special-platform-link-grid,.special-platform-role-grid) article,
+#special-daily-work .special-platform-final-flow section {
+  padding: 18px;
+  border: 1px solid var(--slate-200);
+  border-radius: 12px;
+  background: #f6f8fb;
+}
+#special-daily-work :is(.special-platform-part-grid,.special-platform-role-grid) span,
+#special-daily-work .special-platform-final-flow span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--blue-700);
+  font-size: 12px;
+  font-weight: 800;
+}
+#special-daily-work :is(.special-platform-part-grid,.special-platform-link-grid,.special-platform-role-grid) strong { display: block; color: var(--navy-900); }
+#special-daily-work :is(.special-platform-part-grid,.special-platform-link-grid,.special-platform-role-grid) p { margin: 8px 0 0; }
+#special-daily-work .special-platform-mapping { display: grid; gap: 8px; margin-bottom: 18px; }
+#special-daily-work .special-platform-mapping article { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px; border: 1px solid var(--slate-200); border-radius: 10px; }
+#special-daily-work .special-platform-mapping span { flex: 0 0 auto; color: var(--blue-700); font-weight: 800; }
+#special-daily-work .special-platform-status-grid { margin: 18px 0; }
+#special-daily-work .special-platform-status-grid article { padding: 18px; border-radius: 12px; }
+#special-daily-work .special-platform-status-grid small { display: block; margin-bottom: 6px; }
+#special-daily-work .special-platform-status-grid .is-complete { color: #12633d; background: #e9f7ef; border: 1px solid #9bd1b3; }
+#special-daily-work .special-platform-status-grid .needs-check { color: #8a4b00; background: #fff5df; border: 1px solid #efca80; }
+#special-daily-work .special-platform-signature { margin: 0; padding: 26px; color: var(--navy-900); background: #f2f6fc; border: 1px solid var(--slate-200); border-left: 5px solid var(--blue-700); border-radius: 12px; font-size: 20px; font-weight: 800; line-height: 1.6; }
+#special-daily-work .special-platform-final-flow section { text-align: center; }
+#special-daily-work .special-platform-final-flow h4 { margin: 0 0 16px; color: var(--navy-900); font-size: 20px; }
+#special-daily-work .special-platform-final-flow p { margin: 7px 0; }
+#special-daily-work .special-platform-final-flow b { color: var(--blue-700); }
+#special-daily-work .special-handbook-complete { background: linear-gradient(145deg,#f7faff,#eef4fc); }
+#special-daily-work .special-handbook-complete-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin: 0 0 24px; padding: 0; list-style: none; }
+#special-daily-work .special-handbook-complete-list li { padding: 14px 16px; color: var(--navy-900); background: #fff; border: 1px solid var(--slate-200); border-radius: 10px; font-weight: 700; }
+
+@media (max-width: 700px) {
+  body.is-lesson-view #special-daily-work > .academy-lesson { width: 100%; margin-right: 0; margin-left: 0; }
+  #special-daily-work :is(.special-platform-part-grid,.special-platform-link-grid,.special-platform-role-grid,.special-platform-final-flow) { grid-template-columns: 1fr; }
+  #special-daily-work .special-platform-signature { padding: 20px; font-size: 18px; }
+}
+
+@media (max-width: 380px) {
+  #special-daily-work .special-platform-status-grid,
+  #special-daily-work .special-handbook-complete-list { grid-template-columns: 1fr; }
+}
+
 /* PLATFORM-CH02: preserve complete lesson images on narrow mobile viewports. */
 body.is-lesson-view #workflow .platform-summary,
 body.is-lesson-view #workflow .workflow-group-visual {
@@ -2269,6 +2334,11 @@ body.is-lesson-view #risk-assessment-daily-safety .tbm-scenario-lesson {
   margin-top: 0;
 }
 
+/* Special Safety Education CH02: match the approved chapter-to-content start rhythm locally. */
+body.is-lesson-view #special-common-training .tbm-scenario-lesson {
+  margin-top: 0;
+}
+
 /* Risk Assessment CH05: match the approved CH04 chapter-to-content rhythm locally. */
 body.is-lesson-view #risk-assessment-platform .tbm-scenario-lesson {
   margin-top: 0;
@@ -2413,6 +2483,174 @@ body.is-lesson-view #sop-practice .tbm-scenario-lesson { margin-top: 0; }
 #sop-reader-practice .risk-practice-achievement small b { color: #14723c; }
 @media (max-width: 700px) { body.is-lesson-view #sop-practice > .academy-lesson { width: auto; margin-right: -13px; margin-left: 2px; } #sop-reader-practice .risk-practice-step { padding: 16px 12px; } #sop-reader-practice .risk-practice-step legend { font-size: 16px; } #sop-reader-practice .sop-version-options { grid-template-columns: 1fr; } }
 
+/* Special Safety Education Practice: reuse the approved Practice visual language in local scope. */
+.special-education-practice .risk-practice-step { min-width: 0; margin: 0 0 16px; padding: 20px; border: 1px solid var(--slate-200); border-radius: 12px; }
+.special-education-practice .risk-practice-step:not(.is-active) { display: none; }
+.special-education-practice .risk-practice-step legend { max-width: 100%; padding: 0 6px; color: var(--navy-900); font-size: 18px; font-weight: 800; white-space: normal; }
+.special-education-practice .risk-practice-step legend span { margin-right: 8px; padding: 5px 8px; color: #fff; background: var(--navy-900); border-radius: 5px; font-size: 12px; }
+.special-education-practice .risk-practice-step > label { min-width: 0; min-height: 46px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #e5eaf0; white-space: normal; overflow-wrap: anywhere; }
+.special-education-practice input[type="radio"] { width: 20px; height: 20px; flex: 0 0 auto; accent-color: var(--blue-700); }
+.special-education-practice button { min-height: 46px; padding: 10px 18px; border: 1px solid var(--navy-900); border-radius: 7px; font: inherit; font-weight: 750; cursor: pointer; }
+.special-education-practice .practice-check { width: 100%; margin-top: 16px; color: #fff; background: var(--navy-900); }
+.special-education-practice .practice-hint-toggle { margin-top: 14px; color: var(--navy-900); background: #fff; }
+.special-education-practice .practice-hint { margin-top: 12px; padding: 14px; background: #f3f7fc; border-radius: 8px; }
+.special-education-practice .practice-hint p { margin: 4px 0; }
+.special-education-practice .practice-feedback { min-height: 24px; margin: 12px 0 0; color: #9b3f18; font-weight: 700; }
+.special-education-practice .practice-feedback.is-correct { color: #14723c; }
+.special-education-practice .risk-practice-result { padding: 24px; background: #f0f8f3; border: 1px solid #b9dcc5; border-radius: 12px; }
+.special-education-practice .risk-practice-result h3 { margin: 6px 0 12px; color: var(--navy-900); }
+.special-education-practice .risk-practice-result li { margin: 7px 0; }
+.special-education-practice .practice-restart { width: 100%; margin-top: 16px; color: var(--navy-900); background: #fff; }
+.special-education-practice .risk-practice-achievement { margin-top: 18px; padding: 20px; background: linear-gradient(135deg,#eef6ff,#f5fbf7); border: 1px solid #b8cce6; border-radius: 12px; }
+.special-education-practice .risk-practice-achievement > div { min-width: 0; display: flex; align-items: center; gap: 14px; }
+.special-education-practice .risk-practice-achievement > div > span { font-size: 34px; line-height: 1; }
+.special-education-practice .risk-practice-achievement strong { display: block; color: var(--navy-900); font-size: 18px; }
+.special-education-practice .risk-practice-achievement p { margin: 4px 0; }
+.special-education-practice .risk-practice-achievement small { color: var(--slate-500); }
+.special-education-practice .risk-practice-achievement small b { color: #14723c; }
+@media (max-width: 700px) { .special-education-practice .risk-practice-step { padding: 16px 12px; } .special-education-practice .risk-practice-step legend { font-size: 16px; } }
+
+/* Special Safety Education CH03: chapter-local material handling visuals and learning cards. */
+body.is-lesson-view #special-cargo-handling .tbm-scenario-lesson { margin-top: 0; }
+#special-cargo-handling .special-material-lesson { min-width: 0; }
+#special-cargo-handling .special-material-lesson :is(.chapter-block-heading > div,.prose,.callout) { min-width: 0; max-width: 100%; }
+#special-cargo-handling .special-material-lesson :is(p,li,strong,small) { max-width: 100%; white-space: normal; word-break: keep-all; overflow-wrap: anywhere; }
+#special-cargo-handling .special-material-visual { width: 100%; height: auto; aspect-ratio: 16 / 9; margin: 0 0 22px; overflow: hidden; border: 1px solid var(--slate-200); border-radius: 12px; background: #e9eef5; }
+#special-cargo-handling .special-material-visual img { width: 100%; height: 100%; display: block; object-fit: cover; }
+#special-cargo-handling .special-material-visual--scene img { object-position: 50% 42%; }
+#special-cargo-handling .special-material-visual--case img { object-position: 50% 42%; }
+#special-cargo-handling .special-material-risk-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
+#special-cargo-handling .special-material-risk-grid article { min-width: 0; padding: 16px; border: 1px solid var(--slate-200); border-radius: 10px; background: #f6f8fb; }
+#special-cargo-handling .special-material-risk-grid strong { color: var(--navy-900); }
+#special-cargo-handling .special-material-risk-grid p { margin: 7px 0 0; color: var(--slate-600); font-size: 14px; }
+#special-cargo-handling .special-material-load-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
+#special-cargo-handling .special-material-load-grid article { min-width: 0; padding: 16px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--slate-200); border-radius: 9px; background: #f6f8fb; }
+#special-cargo-handling .special-material-load-grid span { width: 30px; height: 30px; flex: 0 0 auto; display: grid; place-items: center; color: #fff; background: var(--navy-900); border-radius: 50%; font-size: 11px; font-weight: 800; }
+#special-cargo-handling .special-material-checks,
+#special-cargo-handling .special-material-signal-flow,
+#special-cargo-handling .special-material-stop-flow { margin-bottom: 22px; }
+#special-material-practice input[type="checkbox"] { width: 20px; height: 20px; flex: 0 0 auto; accent-color: var(--blue-700); }
+@media (max-width: 700px) {
+  body.is-lesson-view #special-cargo-handling > .academy-lesson { width: 100%; margin-right: 0; margin-left: 0; }
+  #special-cargo-handling .special-material-visual--scene img { object-position: 50% 42%; }
+  #special-cargo-handling .special-material-visual--case img { object-position: 50% 42%; }
+  #special-cargo-handling .special-material-risk-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #special-cargo-handling .special-material-load-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 380px) {
+  #special-cargo-handling .special-material-risk-grid,
+  #special-cargo-handling .special-material-load-grid { grid-template-columns: 1fr; }
+}
+
+/* Special Safety Education CH04: electrical work content remains chapter-local. */
+body.is-lesson-view #special-live-work-75v .tbm-scenario-lesson { margin-top: 0; }
+#special-live-work-75v .special-electrical-lesson { min-width: 0; }
+#special-live-work-75v .special-electrical-lesson :is(.chapter-block-heading > div,.prose,.callout) { min-width: 0; max-width: 100%; }
+#special-live-work-75v .special-electrical-lesson :is(p,li,strong,small) { max-width: 100%; white-space: normal; word-break: keep-all; overflow-wrap: anywhere; }
+#special-live-work-75v .special-electrical-visual { width: 100%; height: auto; aspect-ratio: 16 / 9; margin: 0 0 22px; overflow: hidden; border: 1px solid var(--slate-200); border-radius: 12px; background: #e9eef5; }
+#special-live-work-75v .special-electrical-visual img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: 50% 100%; }
+#special-live-work-75v .special-electrical-visual--verify img { object-position: 32% 100%; }
+#special-live-work-75v .special-electrical-risk-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
+#special-live-work-75v .special-electrical-risk-grid article { min-width: 0; padding: 16px; border: 1px solid var(--slate-200); border-radius: 10px; background: #f6f8fb; }
+#special-live-work-75v .special-electrical-risk-grid strong { color: var(--navy-900); }
+#special-live-work-75v .special-electrical-risk-grid p { margin: 7px 0 0; color: var(--slate-600); font-size: 14px; }
+#special-live-work-75v .special-electrical-checklist { margin-top: 22px; padding: 18px; display: grid; gap: 8px; border: 1px solid var(--slate-200); border-radius: 10px; background: #f6f8fb; }
+#special-live-work-75v .special-electrical-checklist > strong { color: var(--navy-900); }
+#special-live-work-75v .special-electrical-checklist p { margin: 0; }
+#special-live-work-75v .special-electrical-equation { margin: 20px 0; padding: 20px; display: flex; align-items: center; justify-content: center; gap: 24px; border: 1px solid var(--slate-200); border-radius: 10px; background: #f6f8fb; color: var(--navy-900); }
+#special-live-work-75v .special-electrical-equation span { color: #c43d2e; font-size: 30px; font-weight: 900; }
+#special-live-work-75v .special-electrical-equipment-grid,
+#special-live-work-75v .special-electrical-summary-grid { margin: 0 0 22px; padding: 0; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; list-style: none; }
+#special-live-work-75v .special-electrical-equipment-grid article,
+#special-live-work-75v .special-electrical-summary-grid li { min-width: 0; padding: 16px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--slate-200); border-radius: 9px; background: #f6f8fb; }
+#special-live-work-75v .special-electrical-equipment-grid span,
+#special-live-work-75v .special-electrical-summary-grid span { width: 30px; height: 30px; flex: 0 0 auto; display: grid; place-items: center; color: #fff; background: var(--navy-900); border-radius: 50%; font-size: 11px; font-weight: 800; }
+#special-live-work-75v :is(.special-electrical-before-flow,.special-electrical-outage-flow,.special-electrical-priority-flow,.special-electrical-stop-flow) { margin-bottom: 22px; }
+#special-electrical-practice input[type="checkbox"] { width: 20px; height: 20px; flex: 0 0 auto; accent-color: var(--blue-700); }
+@media (max-width: 700px) {
+  body.is-lesson-view #special-live-work-75v > .academy-lesson { width: 100%; margin-right: 0; margin-left: 0; }
+  #special-live-work-75v .special-electrical-risk-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #special-live-work-75v .special-electrical-equipment-grid,
+  #special-live-work-75v .special-electrical-summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #special-live-work-75v .special-electrical-equation { gap: 14px; }
+}
+@media (max-width: 380px) {
+  #special-live-work-75v .special-electrical-risk-grid,
+  #special-live-work-75v .special-electrical-equipment-grid,
+  #special-live-work-75v .special-electrical-summary-grid { grid-template-columns: 1fr; }
+}
+
+/* Special Safety Education CH05: chemical handling content remains chapter-local. */
+body.is-lesson-view #special-hazardous-chemicals .tbm-scenario-lesson { margin-top: 0; }
+#special-hazardous-chemicals .special-chemical-lesson { min-width: 0; }
+#special-hazardous-chemicals .special-chemical-lesson :is(.chapter-block-heading > div,.prose,.callout) { min-width: 0; max-width: 100%; }
+#special-hazardous-chemicals .special-chemical-lesson :is(p,li,strong,small) { max-width: 100%; white-space: normal; word-break: keep-all; overflow-wrap: anywhere; }
+#special-hazardous-chemicals .special-chemical-visual { width: 100%; height: auto; aspect-ratio: 16 / 9; margin: 0 0 22px; overflow: hidden; border: 1px solid var(--slate-200); border-radius: 12px; background: #e9eef5; }
+#special-hazardous-chemicals .special-chemical-visual img { width: 100%; height: 100%; display: block; object-fit: cover; transform: translateY(55px) scale(1.8); }
+#special-hazardous-chemicals .special-chemical-visual--scene img { transform-origin: 50% 44%; }
+#special-hazardous-chemicals .special-chemical-visual--msds img { transform-origin: 43% 44%; }
+#special-hazardous-chemicals .special-chemical-visual--storage img { transform-origin: 88% 44%; }
+#special-hazardous-chemicals :is(.special-chemical-case-grid,.special-chemical-risk-grid,.special-chemical-info-grid,.special-chemical-use-cases,.special-chemical-summary-grid) { display: grid; gap: 10px; }
+#special-hazardous-chemicals :is(.special-chemical-case-grid,.special-chemical-use-cases) { grid-template-columns: repeat(3,minmax(0,1fr)); }
+#special-hazardous-chemicals :is(.special-chemical-risk-grid,.special-chemical-info-grid,.special-chemical-summary-grid) { grid-template-columns: repeat(2,minmax(0,1fr)); }
+#special-hazardous-chemicals :is(.special-chemical-case-grid,.special-chemical-risk-grid,.special-chemical-info-grid,.special-chemical-use-cases) article,
+#special-hazardous-chemicals .special-chemical-summary-grid li { min-width: 0; padding: 16px; border: 1px solid var(--slate-200); border-radius: 10px; background: #f6f8fb; }
+#special-hazardous-chemicals .special-chemical-case-grid span,
+#special-hazardous-chemicals .special-chemical-use-cases span { color: var(--blue-700); font-size: 11px; font-weight: 800; letter-spacing: .05em; }
+#special-hazardous-chemicals .special-chemical-case-grid strong { margin-top: 6px; display: block; color: var(--navy-900); }
+#special-hazardous-chemicals .special-chemical-case-grid p { margin: 5px 0 0; }
+#special-hazardous-chemicals .special-chemical-risk-grid { margin-top: 10px; }
+#special-hazardous-chemicals .special-chemical-checklist { padding: 18px; display: grid; gap: 8px; border: 1px solid var(--slate-200); border-radius: 10px; background: #f6f8fb; }
+#special-hazardous-chemicals .special-chemical-checklist p { margin: 0; }
+#special-hazardous-chemicals .special-chemical-use-cases h4 { margin: 7px 0 10px; color: var(--navy-900); }
+#special-hazardous-chemicals .special-chemical-use-cases ol { margin: 0; padding-left: 20px; }
+#special-hazardous-chemicals .special-chemical-summary-grid { margin: 0; padding: 0; list-style: none; }
+#special-hazardous-chemicals .special-chemical-summary-grid li { display: flex; align-items: center; gap: 10px; }
+#special-hazardous-chemicals .special-chemical-summary-grid span { width: 30px; height: 30px; flex: 0 0 auto; display: grid; place-items: center; color: #fff; background: var(--navy-900); border-radius: 50%; font-size: 11px; font-weight: 800; }
+#special-hazardous-chemicals :is(.special-chemical-product-flow,.special-chemical-priority-flow,.special-chemical-storage-flow,.special-chemical-stop-flow) { margin-bottom: 22px; }
+#special-chemical-practice input[type="checkbox"] { width: 20px; height: 20px; flex: 0 0 auto; accent-color: var(--blue-700); }
+@media (max-width: 700px) {
+  body.is-lesson-view #special-hazardous-chemicals > .academy-lesson { width: 100%; margin-right: 0; margin-left: 0; }
+  #special-hazardous-chemicals .special-chemical-visual img { transform: translateY(55px) scale(1.8); }
+  #special-hazardous-chemicals :is(.special-chemical-case-grid,.special-chemical-use-cases) { grid-template-columns: 1fr; }
+}
+@media (max-width: 380px) {
+  #special-hazardous-chemicals :is(.special-chemical-risk-grid,.special-chemical-info-grid,.special-chemical-summary-grid) { grid-template-columns: 1fr; }
+}
+
+/* Special Safety Education CH06: sector crops and robot content stay chapter-local. */
+body.is-lesson-view #special-robot-work .tbm-scenario-lesson { margin-top: 0; }
+#special-robot-work .special-robot-lesson { min-width: 0; }
+#special-robot-work .special-robot-lesson :is(.chapter-block-heading > div,.prose,.callout) { min-width: 0; max-width: 100%; }
+#special-robot-work .special-robot-lesson :is(p,li,strong,small) { max-width: 100%; white-space: normal; word-break: keep-all; overflow-wrap: anywhere; }
+#special-robot-work .special-robot-sector { position: relative; width: 100%; height: auto; aspect-ratio: 4 / 5; margin: 0 0 22px; overflow: hidden; border: 1px solid var(--slate-200); border-radius: 12px; background: #e9eef5; }
+#special-robot-work .special-robot-sector img { position: absolute; top: -18%; width: 328%; max-width: none; height: auto; display: block; }
+#special-robot-work .special-robot-sector--a img { left: 0; }
+#special-robot-work .special-robot-sector--b img { left: -102%; }
+#special-robot-work .special-robot-sector--c img { left: -225%; }
+#special-robot-work :is(.special-robot-risk-grid,.special-robot-info-grid,.special-robot-summary-grid) { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+#special-robot-work :is(.special-robot-risk-grid,.special-robot-info-grid) article,
+#special-robot-work .special-robot-summary-grid li { min-width: 0; padding: 16px; border: 1px solid var(--slate-200); border-radius: 10px; background: #f6f8fb; }
+#special-robot-work .special-robot-checklist { padding: 18px; display: grid; gap: 8px; border: 1px solid var(--slate-200); border-radius: 10px; background: #f6f8fb; }
+#special-robot-work .special-robot-checklist p { margin: 0; }
+#special-robot-work .special-robot-role-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+#special-robot-work .special-robot-role-grid article { min-width: 0; padding: 18px; border: 1px solid var(--slate-200); border-radius: 10px; background: #f6f8fb; }
+#special-robot-work .special-robot-role-grid span { color: var(--blue-700); font-size: 12px; font-weight: 800; }
+#special-robot-work .special-robot-role-grid strong { margin-top: 6px; display: block; color: var(--navy-900); }
+#special-robot-work .special-robot-equation { margin: 20px 0; padding: 18px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; color: var(--navy-900); background: #f6f8fb; border-radius: 10px; }
+#special-robot-work .special-robot-summary-grid { margin: 0; padding: 0; list-style: none; }
+#special-robot-work .special-robot-summary-grid li { display: flex; align-items: center; gap: 10px; }
+#special-robot-work .special-robot-summary-grid span { width: 30px; height: 30px; flex: 0 0 auto; display: grid; place-items: center; color: #fff; background: var(--navy-900); border-radius: 50%; font-size: 11px; font-weight: 800; }
+#special-robot-work :is(.special-robot-before-flow,.special-robot-zone-flow,.special-robot-access-flow,.special-robot-emergency-flow) { margin-bottom: 22px; }
+#special-robot-practice input[type="checkbox"] { width: 20px; height: 20px; flex: 0 0 auto; accent-color: var(--blue-700); }
+@media (max-width: 700px) {
+  body.is-lesson-view #special-robot-work > .academy-lesson { width: 100%; margin-right: 0; margin-left: 0; }
+  #special-robot-work .special-robot-role-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 380px) {
+  #special-robot-work :is(.special-robot-risk-grid,.special-robot-info-grid,.special-robot-summary-grid) { grid-template-columns: 1fr; }
+}
+
 body.is-lesson-view #risk-assessment-purpose #risk-assessment-why > .tbm-scenario-photo {
   width: 100%;
   margin-inline: auto;
@@ -2455,5 +2693,101 @@ body.is-lesson-view #safety-report .safety-report-lesson > .tbm-scenario-photo i
   }
   body.is-lesson-view #tbm-scenario .tbm-scenario-lesson > .chapter-block-heading h3 {
     font-size: 21px;
+  }
+}
+
+/* Mobile handbook readability: typography and wrapping only; layout remains locked. */
+@media (max-width: 719px) {
+  body.is-lesson-view .lesson-sticky-stack .book-chapter-start > span,
+  body[data-academy-view^="tbm-purpose-"] #tbm-purpose .book-chapter-start > span,
+  body[data-academy-view^="tbm-nine-steps-"] #tbm-nine-steps .book-chapter-start > span {
+    display: block;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    white-space: normal;
+    text-overflow: clip;
+    -webkit-box-orient: initial;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    font-size: 15px;
+    line-height: 1.62;
+  }
+
+  body.is-lesson-view .academy-lesson {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  body.is-lesson-view .academy-lesson .chapter-block-heading h3,
+  body.is-lesson-view .academy-lesson .chapter-section-title {
+    font-size: 21px;
+    line-height: 1.35;
+  }
+
+  body.is-lesson-view .academy-lesson .chapter-block-heading p,
+  body.is-lesson-view .academy-lesson .section-heading > p {
+    font-size: 15px;
+    line-height: 1.62;
+  }
+
+  body.is-lesson-view .academy-lesson :is(.prose p,.prose li,.scene-opening p,.scene-case p) {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  body.is-lesson-view .academy-lesson article > :is(h4,strong),
+  body.is-lesson-view .academy-lesson :is(.info-card,.principle-grid,.event-grid) strong {
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  body.is-lesson-view .academy-lesson article > p,
+  body.is-lesson-view .academy-lesson :is(.info-card,.principle-grid,.event-grid) p {
+    font-size: 15px;
+    line-height: 1.62;
+  }
+
+  body.is-lesson-view .academy-lesson .standard-workflow strong,
+  body[data-lesson-type="workflow"] .standard-workflow strong {
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  body.is-lesson-view .academy-lesson .standard-workflow small,
+  body[data-lesson-type="workflow"] .standard-workflow small {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  body.is-lesson-view .academy-lesson :is(.callout,.tip,.note) p {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  body.is-lesson-view .academy-lesson :is(.callout,.tip,.note) strong,
+  body.is-lesson-view .academy-lesson :is(.special-robot-checklist,.special-chemical-checklist,.special-electrical-checklist) > strong {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  body.is-lesson-view .academy-lesson :is(.special-robot-checklist,.special-chemical-checklist,.special-electrical-checklist) p {
+    font-size: 15px;
+    line-height: 1.62;
+  }
+
+  body.is-lesson-view .academy-lesson .risk-practice-step legend {
+    font-size: 20px !important;
+    line-height: 1.5 !important;
+  }
+
+  body.is-lesson-view .academy-lesson .risk-practice-step > label {
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  body.is-lesson-view .academy-lesson :is(.practice-feedback,.practice-hint p) {
+    font-size: 15px;
+    line-height: 1.62;
   }
 }

@@ -1,10 +1,12 @@
 # Special Safety Education Handbook Production Guide
 
-Status: **MAPPING READY**  
-Sprint: **SED-001**  
+Status: **CH01 PRODUCTION GUIDE READY**
+
+Sprint: **SED-003**
+
 Golden Reference: **TBM Handbook / Platform Handbook**
 
-이 문서는 특별안전교육 Handbook의 Chapter 제작 기준이다. SED-001에서는 Chapter Mapping만 확정하며 본문, 이미지, Practice와 새로운 Component를 제작하지 않는다.
+이 문서는 특별안전교육 Handbook의 Chapter 제작 기준이다. SED-003에서는 CH01 Production Guide만 확정하며 Lesson, 이미지, Practice와 새로운 Component를 제작하지 않는다.
 
 ## 1. Handbook 구조
 
@@ -32,8 +34,102 @@ Golden Reference: **TBM Handbook / Platform Handbook**
 ### CH01 · 특별안전교육이란?
 
 - 형식: Summary
-- 목적: 특별안전교육이 필요한 이유와 대상 작업을 이해한다.
-- 자산: SED-001에서 생성하지 않는다.
+- 목적: 특별안전교육이 필요한 이유와 ONOFF 현장에서 어떤 작업이 특별안전교육 대상인지 이해한다.
+- 자산: SED-003에서 생성하지 않는다.
+
+#### WHY
+
+특별안전교육은 고위험 작업을 수행하는 작업자가 작업 전 반드시 받아야 하는 법정 안전교육이다. ONOFF는 이를 실제 작업 Workflow와 연결하여 현장에서 바로 활용할 수 있도록 교육한다.
+
+#### 학습 목표
+
+- 특별안전교육의 목적 이해
+- 공통교육과 개별교육의 차이 이해
+- 대상 작업 확인
+- Daily Work와 연결 이해
+
+#### 핵심 내용
+
+공통교육
+
+↓
+
+13번 · 운반하역기계
+
+↓
+
+17번 · 전압 75V 이상
+
+↓
+
+35번 · 유해화학물질
+
+↓
+
+36번 · 로봇작업
+
+↓
+
+Daily Work 연계
+
+#### CHECK POINT
+
+- 특별안전교육 대상 작업인지 확인한다.
+- 공통교육 이수 여부를 확인한다.
+- 해당 작업의 개별교육을 확인한다.
+- 교육 완료 후 작업을 시작한다.
+
+#### TIP
+
+특별안전교육은 법정교육으로 끝나는 것이 아니라 실제 작업 Workflow와 연결되어야 한다.
+
+교육 완료
+
+↓
+
+전자문서 확인
+
+↓
+
+전자서명
+
+↓
+
+Safety Start
+
+#### 현장 적용
+
+Today's Work
+
+↓
+
+특별안전교육 대상 확인
+
+↓
+
+Academy 참고
+
+↓
+
+전자문서
+
+↓
+
+전자서명
+
+↓
+
+Safety Start
+
+↓
+
+작업 시작
+
+#### 제작 제한
+
+- TBM Handbook의 확정 구조를 그대로 사용한다.
+- 새로운 UI, Lesson 또는 이미지를 제작하지 않는다.
+- CH02 이후의 Mapping과 제작 기준은 변경하지 않는다.
 
 ### CH02 · 교육 대상 작업
 

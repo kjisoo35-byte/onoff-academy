@@ -54,6 +54,13 @@
     { id: 'risk-assessment-stra', book: 'risk', part: '1', chapter: '03', title: 'S-TRA 위험성 판단 이해', progressTotal: 5 },
     { id: 'risk-assessment-daily-safety', book: 'risk', part: '2', chapter: '04', title: 'Daily Safety', progressTotal: 5 },
     { id: 'risk-assessment-platform', book: 'risk', part: '2', chapter: '05', title: 'Platform에서 위험성평가 활용', progressTotal: 5 }
+    ,{ id: 'special-education-intro', book: 'special', chapter: '01', title: '특별안전교육이란?', progressTotal: 7 }
+    ,{ id: 'special-common-training', book: 'special', chapter: '02', title: '공통교육', progressTotal: 7 }
+    ,{ id: 'special-cargo-handling', book: 'special', chapter: '03', title: '13번 · 운반·하역기계 작업', progressTotal: 7 }
+    ,{ id: 'special-live-work-75v', book: 'special', chapter: '04', title: '17번 · 전압 75V 이상 정전·활선 작업', progressTotal: 7 }
+    ,{ id: 'special-hazardous-chemicals', book: 'special', chapter: '05', title: '35번 · 유해물질 제조·취급 작업', progressTotal: 7 }
+    ,{ id: 'special-robot-work', book: 'special', chapter: '06', title: '36번 · 로봇작업', progressTotal: 7 }
+    ,{ id: 'special-daily-work', book: 'special', part: '02', chapter: '07', title: 'Daily Work 연계', progressTotal: 7 }
   ];
   bookChapterForm.forEach((item) => {
     const chapter = document.getElementById(item.id);
@@ -342,6 +349,58 @@
     ,{ chapter: 'risk-assessment-platform', book: 'risk', key: 'sop', title: 'SOP와 위험성평가', selector: '#risk-platform-sop' }
     ,{ chapter: 'risk-assessment-platform', book: 'risk', key: 'daily', title: 'Daily Work 연결', selector: '#risk-platform-daily' }
     ,{ chapter: 'risk-assessment-platform', book: 'risk', key: 'cycle', title: '작업 현장 순환', selector: '#risk-platform-cycle' }
+    ,{ chapter: 'special-education-intro', book: 'special', key: 'quick', title: '특별안전교육이란?', selector: '.section-heading' }
+    ,{ chapter: 'special-common-training', book: 'special', key: 'topics', title: '공통적으로 무엇을 배우는가?', selector: '#special-common-topics' }
+    ,{ chapter: 'special-common-training', book: 'special', key: 'why', title: '왜 공통교육이 필요한가?', selector: '#special-common-why' }
+    ,{ chapter: 'special-common-training', book: 'special', key: 'types', title: '안전교육은 언제 받는가?', selector: '#special-common-types' }
+    ,{ chapter: 'special-common-training', book: 'special', key: 'additional', title: '특별한 위험작업은 추가교육', selector: '#special-common-additional' }
+    ,{ chapter: 'special-common-training', book: 'special', key: 'before-work', title: '교육을 현장의 안전행동으로 연결', selector: '#special-common-before-work' }
+    ,{ chapter: 'special-common-training', book: 'special', key: 'practice', title: 'PRACTICE', selector: '#special-common-practice' }
+    ,{ chapter: 'special-cargo-handling', book: 'special', key: 'why', title: '왜 운반·하역 작업이 위험할까?', selector: '#special-material-why' }
+    ,{ chapter: 'special-cargo-handling', book: 'special', key: 'before', title: '작업 전 확인', selector: '#special-material-before' }
+    ,{ chapter: 'special-cargo-handling', book: 'special', key: 'load', title: '화물 취급', selector: '#special-material-load' }
+    ,{ chapter: 'special-cargo-handling', book: 'special', key: 'signal', title: '작업신호', selector: '#special-material-signal' }
+    ,{ chapter: 'special-cargo-handling', book: 'special', key: 'stop', title: '이상 시 STOP', selector: '#special-material-stop' }
+    ,{ chapter: 'special-cargo-handling', book: 'special', key: 'practice', title: 'PRACTICE', selector: '#special-material-practice' }
+    ,{ chapter: 'special-live-work-75v', book: 'special', key: 'why', title: '전기는 보이지 않습니다', selector: '#special-electrical-why' }
+    ,{ chapter: 'special-live-work-75v', book: 'special', key: 'before', title: '작업 전 확인', selector: '#special-electrical-before' }
+    ,{ chapter: 'special-live-work-75v', book: 'special', key: 'outage', title: '정전작업 기본 Flow', selector: '#special-electrical-outage' }
+    ,{ chapter: 'special-live-work-75v', book: 'special', key: 'voltage', title: 'OFF 표시만 믿지 않습니다', selector: '#special-electrical-voltage' }
+    ,{ chapter: 'special-live-work-75v', book: 'special', key: 'ppe', title: '보호구와 절연용 기구', selector: '#special-electrical-ppe' }
+    ,{ chapter: 'special-live-work-75v', book: 'special', key: 'live', title: '활선작업', selector: '#special-electrical-live' }
+    ,{ chapter: 'special-live-work-75v', book: 'special', key: 'stop', title: '이상하면 STOP', selector: '#special-electrical-stop' }
+    ,{ chapter: 'special-live-work-75v', book: 'special', key: 'summary', title: 'SUMMARY', selector: '#special-electrical-summary' }
+    ,{ chapter: 'special-live-work-75v', book: 'special', key: 'practice', title: 'PRACTICE', selector: '#special-electrical-practice' }
+    ,{ chapter: 'special-hazardous-chemicals', book: 'special', key: 'why', title: '익숙한 제품도 화학물질입니다', selector: '#special-chemical-why' }
+    ,{ chapter: 'special-hazardous-chemicals', book: 'special', key: 'product', title: '사용 전 제품 확인', selector: '#special-chemical-product' }
+    ,{ chapter: 'special-hazardous-chemicals', book: 'special', key: 'msds', title: 'MSDS 확인', selector: '#special-chemical-msds' }
+    ,{ chapter: 'special-hazardous-chemicals', book: 'special', key: 'current', title: '최신 MSDS 확인', selector: '#special-chemical-current' }
+    ,{ chapter: 'special-hazardous-chemicals', book: 'special', key: 'environment', title: '작업환경과 보호구', selector: '#special-chemical-environment' }
+    ,{ chapter: 'special-hazardous-chemicals', book: 'special', key: 'use', title: '안전하게 사용', selector: '#special-chemical-use' }
+    ,{ chapter: 'special-hazardous-chemicals', book: 'special', key: 'storage', title: '보관과 폐기', selector: '#special-chemical-storage' }
+    ,{ chapter: 'special-hazardous-chemicals', book: 'special', key: 'stop', title: '이상하면 STOP', selector: '#special-chemical-stop' }
+    ,{ chapter: 'special-hazardous-chemicals', book: 'special', key: 'summary', title: 'SUMMARY', selector: '#special-chemical-summary' }
+    ,{ chapter: 'special-hazardous-chemicals', book: 'special', key: 'practice', title: 'PRACTICE', selector: '#special-chemical-practice' }
+    ,{ chapter: 'special-robot-work', book: 'special', key: 'why', title: '로봇은 왜 위험할까?', selector: '#special-robot-why' }
+    ,{ chapter: 'special-robot-work', book: 'special', key: 'before', title: '로봇작업 전 확인', selector: '#special-robot-before' }
+    ,{ chapter: 'special-robot-work', book: 'special', key: 'zone', title: '운전 중 위험구역', selector: '#special-robot-zone' }
+    ,{ chapter: 'special-robot-work', book: 'special', key: 'safeguard', title: '안전장치 임의 해제 금지', selector: '#special-robot-safeguard' }
+    ,{ chapter: 'special-robot-work', book: 'special', key: 'access', title: '티칭·점검·정비 접근', selector: '#special-robot-access' }
+    ,{ chapter: 'special-robot-work', book: 'special', key: 'teach', title: 'Teach Mode', selector: '#special-robot-teach' }
+    ,{ chapter: 'special-robot-work', book: 'special', key: 'team', title: '2인 작업·역할 공유', selector: '#special-robot-team' }
+    ,{ chapter: 'special-robot-work', book: 'special', key: 'emergency', title: '이상 발생 시', selector: '#special-robot-emergency' }
+    ,{ chapter: 'special-robot-work', book: 'special', key: 'summary', title: 'SUMMARY', selector: '#special-robot-summary' }
+    ,{ chapter: 'special-robot-work', book: 'special', key: 'practice', title: 'PRACTICE', selector: '#special-robot-practice' }
+    ,{ chapter: 'special-daily-work', book: 'special', key: 'role', title: 'PART 01과 PART 02', selector: '#special-platform-role' }
+    ,{ chapter: 'special-daily-work', book: 'special', key: 'today', title: '오늘 작업을 선택합니다', selector: '#special-platform-today' }
+    ,{ chapter: 'special-daily-work', book: 'special', key: 'training', title: '특별교육 대상 확인', selector: '#special-platform-training' }
+    ,{ chapter: 'special-daily-work', book: 'special', key: 'incomplete', title: '미이수라면?', selector: '#special-platform-incomplete' }
+    ,{ chapter: 'special-daily-work', book: 'special', key: 'documents', title: '안전문서 확인', selector: '#special-platform-documents' }
+    ,{ chapter: 'special-daily-work', book: 'special', key: 'sign', title: '전자서명', selector: '#special-platform-sign' }
+    ,{ chapter: 'special-daily-work', book: 'special', key: 'start', title: 'Safety Start', selector: '#special-platform-start' }
+    ,{ chapter: 'special-daily-work', book: 'special', key: 'change', title: '작업조건 변경', selector: '#special-platform-change' }
+    ,{ chapter: 'special-daily-work', book: 'special', key: 'final', title: 'FINAL WORKFLOW', selector: '#special-platform-final' }
+    ,{ chapter: 'special-daily-work', book: 'special', key: 'complete', title: 'HANDBOOK COMPLETE', selector: '#special-platform-complete' }
   ].map((lesson) => ({ ...lesson, book: lesson.book || 'platform', route: `${lesson.chapter}-${lesson.key}` }));
   const lessonsByChapter = lessonCatalog.reduce((groups, lesson) => {
     const group = groups.get(lesson.chapter) || [];
@@ -654,6 +713,634 @@
     practiceRestart?.addEventListener('click', resetPractice);
     showAchievement(readAchievements()[achievementId]);
   }
+
+  const specialPractice = document.querySelector('#special-education-practice');
+  if (specialPractice) {
+    const practiceForm = specialPractice.querySelector('.risk-practice-form');
+    const practiceSteps = [...specialPractice.querySelectorAll('.risk-practice-step')];
+    const practiceResult = specialPractice.querySelector('.risk-practice-result');
+    const practiceRestart = specialPractice.querySelector('.practice-restart');
+    const practiceAchievement = specialPractice.querySelector('.risk-practice-achievement');
+    const achievementStorageKey = 'onoff-academy-achievements';
+    const achievementId = 'special-safety-basic';
+    const correctAnswers = ['before', 'worker', 'high-risk'];
+    const correctMessages = [
+      '✓ 작업 시작 전 교육 실시 시점을 확인했습니다.',
+      '✓ 고위험 작업 수행자가 교육 대상임을 확인했습니다.',
+      '✓ 고위험 작업이 특별안전교육 대상임을 확인했습니다.'
+    ];
+    const retryMessages = [
+      '고위험 작업을 시작하기 전 교육이 완료되어야 합니다. 힌트를 확인하고 다시 선택하세요.',
+      '직급이나 소속보다 실제 수행하는 작업을 기준으로 다시 선택하세요.',
+      '중대한 사고 위험이 있는 작업을 다시 선택하세요.'
+    ];
+    const showPracticeStep = (index) => {
+      practiceSteps.forEach((step, stepIndex) => {
+        step.classList.toggle('is-active', stepIndex === index);
+        step.disabled = stepIndex > index;
+      });
+    };
+    const setPracticeFeedback = (step, message, correct = false) => {
+      const feedback = step.querySelector('.practice-feedback');
+      feedback.textContent = message;
+      feedback.classList.toggle('is-correct', correct);
+    };
+    const readAchievements = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem(achievementStorageKey) || '{}');
+        return saved && typeof saved === 'object' ? saved : {};
+      } catch {
+        return {};
+      }
+    };
+    const showAchievement = (achievement) => {
+      if (!achievement || achievement.status !== 'completed') return;
+      const completedDate = achievement.completedAt
+        ? new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(achievement.completedAt))
+        : '';
+      const completedAt = practiceAchievement.querySelector('time');
+      completedAt.dateTime = achievement.completedAt || '';
+      completedAt.textContent = completedDate;
+      practiceAchievement.hidden = false;
+    };
+    const saveAchievement = () => {
+      const achievements = readAchievements();
+      const achievement = achievements[achievementId]?.status === 'completed'
+        ? achievements[achievementId]
+        : { achievementId, status: 'completed', completedAt: new Date().toISOString(), version: 1 };
+      achievements[achievementId] = achievement;
+      try {
+        localStorage.setItem(achievementStorageKey, JSON.stringify(achievements));
+      } catch {
+        // Completion remains visible for this session when browser storage is unavailable.
+      }
+      showAchievement(achievement);
+    };
+    const resetPractice = () => {
+      practiceForm.reset();
+      practiceSteps.forEach((step) => {
+        setPracticeFeedback(step, '');
+        const hint = step.querySelector('.practice-hint');
+        const hintToggle = step.querySelector('.practice-hint-toggle');
+        hint.hidden = true;
+        hintToggle.setAttribute('aria-expanded', 'false');
+        hintToggle.textContent = '힌트 보기';
+      });
+      practiceForm.hidden = false;
+      practiceResult.hidden = true;
+      showPracticeStep(0);
+      specialPractice.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
+    practiceSteps.forEach((step, index) => {
+      const hint = step.querySelector('.practice-hint');
+      const hintToggle = step.querySelector('.practice-hint-toggle');
+      hintToggle.addEventListener('click', () => {
+        hint.hidden = !hint.hidden;
+        hintToggle.setAttribute('aria-expanded', String(!hint.hidden));
+        hintToggle.textContent = hint.hidden ? '힌트 보기' : '힌트 닫기';
+      });
+      step.querySelector('.practice-check').addEventListener('click', () => {
+        const selected = step.querySelector('input[type="radio"]:checked')?.value;
+        if (selected !== correctAnswers[index]) {
+          setPracticeFeedback(step, retryMessages[index]);
+          hint.hidden = false;
+          hintToggle.setAttribute('aria-expanded', 'true');
+          hintToggle.textContent = '힌트 닫기';
+          return;
+        }
+        setPracticeFeedback(step, correctMessages[index], true);
+        if (index < practiceSteps.length - 1) {
+          showPracticeStep(index + 1);
+          practiceSteps[index + 1].scrollIntoView({ block: 'start', behavior: 'smooth' });
+          return;
+        }
+        saveAchievement();
+        practiceForm.hidden = true;
+        practiceResult.hidden = false;
+        practiceResult.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      });
+    });
+    practiceRestart.addEventListener('click', resetPractice);
+    showAchievement(readAchievements()[achievementId]);
+  }
+
+  const specialCommonPractice = document.querySelector('#special-common-practice');
+  if (specialCommonPractice) {
+    const practiceForm = specialCommonPractice.querySelector('.risk-practice-form');
+    const practiceSteps = [...specialCommonPractice.querySelectorAll('.risk-practice-step')];
+    const practiceResult = specialCommonPractice.querySelector('.risk-practice-result');
+    const practiceRestart = specialCommonPractice.querySelector('.practice-restart');
+    const practiceAchievement = specialCommonPractice.querySelector('.risk-practice-achievement');
+    const achievementStorageKey = 'onoff-academy-achievements';
+    const achievementId = 'safety-common-basic';
+    const correctAnswers = ['hire', 'additional', 'stop'];
+    const correctMessages = [
+      '✓ 작업 투입 전 채용 시 교육을 확인했습니다.',
+      '✓ 해당 작업의 특별교육을 추가로 확인했습니다.',
+      '✓ 작업을 멈추고 안전상태를 확보한 뒤 알리는 행동을 확인했습니다.'
+    ];
+    const retryMessages = [
+      '새로운 근로자가 작업환경과 기본 안전수칙을 처음 확인하는 교육을 다시 생각해보세요.',
+      '공통교육만으로 특정 유해·위험작업의 교육이 완료되는지 다시 확인해보세요.',
+      '예상하지 못한 위험이 계속되는 상황에서 가장 먼저 해야 할 행동을 다시 선택하세요.'
+    ];
+    const showPracticeStep = (index) => {
+      practiceSteps.forEach((step, stepIndex) => {
+        step.classList.toggle('is-active', stepIndex === index);
+        step.disabled = stepIndex > index;
+      });
+    };
+    const setPracticeFeedback = (step, message, correct = false) => {
+      const feedback = step.querySelector('.practice-feedback');
+      feedback.textContent = message;
+      feedback.classList.toggle('is-correct', correct);
+    };
+    const readAchievements = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem(achievementStorageKey) || '{}');
+        return saved && typeof saved === 'object' ? saved : {};
+      } catch {
+        return {};
+      }
+    };
+    const showAchievement = (achievement) => {
+      if (!achievement || achievement.status !== 'completed') return;
+      const completedDate = achievement.completedAt
+        ? new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(achievement.completedAt))
+        : '';
+      const completedAt = practiceAchievement.querySelector('time');
+      completedAt.dateTime = achievement.completedAt || '';
+      completedAt.textContent = completedDate;
+      practiceAchievement.hidden = false;
+    };
+    const saveAchievement = () => {
+      const achievements = readAchievements();
+      const achievement = achievements[achievementId]?.status === 'completed'
+        ? achievements[achievementId]
+        : { achievementId, status: 'completed', completedAt: new Date().toISOString(), version: 1 };
+      achievements[achievementId] = achievement;
+      try {
+        localStorage.setItem(achievementStorageKey, JSON.stringify(achievements));
+      } catch {
+        // Completion remains visible for this session when browser storage is unavailable.
+      }
+      showAchievement(achievement);
+    };
+    const resetPractice = () => {
+      practiceForm.reset();
+      practiceSteps.forEach((step) => {
+        setPracticeFeedback(step, '');
+        const hint = step.querySelector('.practice-hint');
+        const hintToggle = step.querySelector('.practice-hint-toggle');
+        hint.hidden = true;
+        hintToggle.setAttribute('aria-expanded', 'false');
+        hintToggle.textContent = '힌트 보기';
+      });
+      practiceForm.hidden = false;
+      practiceResult.hidden = true;
+      showPracticeStep(0);
+      specialCommonPractice.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
+    practiceSteps.forEach((step, index) => {
+      const hint = step.querySelector('.practice-hint');
+      const hintToggle = step.querySelector('.practice-hint-toggle');
+      hintToggle.addEventListener('click', () => {
+        hint.hidden = !hint.hidden;
+        hintToggle.setAttribute('aria-expanded', String(!hint.hidden));
+        hintToggle.textContent = hint.hidden ? '힌트 보기' : '힌트 닫기';
+      });
+      step.querySelector('.practice-check').addEventListener('click', () => {
+        const selected = step.querySelector('input[type="radio"]:checked')?.value;
+        if (selected !== correctAnswers[index]) {
+          setPracticeFeedback(step, retryMessages[index]);
+          hint.hidden = false;
+          hintToggle.setAttribute('aria-expanded', 'true');
+          hintToggle.textContent = '힌트 닫기';
+          return;
+        }
+        setPracticeFeedback(step, correctMessages[index], true);
+        if (index < practiceSteps.length - 1) {
+          showPracticeStep(index + 1);
+          practiceSteps[index + 1].scrollIntoView({ block: 'start', behavior: 'smooth' });
+          return;
+        }
+        saveAchievement();
+        practiceForm.hidden = true;
+        practiceResult.hidden = false;
+        practiceResult.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      });
+    });
+    practiceRestart.addEventListener('click', resetPractice);
+    showAchievement(readAchievements()[achievementId]);
+  }
+
+  const supersededSpecialMaterialPractice = null;
+  if (supersededSpecialMaterialPractice) {
+    const practiceForm = specialMaterialPractice.querySelector('.risk-practice-form');
+    const practiceSteps = [...specialMaterialPractice.querySelectorAll('.risk-practice-step')];
+    const practiceResult = specialMaterialPractice.querySelector('.risk-practice-result');
+    const practiceRestart = specialMaterialPractice.querySelector('.practice-restart');
+    const practiceAchievement = specialMaterialPractice.querySelector('.risk-practice-achievement');
+    const achievementStorageKey = 'onoff-academy-achievements';
+    const achievementId = 'special-safety-material-handling';
+    const correctAnswers = [['all'], ['stop'], ['signal', 'unstable', 'worker']];
+    const correctMessages = [
+      '✓ 화물·이동경로·주변 작업자를 확인했습니다.',
+      '✓ 정지 후 작업신호를 다시 확인했습니다.',
+      '✓ 작업을 계속하면 안 되는 세 가지 상황을 확인했습니다.'
+    ];
+    const retryMessages = [
+      '화물만이 아니라 이동경로와 같은 공간의 작업자도 함께 확인해야 합니다.',
+      '신호가 불명확할 때 이동을 계속해도 되는지 다시 생각해보세요.',
+      '안전한 이동 조건을 깨뜨리는 상황 세 가지를 다시 선택하세요.'
+    ];
+    const showPracticeStep = (index) => {
+      practiceSteps.forEach((step, stepIndex) => {
+        step.classList.toggle('is-active', stepIndex === index);
+        step.disabled = stepIndex > index;
+      });
+    };
+    const setPracticeFeedback = (step, message, correct = false) => {
+      const feedback = step.querySelector('.practice-feedback');
+      feedback.textContent = message;
+      feedback.classList.toggle('is-correct', correct);
+    };
+    const readAchievements = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem(achievementStorageKey) || '{}');
+        return saved && typeof saved === 'object' ? saved : {};
+      } catch {
+        return {};
+      }
+    };
+    const showAchievement = (achievement) => {
+      if (!achievement || achievement.status !== 'completed') return;
+      const completedDate = achievement.completedAt
+        ? new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(achievement.completedAt))
+        : '';
+      const completedAt = practiceAchievement.querySelector('time');
+      completedAt.dateTime = achievement.completedAt || '';
+      completedAt.textContent = completedDate;
+      practiceAchievement.hidden = false;
+    };
+    const saveAchievement = () => {
+      const achievements = readAchievements();
+      const achievement = achievements[achievementId]?.status === 'completed'
+        ? achievements[achievementId]
+        : { achievementId, status: 'completed', completedAt: new Date().toISOString(), version: 1 };
+      achievements[achievementId] = achievement;
+      try {
+        localStorage.setItem(achievementStorageKey, JSON.stringify(achievements));
+      } catch {
+        // Completion remains visible for this session when browser storage is unavailable.
+      }
+      showAchievement(achievement);
+    };
+    const resetPractice = () => {
+      practiceForm.reset();
+      practiceSteps.forEach((step) => {
+        setPracticeFeedback(step, '');
+        const hint = step.querySelector('.practice-hint');
+        const hintToggle = step.querySelector('.practice-hint-toggle');
+        hint.hidden = true;
+        hintToggle.setAttribute('aria-expanded', 'false');
+        hintToggle.textContent = '힌트 보기';
+      });
+      practiceForm.hidden = false;
+      practiceResult.hidden = true;
+      showPracticeStep(0);
+      specialMaterialPractice.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
+    practiceSteps.forEach((step, index) => {
+      const hint = step.querySelector('.practice-hint');
+      const hintToggle = step.querySelector('.practice-hint-toggle');
+      hintToggle.addEventListener('click', () => {
+        hint.hidden = !hint.hidden;
+        hintToggle.setAttribute('aria-expanded', String(!hint.hidden));
+        hintToggle.textContent = hint.hidden ? '힌트 보기' : '힌트 닫기';
+      });
+      step.querySelector('.practice-check').addEventListener('click', () => {
+        const selected = [...step.querySelectorAll('input:checked')].map((input) => input.value).sort();
+        const expected = [...correctAnswers[index]].sort();
+        const correct = selected.length === expected.length && selected.every((value, answerIndex) => value === expected[answerIndex]);
+        if (!correct) {
+          setPracticeFeedback(step, retryMessages[index]);
+          hint.hidden = false;
+          hintToggle.setAttribute('aria-expanded', 'true');
+          hintToggle.textContent = '힌트 닫기';
+          return;
+        }
+        setPracticeFeedback(step, correctMessages[index], true);
+        if (index < practiceSteps.length - 1) {
+          showPracticeStep(index + 1);
+          practiceSteps[index + 1].scrollIntoView({ block: 'start', behavior: 'smooth' });
+          return;
+        }
+        saveAchievement();
+        practiceForm.hidden = true;
+        practiceResult.hidden = false;
+        practiceResult.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      });
+    });
+    practiceRestart.addEventListener('click', resetPractice);
+    showAchievement(readAchievements()[achievementId]);
+  }
+
+  const specialMaterialPractice = document.querySelector('#special-material-practice');
+  if (specialMaterialPractice) {
+    const practiceForm = specialMaterialPractice.querySelector('.risk-practice-form');
+    const practiceSteps = [...specialMaterialPractice.querySelectorAll('.risk-practice-step')];
+    const practiceResult = specialMaterialPractice.querySelector('.risk-practice-result');
+    const practiceRestart = specialMaterialPractice.querySelector('.practice-restart');
+    const practiceAchievement = specialMaterialPractice.querySelector('.risk-practice-achievement');
+    const achievementStorageKey = 'onoff-academy-achievements';
+    const achievementId = 'special-safety-material-handling';
+    const correctAnswers = [['all'], ['stop'], ['signal', 'unstable', 'worker']];
+    const correctMessages = [
+      '✓ 화물·이동경로·주변 작업자를 확인했습니다.',
+      '✓ 정지 후 작업신호를 다시 확인했습니다.',
+      '✓ 작업을 계속하면 안 되는 세 가지 상황을 확인했습니다.'
+    ];
+    const retryMessages = [
+      '화물만이 아니라 이동경로와 같은 공간의 작업자도 함께 확인해야 합니다.',
+      '신호가 불명확할 때 이동을 계속해도 되는지 다시 생각해보세요.',
+      '안전한 이동 조건을 깨뜨리는 상황 세 가지를 다시 선택하세요.'
+    ];
+    const showPracticeStep = (index) => {
+      practiceSteps.forEach((step, stepIndex) => {
+        step.classList.toggle('is-active', stepIndex === index);
+        step.disabled = stepIndex > index;
+      });
+    };
+    const setPracticeFeedback = (step, message, correct = false) => {
+      const feedback = step.querySelector('.practice-feedback');
+      feedback.textContent = message;
+      feedback.classList.toggle('is-correct', correct);
+    };
+    const readAchievements = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem(achievementStorageKey) || '{}');
+        return saved && typeof saved === 'object' ? saved : {};
+      } catch {
+        return {};
+      }
+    };
+    const showAchievement = (achievement) => {
+      if (!achievement || achievement.status !== 'completed') return;
+      const completedDate = achievement.completedAt
+        ? new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(achievement.completedAt))
+        : '';
+      const completedAt = practiceAchievement.querySelector('time');
+      completedAt.dateTime = achievement.completedAt || '';
+      completedAt.textContent = completedDate;
+      practiceAchievement.hidden = false;
+    };
+    const saveAchievement = () => {
+      const achievements = readAchievements();
+      const achievement = achievements[achievementId]?.status === 'completed'
+        ? achievements[achievementId]
+        : { achievementId, status: 'completed', completedAt: new Date().toISOString(), version: 1 };
+      achievements[achievementId] = achievement;
+      try {
+        localStorage.setItem(achievementStorageKey, JSON.stringify(achievements));
+      } catch {
+        // Completion remains visible for this session when browser storage is unavailable.
+      }
+      showAchievement(achievement);
+    };
+    const resetPractice = () => {
+      practiceForm.reset();
+      practiceSteps.forEach((step) => {
+        setPracticeFeedback(step, '');
+        const hint = step.querySelector('.practice-hint');
+        const hintToggle = step.querySelector('.practice-hint-toggle');
+        hint.hidden = true;
+        hintToggle.setAttribute('aria-expanded', 'false');
+        hintToggle.textContent = '힌트 보기';
+      });
+      practiceForm.hidden = false;
+      practiceResult.hidden = true;
+      showPracticeStep(0);
+      specialMaterialPractice.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
+    practiceSteps.forEach((step, index) => {
+      const hint = step.querySelector('.practice-hint');
+      const hintToggle = step.querySelector('.practice-hint-toggle');
+      hintToggle.addEventListener('click', () => {
+        hint.hidden = !hint.hidden;
+        hintToggle.setAttribute('aria-expanded', String(!hint.hidden));
+        hintToggle.textContent = hint.hidden ? '힌트 보기' : '힌트 닫기';
+      });
+      step.querySelector('.practice-check').addEventListener('click', () => {
+        const selected = [...step.querySelectorAll('input:checked')].map((input) => input.value).sort();
+        const expected = [...correctAnswers[index]].sort();
+        const correct = selected.length === expected.length && selected.every((value, answerIndex) => value === expected[answerIndex]);
+        if (!correct) {
+          setPracticeFeedback(step, retryMessages[index]);
+          hint.hidden = false;
+          hintToggle.setAttribute('aria-expanded', 'true');
+          hintToggle.textContent = '힌트 닫기';
+          return;
+        }
+        setPracticeFeedback(step, correctMessages[index], true);
+        if (index < practiceSteps.length - 1) {
+          showPracticeStep(index + 1);
+          practiceSteps[index + 1].scrollIntoView({ block: 'start', behavior: 'smooth' });
+          return;
+        }
+        saveAchievement();
+        practiceForm.hidden = true;
+        practiceResult.hidden = false;
+        practiceResult.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      });
+    });
+    practiceRestart.addEventListener('click', resetPractice);
+    showAchievement(readAchievements()[achievementId]);
+  }
+  const specialRobotPractice = document.querySelector('#special-robot-practice');
+  if (specialRobotPractice) {
+    const practiceForm = specialRobotPractice.querySelector('.risk-practice-form');
+    const practiceSteps = [...specialRobotPractice.querySelectorAll('.risk-practice-step')];
+    const practiceResult = specialRobotPractice.querySelector('.risk-practice-result');
+    const practiceRestart = specialRobotPractice.querySelector('.practice-restart');
+    const practiceAchievement = specialRobotPractice.querySelector('.risk-practice-achievement');
+    const achievementStorageKey = 'onoff-academy-achievements';
+    const achievementId = 'special-safety-robot';
+    const correctAnswers = [['verify'], ['procedure'], ['movement'], ['mismatch', 'safeguard', 'unexpected']];
+    const correctMessages = ['✓ 접근 전 운전·에너지 상태와 안전조건을 확인했습니다.','✓ 정지·안전절차 후 접근하는 원칙을 확인했습니다.','✓ Teach Mode에서도 동작범위와 작업자 위치를 확인했습니다.','✓ 작업을 계속하면 안 되는 세 가지 상태를 확인했습니다.'];
+    const retryMessages = ['정지해 보이는 상태가 실제 안전상태인지 다시 생각해보세요.','자동운전 중 위험구역에 접근하기 전에 무엇을 해야 하는지 확인하세요.','Teach Mode에서도 로봇이 실제로 움직일 수 있음을 기억하세요.','안전장치, 로봇 동작과 작업자 간 상태 인식이 명확한지 다시 확인하세요.'];
+    const showPracticeStep = (index) => practiceSteps.forEach((step, stepIndex) => { step.classList.toggle('is-active', stepIndex === index); step.disabled = stepIndex > index; });
+    const setPracticeFeedback = (step, message, correct = false) => { const feedback = step.querySelector('.practice-feedback'); feedback.textContent = message; feedback.classList.toggle('is-correct', correct); };
+    const readAchievements = () => { try { const saved = JSON.parse(localStorage.getItem(achievementStorageKey) || '{}'); return saved && typeof saved === 'object' ? saved : {}; } catch { return {}; } };
+    const showAchievement = (achievement) => { if (!achievement || achievement.status !== 'completed') return; const completedDate = achievement.completedAt ? new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(achievement.completedAt)) : ''; const completedAt = practiceAchievement.querySelector('time'); completedAt.dateTime = achievement.completedAt || ''; completedAt.textContent = completedDate; practiceAchievement.hidden = false; };
+    const saveAchievement = () => { const achievements = readAchievements(); const achievement = achievements[achievementId]?.status === 'completed' ? achievements[achievementId] : { achievementId, status: 'completed', completedAt: new Date().toISOString(), version: 1 }; achievements[achievementId] = achievement; try { localStorage.setItem(achievementStorageKey, JSON.stringify(achievements)); } catch { /* Completion remains visible for this session. */ } showAchievement(achievement); };
+    const resetPractice = () => { practiceForm.reset(); practiceSteps.forEach((step) => { setPracticeFeedback(step, ''); const hint = step.querySelector('.practice-hint'); const toggle = step.querySelector('.practice-hint-toggle'); hint.hidden = true; toggle.setAttribute('aria-expanded', 'false'); toggle.textContent = '힌트 보기'; }); practiceForm.hidden = false; practiceResult.hidden = true; showPracticeStep(0); specialRobotPractice.scrollIntoView({ block: 'start', behavior: 'smooth' }); };
+    practiceSteps.forEach((step, index) => { const hint = step.querySelector('.practice-hint'); const toggle = step.querySelector('.practice-hint-toggle'); toggle.addEventListener('click', () => { hint.hidden = !hint.hidden; toggle.setAttribute('aria-expanded', String(!hint.hidden)); toggle.textContent = hint.hidden ? '힌트 보기' : '힌트 닫기'; }); step.querySelector('.practice-check').addEventListener('click', () => { const selected = [...step.querySelectorAll('input:checked')].map((input) => input.value).sort(); const expected = [...correctAnswers[index]].sort(); const correct = selected.length === expected.length && selected.every((value, answerIndex) => value === expected[answerIndex]); if (!correct) { setPracticeFeedback(step, retryMessages[index]); hint.hidden = false; toggle.setAttribute('aria-expanded', 'true'); toggle.textContent = '힌트 닫기'; return; } setPracticeFeedback(step, correctMessages[index], true); if (index < practiceSteps.length - 1) { showPracticeStep(index + 1); practiceSteps[index + 1].scrollIntoView({ block: 'start', behavior: 'smooth' }); return; } saveAchievement(); practiceForm.hidden = true; practiceResult.hidden = false; practiceResult.scrollIntoView({ block: 'start', behavior: 'smooth' }); }); });
+    practiceRestart.addEventListener('click', resetPractice);
+    showAchievement(readAchievements()[achievementId]);
+  }
+
+  const specialChemicalPractice = document.querySelector('#special-chemical-practice');
+  if (specialChemicalPractice) {
+    const practiceForm = specialChemicalPractice.querySelector('.risk-practice-form');
+    const practiceSteps = [...specialChemicalPractice.querySelectorAll('.risk-practice-step')];
+    const practiceResult = specialChemicalPractice.querySelector('.risk-practice-result');
+    const practiceRestart = specialChemicalPractice.querySelector('.practice-restart');
+    const practiceAchievement = specialChemicalPractice.querySelector('.risk-practice-achievement');
+    const achievementStorageKey = 'onoff-academy-achievements';
+    const achievementId = 'special-safety-chemical';
+    const correctAnswers = [['stop'], ['handling', 'hazard', 'ppe', 'storage'], ['designated'], ['no']];
+    const correctMessages = ['✓ 제품과 안전정보를 확인한 뒤 사용하는 원칙을 확인했습니다.','✓ MSDS에서 우선 확인할 네 가지 안전정보를 확인했습니다.','✓ 지정된 보관·폐기방법을 따르는 행동을 확인했습니다.','✓ 보호장갑이 환기 확인을 대신할 수 없음을 확인했습니다.'];
+    const retryMessages = ['제품과 안전정보가 불명확한 상태에서 가장 먼저 해야 할 행동을 확인하세요.','작업자의 노출 예방과 취급·보관에 직접 필요한 정보를 다시 선택하세요.','사용 후 잔류물이 있는 자재의 관리방법을 다시 생각해보세요.','보호구와 환기·작업환경 통제의 역할을 구분해보세요.'];
+    const showPracticeStep = (index) => practiceSteps.forEach((step, stepIndex) => { step.classList.toggle('is-active', stepIndex === index); step.disabled = stepIndex > index; });
+    const setPracticeFeedback = (step, message, correct = false) => { const feedback = step.querySelector('.practice-feedback'); feedback.textContent = message; feedback.classList.toggle('is-correct', correct); };
+    const readAchievements = () => { try { const saved = JSON.parse(localStorage.getItem(achievementStorageKey) || '{}'); return saved && typeof saved === 'object' ? saved : {}; } catch { return {}; } };
+    const showAchievement = (achievement) => {
+      if (!achievement || achievement.status !== 'completed') return;
+      const completedDate = achievement.completedAt ? new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(achievement.completedAt)) : '';
+      const completedAt = practiceAchievement.querySelector('time'); completedAt.dateTime = achievement.completedAt || ''; completedAt.textContent = completedDate; practiceAchievement.hidden = false;
+    };
+    const saveAchievement = () => {
+      const achievements = readAchievements();
+      const achievement = achievements[achievementId]?.status === 'completed' ? achievements[achievementId] : { achievementId, status: 'completed', completedAt: new Date().toISOString(), version: 1 };
+      achievements[achievementId] = achievement;
+      try { localStorage.setItem(achievementStorageKey, JSON.stringify(achievements)); } catch { /* Completion remains visible for this session. */ }
+      showAchievement(achievement);
+    };
+    const resetPractice = () => {
+      practiceForm.reset();
+      practiceSteps.forEach((step) => { setPracticeFeedback(step, ''); const hint = step.querySelector('.practice-hint'); const toggle = step.querySelector('.practice-hint-toggle'); hint.hidden = true; toggle.setAttribute('aria-expanded', 'false'); toggle.textContent = '힌트 보기'; });
+      practiceForm.hidden = false; practiceResult.hidden = true; showPracticeStep(0); specialChemicalPractice.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
+    practiceSteps.forEach((step, index) => {
+      const hint = step.querySelector('.practice-hint'); const toggle = step.querySelector('.practice-hint-toggle');
+      toggle.addEventListener('click', () => { hint.hidden = !hint.hidden; toggle.setAttribute('aria-expanded', String(!hint.hidden)); toggle.textContent = hint.hidden ? '힌트 보기' : '힌트 닫기'; });
+      step.querySelector('.practice-check').addEventListener('click', () => {
+        const selected = [...step.querySelectorAll('input:checked')].map((input) => input.value).sort(); const expected = [...correctAnswers[index]].sort();
+        const correct = selected.length === expected.length && selected.every((value, answerIndex) => value === expected[answerIndex]);
+        if (!correct) { setPracticeFeedback(step, retryMessages[index]); hint.hidden = false; toggle.setAttribute('aria-expanded', 'true'); toggle.textContent = '힌트 닫기'; return; }
+        setPracticeFeedback(step, correctMessages[index], true);
+        if (index < practiceSteps.length - 1) { showPracticeStep(index + 1); practiceSteps[index + 1].scrollIntoView({ block: 'start', behavior: 'smooth' }); return; }
+        saveAchievement(); practiceForm.hidden = true; practiceResult.hidden = false; practiceResult.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      });
+    });
+    practiceRestart.addEventListener('click', resetPractice);
+    showAchievement(readAchievements()[achievementId]);
+  }
+
+  const specialElectricalPractice = document.querySelector('#special-electrical-practice');
+  if (specialElectricalPractice) {
+    const practiceForm = specialElectricalPractice.querySelector('.risk-practice-form');
+    const practiceSteps = [...specialElectricalPractice.querySelectorAll('.risk-practice-step')];
+    const practiceResult = specialElectricalPractice.querySelector('.risk-practice-result');
+    const practiceRestart = specialElectricalPractice.querySelector('.practice-restart');
+    const practiceAchievement = specialElectricalPractice.querySelector('.risk-practice-achievement');
+    const achievementStorageKey = 'onoff-academy-achievements';
+    const achievementId = 'special-safety-electrical';
+    const correctAnswers = [['verify'], ['restart'], ['missing-ppe', 'target', 'voltage'], ['impossible']];
+    const correctMessages = [
+      '✓ LOTO와 무전압 상태를 확인한 뒤 작업하는 원칙을 확인했습니다.',
+      '✓ 예상하지 못한 재가동을 방지하는 LOTO의 목적을 확인했습니다.',
+      '✓ 작업을 시작하면 안 되는 세 가지 조건을 확인했습니다.',
+      '✓ 보호구가 전원 차단 절차를 대신할 수 없음을 확인했습니다.'
+    ];
+    const retryMessages = [
+      'OFF 표시만으로 실제 무전압 상태가 확인되는지 다시 생각해보세요.',
+      '작업 중 다른 사람이 설비를 다시 가동하지 못하게 하는 목적을 확인하세요.',
+      '전원 상태, 차단 대상, 절연보호구가 모두 준비되었는지 다시 확인하세요.',
+      '보호구와 에너지 통제는 서로 다른 안전조치입니다.'
+    ];
+    const showPracticeStep = (index) => {
+      practiceSteps.forEach((step, stepIndex) => {
+        step.classList.toggle('is-active', stepIndex === index);
+        step.disabled = stepIndex > index;
+      });
+    };
+    const setPracticeFeedback = (step, message, correct = false) => {
+      const feedback = step.querySelector('.practice-feedback');
+      feedback.textContent = message;
+      feedback.classList.toggle('is-correct', correct);
+    };
+    const readAchievements = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem(achievementStorageKey) || '{}');
+        return saved && typeof saved === 'object' ? saved : {};
+      } catch {
+        return {};
+      }
+    };
+    const showAchievement = (achievement) => {
+      if (!achievement || achievement.status !== 'completed') return;
+      const completedDate = achievement.completedAt
+        ? new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(achievement.completedAt))
+        : '';
+      const completedAt = practiceAchievement.querySelector('time');
+      completedAt.dateTime = achievement.completedAt || '';
+      completedAt.textContent = completedDate;
+      practiceAchievement.hidden = false;
+    };
+    const saveAchievement = () => {
+      const achievements = readAchievements();
+      const achievement = achievements[achievementId]?.status === 'completed'
+        ? achievements[achievementId]
+        : { achievementId, status: 'completed', completedAt: new Date().toISOString(), version: 1 };
+      achievements[achievementId] = achievement;
+      try {
+        localStorage.setItem(achievementStorageKey, JSON.stringify(achievements));
+      } catch {
+        // Completion remains visible for this session when browser storage is unavailable.
+      }
+      showAchievement(achievement);
+    };
+    const resetPractice = () => {
+      practiceForm.reset();
+      practiceSteps.forEach((step) => {
+        setPracticeFeedback(step, '');
+        const hint = step.querySelector('.practice-hint');
+        const hintToggle = step.querySelector('.practice-hint-toggle');
+        hint.hidden = true;
+        hintToggle.setAttribute('aria-expanded', 'false');
+        hintToggle.textContent = '힌트 보기';
+      });
+      practiceForm.hidden = false;
+      practiceResult.hidden = true;
+      showPracticeStep(0);
+      specialElectricalPractice.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
+    practiceSteps.forEach((step, index) => {
+      const hint = step.querySelector('.practice-hint');
+      const hintToggle = step.querySelector('.practice-hint-toggle');
+      hintToggle.addEventListener('click', () => {
+        hint.hidden = !hint.hidden;
+        hintToggle.setAttribute('aria-expanded', String(!hint.hidden));
+        hintToggle.textContent = hint.hidden ? '힌트 보기' : '힌트 닫기';
+      });
+      step.querySelector('.practice-check').addEventListener('click', () => {
+        const selected = [...step.querySelectorAll('input:checked')].map((input) => input.value).sort();
+        const expected = [...correctAnswers[index]].sort();
+        const correct = selected.length === expected.length && selected.every((value, answerIndex) => value === expected[answerIndex]);
+        if (!correct) {
+          setPracticeFeedback(step, retryMessages[index]);
+          hint.hidden = false;
+          hintToggle.setAttribute('aria-expanded', 'true');
+          hintToggle.textContent = '힌트 닫기';
+          return;
+        }
+        setPracticeFeedback(step, correctMessages[index], true);
+        if (index < practiceSteps.length - 1) {
+          showPracticeStep(index + 1);
+          practiceSteps[index + 1].scrollIntoView({ block: 'start', behavior: 'smooth' });
+          return;
+        }
+        saveAchievement();
+        practiceForm.hidden = true;
+        practiceResult.hidden = false;
+        practiceResult.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      });
+    });
+    practiceRestart.addEventListener('click', resetPractice);
+    showAchievement(readAchievements()[achievementId]);
+  }
   [
     ['philosophy', 'why', '.platform-summary'],
     ['philosophy', 'why', '.callout'],
@@ -678,6 +1365,7 @@
     ['#safety-book .book-chapters', 'platform'],
     ['#tbm-book .book-chapters', 'tbm'],
     ['#risk-book .book-chapters', 'risk']
+    ,['#special-book .book-chapters', 'special']
   ].forEach(([selector, book]) => {
     const toc = document.querySelector(selector);
     const firstLesson = lessonCatalog.find((lesson) => lesson.book === book);
@@ -770,6 +1458,7 @@
       const tocTarget = selectedLesson.book === 'tbm' ? 'tbm-book-toc'
         : selectedLesson.book === 'risk' ? 'risk-book-toc'
         : selectedLesson.book === 'sop' ? 'sop-book-toc'
+        : selectedLesson.book === 'special' ? 'special-book-toc'
         : 'safety-book-toc';
       if (lessonNavigation) lessonNavigation.innerHTML = `${previousItem}<a href="#${tocTarget}">목차</a>${nextItem}`;
       const chapterHeader = document.querySelector(`#${selectedLesson.chapter} .book-chapter-start`);
