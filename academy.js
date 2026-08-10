@@ -1365,11 +1365,12 @@
     ['#safety-book .book-chapters', 'platform'],
     ['#tbm-book .book-chapters', 'tbm'],
     ['#risk-book .book-chapters', 'risk']
+    ,['#sop-book .book-chapters', 'sop']
     ,['#special-book .book-chapters', 'special']
   ].forEach(([selector, book]) => {
     const toc = document.querySelector(selector);
     const firstLesson = lessonCatalog.find((lesson) => lesson.book === book);
-    if (toc && firstLesson) toc.insertAdjacentHTML('beforeend', `<a class="toc-start-learning" href="#${firstLesson.route}"><span>처음부터 학습하기</span><b aria-hidden="true">→</b></a>`);
+    if (toc && firstLesson) toc.insertAdjacentHTML('beforeend', `<a class="toc-start-learning" href="#${firstLesson.route}"><span>학습 시작하기</span><b aria-hidden="true">→</b></a>`);
   });
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   const documentScroller = document.querySelector('.document');
@@ -1449,11 +1450,19 @@
       const lessonIndex = handbookLessons.indexOf(selectedLesson);
       const previous = handbookLessons[lessonIndex - 1];
       const next = handbookLessons[lessonIndex + 1];
-      const previousItem = previous ? `<a href="#${previous.route}">← 이전 Lesson</a>` : '<span aria-disabled="true">← 이전 Lesson</span>';
+      const previousCrossesChapter = Boolean(previous && previous.chapter !== selectedLesson.chapter);
+      const previousItem = previous
+        ? previousCrossesChapter
+          ? `<a href="#${previous.route}">← 이전 Chapter</a>`
+          : `<a href="#${previous.route}">← 이전 Lesson</a>`
+        : '<span aria-disabled="true">← 이전 Lesson</span>';
       const isLastLesson = handbookLessons.at(-1) === selectedLesson;
+      const nextCrossesChapter = Boolean(next && next.chapter !== selectedLesson.chapter);
       const nextItem = isLastLesson
-        ? '<a class="handbook-complete" href="#home">처음으로(Home)</a>'
-        : `<a href="#${next.route}">다음 Lesson →</a>`;
+        ? '<a class="handbook-complete" href="#home">Academy로 →</a>'
+        : nextCrossesChapter
+          ? `<a href="#${next.route}">다음 Chapter →</a>`
+          : `<a href="#${next.route}">다음 Lesson →</a>`;
       const lessonNavigation = document.querySelector(`#${selectedLesson.chapter} .chapter-reading-nav`);
       const tocTarget = selectedLesson.book === 'tbm' ? 'tbm-book-toc'
         : selectedLesson.book === 'risk' ? 'risk-book-toc'

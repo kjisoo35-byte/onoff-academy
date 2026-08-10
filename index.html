@@ -16,8 +16,8 @@
   <a class="skip-link" href="#main-content">본문으로 바로가기</a>
   <header class="site-header">
     <button class="menu-toggle" type="button" aria-label="목차 열기" aria-controls="academy-navigation" aria-expanded="false">☰</button>
-    <a class="brand" href="#home" aria-label="ONOFF Academy 홈">
-      <span class="brand-mark" aria-hidden="true">O</span>
+    <a class="brand" href="#home" aria-label="Academy Home">
+      <span class="brand-mark brand-home-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5M5 10v10h14V10M9 20v-6h6v6"/></svg></span>
       <span class="brand-copy"><strong>ONOFF Academy</strong><small>Digital Knowledge Library</small></span>
     </a>
     <nav class="header-breadcrumb" aria-label="상단 현재 위치"><a href="#home">Home</a><span>›</span><span data-current-chapter>Knowledge Library</span></nav>
@@ -75,14 +75,14 @@
             <section class="academy-home-library" aria-labelledby="home-library-title">
               <h2 id="home-library-title">Library</h2>
               <div class="library-shelf">
-                <a class="library-book is-available book-platform" href="#safety-book-toc"><span class="book-symbol" aria-hidden="true">P</span><div><small>HANDBOOK</small><strong>Platform</strong><p>철학 · Workflow · Today's Work · 전자문서 · Safety Report</p></div></a>
-                <a class="library-book book-tbm" href="#tbm-book-toc" aria-label="TBM Handbook"><span class="book-symbol" aria-hidden="true">T</span><div><small>HANDBOOK</small><strong>TBM</strong><p>목적 · 9단계 · 진행 시나리오 · 생명안전수칙</p></div></a>
-                <a class="library-book book-sop" href="#sop-book-toc" aria-label="SOP Handbook"><span class="book-symbol" aria-hidden="true">S</span><div><small>HANDBOOK</small><strong>SOP</strong><p>목적 · 작업 Flow · Safety Mark · Version</p></div></a>
-                <a class="library-book book-risk" href="#risk-book-toc" aria-label="Risk Assessment Handbook"><span class="book-symbol" aria-hidden="true">R</span><div><small>HANDBOOK</small><strong>Risk Assessment</strong><p>목적 · S-TRA · 유해위험요인 · 재해형태 · 안전조치</p></div></a>
-                <a class="library-book book-education" href="#special-book-toc" aria-label="Special Safety Education Handbook 목차"><span class="book-symbol" aria-hidden="true">E</span><div><small>HANDBOOK</small><strong>Special Safety Education</strong><p>공통교육 · 13번 · 17번 · 35번 · 36번</p></div></a>
-                <article class="library-book book-equipment" aria-label="Equipment Handbook"><span class="book-symbol" aria-hidden="true">Q</span><div><small>HANDBOOK</small><strong>Equipment</strong><p>설비점검 · 예방점검 · 기준</p></div></article>
-                <article class="library-book book-emergency" aria-label="Emergency Handbook"><span class="book-symbol" aria-hidden="true">M</span><div><small>HANDBOOK</small><strong>Emergency</strong><p>비상대응 · 대피 · 응급조치</p></div></article>
-                <article class="library-book book-accident" aria-label="Accident Case Handbook"><span class="book-symbol" aria-hidden="true">A</span><div><small>HANDBOOK</small><strong>Accident Case</strong><p>사고사례 · Near Miss · 개선사례</p></div></article>
+                <a class="library-book is-available book-platform" href="#safety-book-toc" aria-label="플랫폼 Handbook"><div><small>HANDBOOK</small><strong>플랫폼</strong><p>철학 · Workflow · Today's Work · 전자문서 · Safety Report</p></div></a>
+                <a class="library-book book-tbm" href="#tbm-book-toc" aria-label="TBM Handbook"><div><small>HANDBOOK</small><strong>TBM</strong><p>목적 · 9단계 · 진행 시나리오 · 생명안전수칙</p></div></a>
+                <a class="library-book book-sop" href="#sop-book-toc" aria-label="SOP Handbook"><div><small>HANDBOOK</small><strong>SOP</strong><p>목적 · 작업 Flow · Safety Mark · Version</p></div></a>
+                <a class="library-book book-risk" href="#risk-book-toc" aria-label="위험성평가 Handbook"><div><small>HANDBOOK</small><strong>위험성평가</strong><p>목적 · S-TRA · 유해위험요인 · 재해형태 · 안전조치</p></div></a>
+                <a class="library-book book-education" href="#special-book-toc" aria-label="특별안전교육 Handbook 목차"><div><small>HANDBOOK</small><strong>특별안전교육</strong><p>공통교육 · 13번 · 17번 · 35번 · 36번</p></div></a>
+                <article class="library-book book-equipment" aria-label="설비안전 Handbook"><div><small>HANDBOOK</small><strong>설비안전</strong><p>일상점검 · 이상징후 · 안전장치 · STOP·보고</p></div></article>
+                <article class="library-book book-emergency" aria-label="비상대응 Handbook"><div><small>HANDBOOK</small><strong>비상대응</strong><p>비상대응 · 대피 · 응급조치</p></div></article>
+                <article class="library-book book-accident" aria-label="사고사례 Handbook"><div><small>HANDBOOK</small><strong>사고사례</strong><p>사고사례 · Near Miss · 개선사례</p></div></article>
               </div>
             </section>
           </section>
@@ -681,7 +681,7 @@
           <section class="chapter-block tbm-scenario-lesson special-platform-lesson special-handbook-complete" id="special-platform-complete" aria-labelledby="special-platform-complete-title" hidden>
             <header class="chapter-block-heading"><span>COMPLETE</span><div><h3 id="special-platform-complete-title">SPECIAL SAFETY EDUCATION<br>HANDBOOK COMPLETE</h3><p>특별안전교육의 기본개념과 주요 위험작업의 안전수칙, 실제 Daily Work 연결까지 완료했습니다.</p></div></header>
             <ul class="special-handbook-complete-list"><li>✓ 특별안전교육 기본개념</li><li>✓ 공통 안전교육</li><li>✓ 운반·하역기계</li><li>✓ 전기작업</li><li>✓ 유해물질 취급</li><li>✓ 로봇작업</li><li>✓ Practice · Achievement</li><li>✓ Daily Work 적용</li></ul>
-            <section class="book-chapter-complete"><div><span>HANDBOOK COMPLETE</span><strong>Special Safety Education</strong></div><a href="#home"><span>처음으로</span><small>Academy Home</small><b aria-hidden="true">→</b></a></section>
+            <section class="book-chapter-complete"><div><span>HANDBOOK COMPLETE</span><strong>Special Safety Education</strong></div><a href="#home"><span>Academy로</span><small>Academy Home</small><b aria-hidden="true">→</b></a></section>
           </section>
         </section>
 

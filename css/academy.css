@@ -410,9 +410,23 @@ body.is-lesson-view .document {
   scrollbar-gutter: stable;
 }
 
-body.is-toc-view .book-chapters > .toc-start-learning:hover {
+body.is-toc-view .book-chapters > .toc-start-learning:hover,
+body.is-toc-view .book-chapters > .toc-start-learning:focus-visible {
   padding-inline: 20px;
-  background: var(--blue-700);
+  color: #fff;
+  background: var(--navy-700);
+  border-color: var(--navy-700);
+}
+
+body.is-toc-view .book-chapters > .toc-start-learning:focus-visible {
+  outline: 3px solid rgba(20,102,195,.28);
+  outline-offset: 3px;
+}
+
+body.is-toc-view .book-chapters > .toc-start-learning:active {
+  color: #fff;
+  background: var(--navy-950);
+  border-color: var(--navy-950);
 }
 
 body.is-toc-view .book-chapters > .toc-start-learning > span {
@@ -2790,4 +2804,135 @@ body.is-lesson-view #safety-report .safety-report-lesson > .tbm-scenario-photo i
     font-size: 15px;
     line-height: 1.62;
   }
+}
+
+/* Global Library UX final cascade. */
+.brand-home-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+body[data-academy-view="home"] .academy-home-library .library-shelf { grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: none; gap: 12px; }
+body[data-academy-view="home"] .academy-home-library .library-book { min-height: 128px; height: auto; padding: 16px 46px 16px 112px; align-items: center; background: #fff; border: 1px solid #d7e0eb; border-radius: 12px; box-shadow: 0 10px 24px rgba(0,18,46,.12); transform: none; }
+body[data-academy-view="home"] .academy-home-library .library-book::before { top: 10px; bottom: 10px; left: 14px; width: 76px; height: auto; background-color: #061c3b; background-repeat: no-repeat; background-position: center; background-size: cover; border: 1px solid rgba(18,51,91,.34); border-left-width: 4px; border-radius: 5px 9px 9px 5px; box-shadow: 0 7px 14px rgba(0,19,48,.18); }
+body[data-academy-view="home"] .academy-home-library .library-book::after { content: ""; right: 16px; color: var(--blue-600); font-size: 22px; }
+body[data-academy-view="home"] .academy-home-library a.library-book::after { content: "→"; }
+body[data-academy-view="home"] .academy-home-library article.library-book::after { content: "준비 중"; top: auto; bottom: 14px; color: var(--slate-500); font-size: 10px; transform: none; }
+body[data-academy-view="home"] .academy-home-library .book-symbol { display: none; }
+body[data-academy-view="home"] .academy-home-library .library-book > div { height: auto; padding: 0; }
+body[data-academy-view="home"] .academy-home-library strong { font-size: 19px; line-height: 1.3; }
+body[data-academy-view="home"] .academy-home-library p { display: block; margin-top: 7px; overflow: visible; color: var(--slate-600); font-size: 12px; line-height: 1.5; white-space: normal; word-break: keep-all; text-overflow: clip; -webkit-line-clamp: unset; }
+body[data-academy-view="home"] .academy-home-library .book-platform::before { background-image: url("../assets/library-covers/platform.png"); }
+body[data-academy-view="home"] .academy-home-library .book-tbm::before { background-image: url("../assets/library-covers/tbm.png"); }
+body[data-academy-view="home"] .academy-home-library .book-sop::before { background-image: url("../assets/library-covers/sop.png"); }
+body[data-academy-view="home"] .academy-home-library .book-risk::before { background-image: url("../assets/library-covers/risk-assessment.png"); }
+body[data-academy-view="home"] .academy-home-library .book-education::before { background-image: url("../assets/library-covers/special-safety.png"); }
+body[data-academy-view="home"] .academy-home-library .book-equipment::before { background-image: url("../assets/library-covers/equipment-safety.png"); }
+body[data-academy-view="home"] .academy-home-library .book-emergency::before { background-image: url("../assets/library-covers/emergency-response.png"); }
+body[data-academy-view="home"] .academy-home-library .book-accident::before { background-image: url("../assets/library-covers/accident-cases.png"); }
+@media (max-width: 719px) {
+  body[data-academy-view="home"] .academy-flow-home { height: auto; min-height: 100%; }
+  body[data-academy-view="home"] .academy-home-library .library-shelf { grid-template-columns: 1fr; grid-template-rows: none; gap: 10px; }
+  body[data-academy-view="home"] .academy-home-library .library-book { min-height: 118px; height: auto; padding: 14px 42px 14px 102px; border-radius: 11px; }
+  body[data-academy-view="home"] .academy-home-library .library-book::before { top: 9px; bottom: 9px; left: 10px; width: 70px; }
+  body[data-academy-view="home"] .academy-home-library .library-book::after { right: 13px; font-size: 20px; }
+  body[data-academy-view="home"] .academy-home-library article.library-book::after { bottom: 12px; font-size: 10px; }
+  body[data-academy-view="home"] .academy-home-library strong { font-size: 18px; line-height: 1.32; }
+  body[data-academy-view="home"] .academy-home-library p { margin-top: 7px; font-size: 14px; line-height: 1.5; }
+}
+
+/* Mobile Library density micro cleanup. */
+@media (max-width: 719px) {
+  body[data-academy-view="home"] {
+    height: auto;
+    min-height: 100%;
+    overflow: visible;
+  }
+  body[data-academy-view="home"] .content {
+    height: auto;
+    min-height: calc(100dvh - var(--header-height));
+    overflow: visible;
+  }
+  body[data-academy-view="home"] :is(.document,#home,.academy-flow-home) {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+  body[data-academy-view="home"] .academy-flow-home {
+    gap: 10px;
+    padding: 8px 18px 10px;
+  }
+  body[data-academy-view="home"] .landing-hero-copy .landing-brand-mark,
+  body[data-academy-view="home"] .landing-hero-copy .hero-label { display: none; }
+  body[data-academy-view="home"] .academy-flow-home header h1 { margin-top: 0; }
+  body[data-academy-view="home"] .academy-flow-home header > p:last-of-type { margin-top: 4px; }
+  body[data-academy-view="home"] .academy-home-library > h2 { margin-bottom: 5px; }
+  body[data-academy-view="home"] .academy-home-library .library-shelf { gap: 7px; }
+  body[data-academy-view="home"] .academy-home-library .library-book {
+    min-height: 104px;
+    padding: 10px 38px 10px 86px;
+  }
+  body[data-academy-view="home"] .academy-home-library .library-book::before {
+    top: 50%;
+    bottom: auto;
+    width: 60px;
+    height: 80px;
+    transform: translateY(-50%);
+  }
+  body[data-academy-view="home"] .academy-home-library p { margin-top: 4px; }
+}
+
+/* Academy Home brand mark: identity beside the Hero title, separate from Home navigation. */
+body[data-academy-view="home"] .landing-hero-copy {
+  display: grid;
+  grid-template-columns: 36px minmax(0,1fr);
+  column-gap: 12px;
+  align-items: center;
+}
+body[data-academy-view="home"] .landing-hero-copy .hero-label { grid-column: 1 / -1; grid-row: 1; }
+body[data-academy-view="home"] .landing-hero-copy .landing-brand-mark {
+  grid-column: 1;
+  grid-row: 2;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+}
+body[data-academy-view="home"] .landing-hero-copy .landing-brand-mark img { width: 25px; height: 25px; }
+body[data-academy-view="home"] .landing-hero-copy h1 { grid-column: 2; grid-row: 2; margin-top: 0; }
+body[data-academy-view="home"] .landing-hero-copy > p:last-of-type { grid-column: 2; grid-row: 3; }
+
+@media (max-width: 719px) {
+  body[data-academy-view="home"] .landing-hero-copy { grid-template-columns: 34px minmax(0,1fr); column-gap: 10px; }
+  body[data-academy-view="home"] .landing-hero-copy .landing-brand-mark {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    border-radius: 9px;
+  }
+  body[data-academy-view="home"] .landing-hero-copy .landing-brand-mark img { width: 23px; height: 23px; }
+  body[data-academy-view="home"] .landing-hero-copy .hero-label { display: none; }
+}
+
+/* Handbook TOC Chapter row affordance. */
+body.is-toc-view .book-chapters .book-part ol a {
+  position: relative;
+  padding-right: 28px;
+}
+body.is-toc-view .book-chapters .book-part ol a::after {
+  content: "›";
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  color: var(--blue-600);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+  opacity: .72;
+  transform: translateY(-50%);
+  transition: color .16s ease, opacity .16s ease, transform .16s ease;
+  pointer-events: none;
+}
+body.is-toc-view .book-chapters .book-part ol a:is(:hover,:focus-visible)::after {
+  color: var(--blue-700);
+  opacity: 1;
+  transform: translate(3px,-50%);
 }
