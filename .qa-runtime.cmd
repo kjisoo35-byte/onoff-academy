@@ -1,0 +1,6 @@
+set "QA_PROJECT=Academy"
+set "QA_PORT=4174"
+set "QA_URL=http://127.0.0.1:4174/__preview?path=%2Findex.html"
+set "SERVER_TITLE=ONOFF_QA_SERVER"
+set "QA_DEVICE_IP=192.168.132.227"
+set "QA_DEVICE_SERIAL=192.168.132.227:5555"

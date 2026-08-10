@@ -17,6 +17,14 @@
   const chapterIndex = chapters.map((chapter) => ({ id: chapter.id, title: chapter.querySelector('h1,h2')?.textContent.trim() || chapter.id, description: chapter.querySelector('.lead,.section-heading>p')?.textContent.trim() || '' }));
   const breadcrumb = document.querySelector('.breadcrumb');
   const homeSection = document.querySelector('#home');
+  const bookCatalog = [
+    { id: 'platform', route: 'safety-book-toc', view: 'safety-book' },
+    { id: 'tbm', route: 'tbm-book-toc', view: 'tbm-book' },
+    { id: 'risk', route: 'risk-book-toc', view: 'risk-book' },
+    { id: 'sop', route: 'sop-book-toc', view: 'sop-book' },
+    { id: 'special', route: 'special-book-toc', view: 'special-book' }
+  ];
+  const bookRouteRegistry = new Map(bookCatalog.map((book) => [book.route, book.view]));
   const modeName = document.querySelector('[data-selected-learning-mode]');
   const modeDescription = document.querySelector('[data-selected-mode-description]');
   const globalPager = document.querySelector('.document > .chapter-pager');
@@ -734,7 +742,7 @@
     document.body.classList.toggle('is-toc-view', route.endsWith('-book-toc'));
     document.body.dataset.lessonType = selectedLesson?.title.toLowerCase() || '';
     const chapterRoute = selectedLesson?.chapter || (route === 'workflow-action' || route.startsWith('scene-') ? 'workflow' : route);
-    const homeRoutes = new Set(['home', 'library', 'safety-book', 'safety-book-mode', 'safety-book-toc', 'safety-book-complete', 'tbm-book-toc', 'risk-book-toc', 'sop-book-toc', 'continue-reading', 'my-academy']);
+    const homeRoutes = new Set(['home', 'library', 'safety-book', 'safety-book-mode', 'safety-book-complete', 'continue-reading', 'my-academy', ...bookRouteRegistry.keys()]);
     const isHomeRoute = homeRoutes.has(route);
     if (route === 'workflow-action') applyLearningMode('action');
     const actionPresentation = selectedLearningMode === 'action' && (route === 'workflow-action' || route.startsWith('scene-'));
@@ -790,12 +798,9 @@
       return;
     }
     const visiblePart = route === 'library' ? 'library'
-      : ['safety-book', 'safety-book-mode', 'safety-book-toc', 'safety-book-complete'].includes(route) ? 'safety-book'
-      : route === 'tbm-book-toc' ? 'tbm-book'
-      : route === 'risk-book-toc' ? 'risk-book'
-      : route === 'sop-book-toc' ? 'sop-book'
-      : route === 'my-academy' ? 'my-academy'
-      : 'home';
+      : ['safety-book', 'safety-book-mode', 'safety-book-complete'].includes(route) ? 'safety-book'
+      : bookRouteRegistry.get(route)
+      || (route === 'my-academy' ? 'my-academy' : 'home');
     [...homeSection.children].forEach((child) => {
       if (child.matches('.academy-flow-home')) child.hidden = route !== 'home';
       else if (child.matches('.academy-hero,.home-discovery')) child.hidden = true;
