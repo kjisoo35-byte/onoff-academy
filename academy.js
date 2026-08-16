@@ -75,6 +75,53 @@
     start.innerHTML = `<p>${chapterLabel}</p><h1>${item.title}</h1><span>${description}</span>`;
     chapter.insertAdjacentElement('afterbegin', start);
   });
+
+  const platformMobileChapters = [
+    { id: 'philosophy', chapter: '01', part: 'PART 01 · PLATFORM 이해', title: 'ONOFF Safety Platform 이해' },
+    { id: 'workflow', chapter: '02', part: 'PART 01 · PLATFORM 이해', title: '오늘 작업과 Daily Safety' },
+    { id: 'daily-work', chapter: '03', part: 'PART 02 · 작업 시작', title: 'Safety Start' },
+    { id: 'safety-report', chapter: '04', part: 'PART 02 · 작업 수행', title: '작업 중과 작업 종료' }
+  ];
+  const platformMobileToc = document.createElement('dialog');
+  platformMobileToc.className = 'platform-mobile-toc';
+  platformMobileToc.id = 'platform-mobile-toc';
+  platformMobileToc.setAttribute('aria-labelledby', 'platform-mobile-toc-title');
+  platformMobileToc.innerHTML = `
+    <header><button type="button" data-platform-toc-close aria-label="목차 닫기">×</button><strong id="platform-mobile-toc-title">ONOFF Academy</strong><span>Table of Contents</span></header>
+    <div class="platform-mobile-toc-list">
+      <section><p>PART 01 · PLATFORM 이해</p>${platformMobileChapters.slice(0, 2).map((item) => `<a href="#${item.id}" data-platform-toc-chapter="${item.id}"><span>${item.chapter}</span><strong>${item.title}</strong><i aria-hidden="true">›</i></a>`).join('')}</section>
+      <section><p>PART 02 · 작업 시작과 수행</p>${platformMobileChapters.slice(2).map((item) => `<a href="#${item.id}" data-platform-toc-chapter="${item.id}"><span>${item.chapter}</span><strong>${item.title}</strong><i aria-hidden="true">›</i></a>`).join('')}</section>
+    </div>`;
+  document.body.append(platformMobileToc);
+  const mountPlatformMobileShell = () => platformMobileChapters.forEach((item) => {
+    const chapter = document.getElementById(item.id);
+    const start = chapter?.querySelector('.book-chapter-start');
+    if (!chapter || !start || chapter.querySelector('.platform-mobile-header')) return;
+    const header = document.createElement('header');
+    header.className = 'platform-mobile-header';
+    header.innerHTML = `<button type="button" data-platform-toc-open aria-label="Platform 목차 열기" aria-controls="platform-mobile-toc"><span aria-hidden="true"></span></button><strong>ONOFF Academy</strong><span>CH${item.chapter} · ${item.chapter}/04</span>`;
+    header.querySelector('[data-platform-toc-open]').addEventListener('click', openPlatformMobileToc);
+    start.insertAdjacentElement('beforebegin', header);
+    const hero = document.createElement('header');
+    hero.className = 'platform-mobile-route-hero';
+    hero.innerHTML = `<div><strong>${item.chapter}</strong><span>${item.part}</span></div><h1>${item.title}</h1><p>${start.querySelector('span')?.textContent || ''}</p>`;
+    header.insertAdjacentElement('afterend', hero);
+  });
+  const openPlatformMobileToc = () => {
+    if (platformMobileToc.open) return;
+    platformMobileToc.showModal();
+    document.body.classList.add('is-platform-mobile-toc-open');
+    platformMobileToc.querySelector('[data-platform-toc-close]')?.focus({ preventScroll: true });
+  };
+  const closePlatformMobileToc = () => {
+    if (!platformMobileToc.open) return;
+    platformMobileToc.close();
+    document.body.classList.remove('is-platform-mobile-toc-open');
+  };
+  platformMobileToc.querySelector('[data-platform-toc-close]')?.addEventListener('click', closePlatformMobileToc);
+  platformMobileToc.addEventListener('cancel', (event) => { event.preventDefault(); closePlatformMobileToc(); });
+  platformMobileToc.addEventListener('click', (event) => { if (event.target === platformMobileToc) closePlatformMobileToc(); });
+  platformMobileToc.querySelectorAll('a').forEach((link) => link.addEventListener('click', closePlatformMobileToc));
   const workflowChapter = document.getElementById('workflow');
   const workflowChapterStart = workflowChapter?.querySelector('.book-chapter-start');
   if (workflowChapter && workflowChapterStart) {
@@ -181,6 +228,195 @@
     ];
     dailyWorkPages.forEach((page, index) => {
       dailyWorkChapter.insertAdjacentHTML('beforeend', `<section class="chapter-block tbm-scenario-lesson daily-work-lesson" id="${page.id}" aria-labelledby="${page.id}-title"${index ? ' hidden' : ''}><header class="chapter-block-heading"><span>PAGE ${page.number}</span><div><h3 id="${page.id}-title">${page.title}</h3><p>${page.description}</p></div></header><figure class="tbm-scenario-photo daily-work-photo"><img src="${page.image}" alt="${page.alt}"${index ? ' loading="lazy"' : ''}></figure><div class="prose"><h3>WHY</h3><p>${page.why}</p><p>${page.explanation}</p><h3>CHECK POINT</h3><ul>${page.checks.map((item) => `<li>${item}</li>`).join('')}</ul><h3>현장 적용</h3><p>${page.field}</p></div><aside class="callout tip"><strong>TIP</strong><p>${page.tip}</p></aside></section>`);
+    });
+
+    const mobileWorkflow = [
+      '오늘 작업 선택',
+      '작업 시작',
+      '교육 및 회의 참가 확인',
+      '권리와 의무 확인',
+      '작업 전 안전확인',
+      '전자서명',
+      'SAFETY START',
+      '실제 작업 시작'
+    ];
+    const mobileLearningUnits = [
+      {
+        number: '01',
+        title: '교육 및 권리 확인',
+        description: '교육 및 회의 참가 여부를 확인하고, 작업자의 권리와 의무를 확인합니다.',
+        image: 'assets/platform/chapter-03/mobile-unit-01.png',
+        alt: '교육 및 회의 참가 확인과 권리와 의무 확인 화면',
+        points: [
+          ['교육 및 회의 참가 확인', '오늘 작업과 관련된 교육 또는 회의 참가 여부를 확인합니다.'],
+          ['권리와 의무', '안전하게 일할 권리와 작업자가 지켜야 할 의무를 확인합니다.']
+        ]
+      },
+      {
+        number: '02',
+        title: '작업 전 안전확인',
+        description: '작업을 시작하기 전에 다섯 가지 안전사항을 직접 확인합니다.',
+        image: 'assets/platform/chapter-03/mobile-unit-02.png',
+        alt: '보호구, 오늘의 주의사항, 작업 준비, 작업 수행상태, 주요 위험요인을 확인하는 작업 전 안전확인 화면',
+        points: [
+          ['5개 안전확인', '보호구, 오늘의 주의사항, 작업 준비, 작업 수행상태, 주요 위험요인을 확인합니다.'],
+          ['직접 확인', '현재 작업과 현장 상태를 기준으로 각 항목을 확인합니다.'],
+          ['확인 후 진행', '다섯 항목을 모두 확인한 뒤 다음 단계로 이동합니다.']
+        ]
+      },
+      {
+        number: '03',
+        title: '전자서명',
+        description: '작업 시작 전에 필요한 안전사항을 직접 확인했다는 흐름을 전자서명으로 기록합니다.',
+        image: 'assets/platform/chapter-03/mobile-unit-03.png',
+        alt: '작업 시작 전 안전사항 확인을 기록하는 전자서명 화면',
+        points: [
+          ['확인 기록', '작업 시작 전 필요한 안전사항을 직접 확인했다는 흐름을 기록합니다.'],
+          ['본인이 서명', '확인한 작업자가 서명 영역에 직접 서명합니다.']
+        ]
+      },
+      {
+        number: '04',
+        title: '실제 작업 시작',
+        description: 'Safety Start의 모든 과정을 완료하면 실제 작업을 시작할 수 있습니다.',
+        image: 'assets/platform/chapter-03/mobile-unit-04.png',
+        alt: 'Safety Start 완료 후 실제 작업 진행 상태 화면',
+        points: [
+          ['현재 작업 진행 상태', '작업명, 시작 시간과 현재 작업 진행 상태를 확인합니다.'],
+          ['위험 신고 / 작업 중지', '작업 중 위험 상황이 발생하면 위험 신고 또는 작업 중지를 할 수 있습니다.']
+        ]
+      }
+    ];
+    const learningUnitMarkup = mobileLearningUnits.map((unit, unitIndex) => `
+      <section class="mobile-golden-unit" aria-labelledby="mobile-golden-unit-${unit.number}">
+        <header class="mobile-golden-unit-heading">
+          <span>${unit.number}</span>
+          <h2 id="mobile-golden-unit-${unit.number}">${unit.title}</h2>
+          <p>${unit.description}</p>
+        </header>
+        <figure class="mobile-golden-preview mobile-golden-preview--${unit.number}">
+          <img src="${unit.image}" alt="${unit.alt}" loading="lazy">
+        </figure>
+        <button class="mobile-golden-full-view" type="button" data-full-view="${unitIndex}" aria-haspopup="dialog">확대하여 전체 화면 보기 <span aria-hidden="true">↗</span></button>
+        <ol class="mobile-golden-points">
+          ${unit.points.map(([title, description], pointIndex) => `<li><span>${String(pointIndex + 1).padStart(2, '0')}</span><div><strong>${title}</strong><p>${description}</p></div></li>`).join('')}
+        </ol>
+      </section>`).join('');
+
+    dailyWorkChapter.insertAdjacentHTML('beforeend', `
+      <article class="mobile-golden-ch03" aria-label="CH03 Safety Start Mobile Learning">
+        <header class="mobile-golden-compact-header">
+          <button type="button" data-mobile-golden-menu aria-label="Academy 목차 열기" aria-controls="academy-navigation" aria-expanded="false"><span aria-hidden="true"></span></button>
+          <strong>ONOFF Academy</strong>
+          <span>CH03 · 3/5</span>
+        </header>
+        <header class="mobile-golden-hero">
+          <div class="mobile-golden-chapter-number"><strong>03</strong><span>PART 02 · 작업 시작</span></div>
+          <div class="mobile-golden-hero-copy"><p>SAFETY START</p><h1>안전하게 작업 시작하기</h1><span>교육 및 회의 참가 확인부터 권리와 의무, 작업 전 안전확인과 전자서명까지 — 실제 작업을 시작하기 전 필요한 과정을 학습합니다.</span></div>
+          <blockquote>“안전한 작업은 시작하기 전에 결정됩니다.”</blockquote>
+          <div class="mobile-golden-progress"><p><span>진행률 60%</span><span>CH03 / CH05</span></p><div><i></i></div></div>
+        </header>
+        <section class="mobile-golden-why">
+          <b>WHY</b><h2>왜 바로 작업을 시작하지 않을까요?</h2>
+          <p>현장에 도착했다고 바로 작업을 시작하지 않습니다. 안전한 작업을 위해서는 몇 가지 과정을 먼저 완료해야 합니다.</p>
+          <p>이 과정은 형식적인 절차가 아니라, 나와 동료의 안전을 위한 실질적인 준비입니다.</p>
+          <aside><span>KEY MESSAGE</span><strong>Safety Start는 “작업을 시작해도 되는 상태”를 만드는 과정입니다.</strong></aside>
+        </section>
+        <section class="mobile-golden-flow">
+          <b>FLOW</b><h2>ONOFF Platform Flow</h2><p>작업 시작 전 완료해야 하는 전체 과정</p>
+          <ol>${mobileWorkflow.map((step, index) => `<li><span>${String(index + 1).padStart(2, '0')}</span><strong>${step}</strong><i aria-hidden="true">✓</i></li>`).join('')}</ol>
+        </section>
+        ${learningUnitMarkup}
+        <section class="mobile-golden-after">
+          <b>AFTER SAFETY START</b><h2>Safety Start 이후</h2>
+          <p>Safety Start가 완료되면 실제 작업을 수행합니다. 작업 중에도 안전 관련 확인과 보고가 계속됩니다. 다음 Chapter에서 “작업 중과 작업 종료”를 학습합니다.</p>
+          <div><strong>RELATED SAFETY MATERIALS</strong><p><span>위험성평가</span><span>SOP</span><span>TBM</span></p><small>작업과 연결된 안전자료가 있다면 필요할 때 원문 또는 상세 내용을 추가로 확인할 수 있습니다.</small></div>
+        </section>
+        <section class="mobile-golden-practice" data-practice-state="default">
+          <b>PRACTICE</b><h2>학습 확인</h2>
+          <p class="mobile-golden-question">Q. ‘작업 전 안전확인’에서 확인하는 5가지 항목이 아닌 것은?</p>
+          <div class="mobile-golden-options" role="group" aria-label="답변 선택">
+            ${[['A', '보호구'], ['B', '오늘의 주의사항'], ['C', '작업 변경 요청'], ['D', '주요 위험요인']].map(([value, label]) => `<button type="button" data-answer="${value}"><span>${value}</span>${label}</button>`).join('')}
+          </div>
+          <div class="mobile-golden-result" hidden aria-live="polite"><strong></strong><p>정답: C 작업 변경 요청</p><p>작업 변경 요청은 작업 전 안전확인 항목이 아닙니다.<br><br>작업 전 안전확인은 보호구, 오늘의 주의사항, 작업 준비, 작업 수행상태, 주요 위험요인을 확인합니다.</p><button type="button" data-practice-retry>다시 풀기</button></div>
+        </section>
+        <section class="mobile-golden-complete">
+          <b>CHAPTER COMPLETE</b><h2>CH03 · Safety Start 학습 완료</h2>
+          <ol><li>Safety Start는 작업 시작 전 필요한 안전사항을 확인하고 실제 작업으로 이어지는 과정입니다.</li><li>교육 및 회의 참가 확인 → 권리와 의무 → 작업 전 안전확인 → 전자서명 순서로 진행합니다.</li><li>작업 전 안전확인에서는 보호구, 오늘의 주의사항, 작업 준비, 작업 수행상태, 주요 위험요인을 확인합니다.</li><li>전자서명은 작업 시작 전 안전사항을 직접 확인했다는 기록입니다.</li></ol>
+          <blockquote>“작업이 무엇이든, 안전확인 없이 시작하지 않습니다.”</blockquote>
+        </section>
+        <nav class="mobile-golden-navigation" aria-label="Chapter 이동"><a href="#workflow">← CH02 오늘 작업</a><a href="#safety-report">CH04 작업 중과 작업 종료 →</a></nav>
+      </article>
+      <dialog class="mobile-golden-viewer" aria-labelledby="mobile-golden-viewer-title">
+        <header><h2 id="mobile-golden-viewer-title">Product 화면 전체 보기</h2><button type="button" data-viewer-close aria-label="전체 화면 보기 닫기">×</button></header>
+        <div><img alt=""></div>
+      </dialog>`);
+
+    const mobilePilot = dailyWorkChapter.querySelector('.mobile-golden-ch03');
+    const mobileGoldenMenu = mobilePilot?.querySelector('[data-mobile-golden-menu]');
+    mobileGoldenMenu?.addEventListener('click', () => {
+      openPlatformMobileToc();
+      mobileGoldenMenu.setAttribute('aria-expanded', 'true');
+    });
+    platformMobileToc.addEventListener('close', () => mobileGoldenMenu?.setAttribute('aria-expanded', 'false'));
+    const mobileViewer = dailyWorkChapter.querySelector('.mobile-golden-viewer');
+    const viewerImage = mobileViewer?.querySelector('img');
+    const viewerTitle = mobileViewer?.querySelector('h2');
+    let viewerTrigger = null;
+    let viewerHistoryActive = false;
+    const closeMobileViewer = ({ fromHistory = false } = {}) => {
+      if (!mobileViewer?.open) return;
+      mobileViewer.close();
+      if (viewerImage) {
+        viewerImage.removeAttribute('src');
+        viewerImage.alt = '';
+      }
+      document.body.classList.remove('is-mobile-product-viewer-open');
+      if (!fromHistory && viewerHistoryActive) history.back();
+      viewerHistoryActive = false;
+      viewerTrigger?.focus({ preventScroll: true });
+    };
+    mobilePilot?.querySelectorAll('[data-full-view]').forEach((button) => button.addEventListener('click', () => {
+      const unit = mobileLearningUnits[Number(button.dataset.fullView)];
+      if (!unit || !mobileViewer || !viewerImage || !viewerTitle) return;
+      viewerTrigger = button;
+      viewerImage.src = unit.image;
+      viewerImage.alt = unit.alt;
+      viewerTitle.textContent = `${unit.number} ${unit.title} 전체 화면`;
+      document.body.classList.add('is-mobile-product-viewer-open');
+      mobileViewer.showModal();
+      history.pushState({ academyProductViewer: true }, '');
+      viewerHistoryActive = true;
+    }));
+    mobileViewer?.querySelector('[data-viewer-close]')?.addEventListener('click', () => closeMobileViewer());
+    mobileViewer?.addEventListener('cancel', (event) => { event.preventDefault(); closeMobileViewer(); });
+    mobileViewer?.addEventListener('click', (event) => { if (event.target === mobileViewer) closeMobileViewer(); });
+    window.addEventListener('popstate', () => {
+      if (mobileViewer?.open) closeMobileViewer({ fromHistory: true });
+    });
+
+    const mobilePractice = mobilePilot?.querySelector('.mobile-golden-practice');
+    const practiceResult = mobilePractice?.querySelector('.mobile-golden-result');
+    mobilePractice?.querySelectorAll('[data-answer]').forEach((button) => button.addEventListener('click', () => {
+      const isCorrect = button.dataset.answer === 'C';
+      mobilePractice.querySelectorAll('[data-answer]').forEach((option) => {
+        option.classList.toggle('is-selected', option === button);
+        option.classList.toggle('is-correct', option.dataset.answer === 'C');
+        option.classList.toggle('is-incorrect', option === button && !isCorrect);
+        option.disabled = true;
+      });
+      mobilePractice.dataset.practiceState = isCorrect ? 'correct' : 'incorrect';
+      practiceResult.hidden = false;
+      practiceResult.querySelector('strong').textContent = isCorrect ? 'Correct' : 'Incorrect';
+    }));
+    mobilePractice?.querySelector('[data-practice-retry]')?.addEventListener('click', () => {
+      mobilePractice.dataset.practiceState = 'default';
+      mobilePractice.querySelectorAll('[data-answer]').forEach((option) => {
+        option.disabled = false;
+        option.classList.remove('is-selected', 'is-correct', 'is-incorrect');
+      });
+      practiceResult.hidden = true;
+      mobilePractice.querySelector('[data-answer]')?.focus();
     });
   }
   const safetyReportChapter = document.getElementById('safety-report');
@@ -1341,6 +1577,7 @@
     practiceRestart.addEventListener('click', resetPractice);
     showAchievement(readAchievements()[achievementId]);
   }
+  mountPlatformMobileShell();
   [
     ['philosophy', 'why', '.platform-summary'],
     ['philosophy', 'why', '.callout'],
@@ -1419,6 +1656,19 @@
     const selectedLesson = lessonCatalog.find((lesson) => lesson.route === route)
       || lessonsByChapter.get(route)?.[0]
       || null;
+    const isPlatformFigmaChapter = selectedLesson?.book === 'platform' && platformMobileChapters.some((item) => item.id === selectedLesson.chapter);
+    document.body.classList.toggle('is-platform-figma-chapter', isPlatformFigmaChapter);
+    document.body.classList.toggle('is-ch03-mobile-golden', selectedLesson?.chapter === 'daily-work');
+    if (isPlatformFigmaChapter) {
+      platformMobileToc.querySelectorAll('[data-platform-toc-chapter]').forEach((link) => {
+        const current = link.dataset.platformTocChapter === selectedLesson.chapter;
+        link.classList.toggle('is-current', current);
+        if (current) link.setAttribute('aria-current', 'page');
+        else link.removeAttribute('aria-current');
+      });
+    } else {
+      closePlatformMobileToc();
+    }
     if (activeStickyChapterHeader) {
       document.getElementById(activeStickyChapterHeader.dataset.chapterOwner)?.insertAdjacentElement('afterbegin', activeStickyChapterHeader);
       activeStickyChapterHeader = null;
