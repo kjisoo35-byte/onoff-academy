@@ -25,9 +25,54 @@
     { id: 'special', route: 'special-book-toc', view: 'special-book' }
   ];
   const bookRouteRegistry = new Map(bookCatalog.map((book) => [book.route, book.view]));
+  const entryCourseCatalog = [
+    { id: 'platform', route: 'platform-course', view: 'platform-landing', number: '01', tag: '기초 필수', title: 'ONOFF Safety Platform', description: '안전 관리 플랫폼의 설계 사상과 오늘 작업 선택부터 실제 서명까지의 핵심 Workflow를 학습합니다.', hero: 'assets/course-heroes/platform.png', time: '60분', standard: '퀴즈 80점', chapters: [['philosophy','ONOFF의 안전철학과 Platform 구조','플랫폼 도입 목적과 핵심 안전 흐름'],['workflow','Safety Start','안전정보 준비'],['daily-work','오늘 작업과 Daily Safety','오늘의 안전확인'],['safety-report','작업 중과 작업 종료','비정상 상황 대처 및 작업 종료']] },
+    { id: 'risk', route: 'risk-course', view: 'risk-landing', number: '02', tag: '평가 관리', title: '위험성평가 (Risk Assessment)', description: '잠재적 유해·위험요인을 발견하고 위험성을 결정하여 체계적인 감소대책을 수립합니다.', hero: 'assets/course-heroes/risk-assessment.png', finalHero: 'assets/course-heroes/final-risk.png', time: '75분', standard: '제출물 통과', chapters: [['risk-assessment-purpose','위험성평가의 목적과 기본 원칙','법적 근거와 기본 원칙'],['risk-assessment-structure','위험성 판단과 감소대책','위험 수준 산정과 제거 방안'],['risk-assessment-stra','현장 실행과 지속 관리','대책 실행과 모니터링'],['risk-assessment-platform','ONOFF Platform 연결','결과 반영과 이행 확인']] },
+    { id: 'practical', route: 'risk-practical-course', view: 'risk-practical-landing', number: '03', tag: '실무 서식 실습', title: '위험성평가 실무 작성', description: '현장 양식과 산업안전 보건지표 조사표를 직접 열어보고 정해진 서식을 기록하는 실무 코스입니다.', hero: 'assets/course-heroes/risk-practical.png', finalHero: 'assets/course-heroes/final-risk-practical.png', time: '3시간', standard: '4개 실습 제출', chapters: [['risk-practical-01','작업 확인과 위험요인 파악','공정별 표준 위험요인 매핑'],['risk-practical-02','최초 위험성과 안전조치','위험지수 산출과 조치 작성'],['risk-practical-03','감소대책과 재평가','대책 적용 후 재평가'],['risk-practical-04','개선 실행과 완료 확인','완료 증빙과 최종 검토']] },
+    { id: 'sop', route: 'sop-course', view: 'sop-landing', number: '04', tag: '절차 이행', title: 'SOP 표준작업절차서', description: '고위험 공정의 안전수칙을 명확히 정의하고 올바르게 작업을 실행·이행하는 체계를 학습합니다.', hero: 'assets/course-heroes/sop.png', finalHero: 'assets/course-heroes/final-sop.png', time: '50분', standard: 'SOP 서명', chapters: [['sop-purpose','SOP의 목적과 핵심 구조','SOP의 정의와 도입 목적'],['sop-reading','작업 준비와 실행','필수 Sequence 수행'],['sop-structure','변경과 비정상 상황','중지와 관리자 알림'],['sop-platform','ONOFF Platform 연결','이행 결과 확인과 보존']] },
+    { id: 'tbm', route: 'tbm-course', view: 'tbm-landing', number: '05', tag: '매일 진행', title: 'TBM (Tool Box Meeting)', description: '작업 개시 전 감독자를 중심으로 현장에서 직접 소통하는 10분 밀착 미팅의 핵심 가이드를 익힙니다.', hero: 'assets/course-heroes/tbm.png', finalHero: 'assets/course-heroes/final-tbm.png', time: '30분', standard: '서명 참여율', chapters: [['tbm-purpose','TBM의 목적과 기본 원칙','컨디션과 보호구 확인'],['tbm-nine-steps','위험 공유와 사고사례','작업별 위험요인 공유'],['tbm-scenario','대응 준비와 작업 시작','비상행동과 미팅 마감']] },
+    { id: 'special', route: 'special-course', view: 'special-landing', number: '06', tag: '고위험군 특화', title: '특별안전교육 (Special Safety)', description: '로봇, 고전압, 유해물질, 중량물 등 사고 위험이 높은 전문 분야의 행동수칙을 학습합니다.', hero: 'assets/course-heroes/special-safety.png', finalHero: 'assets/course-heroes/final-special.png', time: '90분', standard: '최종 시험 90점', accent: 'red', chapters: [['special-robot-work','Robot Safety — 산업용 로봇 작업','협착 방지와 LOTO'],['special-live-work-75v','Electrical Safety — 전기작업','정전작업과 고전압 차단'],['special-hazardous-chemicals','Chemical Safety — 유해물질 취급','MSDS와 보호구'],['special-cargo-handling','Material Handling — 중량물 취급','운반장비와 인양 안전']] }
+  ];
+  entryCourseCatalog.forEach((course) => bookRouteRegistry.set(course.route, course.view));
+  const mobileLandingCatalog = {
+    platform: { header: 'Course Platform', tag: '기초 필수', status: '진행률 50%', description: '안전 관리 플랫폼의 전체적인 설계 사상 및 작업 선택부터 실제 서명까지의 핵심 Workflow를 모바일 환경에서 학습합니다.', metrics: [['⏱️','총 학습 시간','60분'],['📝','학습 수','4개 학습'],['🏆','이수 기준','퀴즈 80점']], section: '학습 목록', note: "학습 03 'Safety Start' 학습 대기 중", cta: '이어서 안전 학습하기', ctaRoute: 'daily-work', rows: [['15분','complete'],['15분','complete'],['20분','current'],['10분','upcoming']] },
+    risk: { header: 'Course Assessment', tag: '평가 관리', status: '수강 시작', description: '산업현장의 잠재적 유해·위험요인을 사전에 스스로 발견하여 그 크기를 결정하고 체계적인 감소 대책을 수립합니다.', metrics: [['⏱️','총 학습 시간','75분'],['📝','학습 수','4개 학습'],['🏆','이수 기준','제출물 통과']], section: '학습 목록', note: '산업안전보건법 필수 보건 수칙 반영', cta: '첫 번째 학습 시작하기', ctaRoute: 'risk-assessment-purpose', rows: [['20분','current'],['20분','upcoming'],['15분','upcoming'],['20분','upcoming']] },
+    practical: { header: 'Hands-on Lab', tag: '실무 실습', status: '평가 완료', title: '위험성평가 실무 작성', description: '현장 양식과 산업안전 보건지표 조사표를 직접 열어보고 누락 없이 정해진 서식을 기록해 보는 고강도 트레이닝입니다.', metrics: [['📋','제출 양식','조사표 1부'],['📝','학습 수','4개 학습'],['⚙️','평가 난이도','심화 수준']], section: '단계별 학습 목록', note: '과정 전체 이수 및 제출 완료', cta: '작성 가이드 다시 보기', ctaRoute: 'risk-assessment-structure', rows: [['20분','complete'],['15분','complete'],['20분','complete'],['15분','complete']] },
+    sop: { header: 'Course SOP', tag: '절차 이행', status: '진행률 25%', title: '표준작업절차서(SOP) 학습', description: '제조 및 정비 등 고위험 공정의 안전 수칙을 명확히 정의하고 올바르게 작업을 실행·이행하는 체계를 학습합니다.', metrics: [['⏱️','총 학습 시간','50분'],['📝','학습 수','4개 학습'],['🏆','이수 기준','SOP 서명']], section: '학습 목록', note: "학습 02 '작업 준비와 실행' 진행중", cta: '이어서 학습 진행', ctaRoute: 'sop-reading', rows: [['10분','complete'],['15분','current'],['15분','upcoming'],['10분','upcoming']] },
+    tbm: { header: 'Course TBM', tag: '매일 진행', status: '대기 중', title: 'TBM (Tool Box Meeting)', description: '작업 개시 전 감독자를 중심으로 현장에서 직접 소통하는 10분 밀착 미팅의 핵심 가이드를 익힙니다.', metrics: [['⏱️','총 학습 시간','30분'],['📝','학습 수','3개 학습'],['🏆','이수 기준','서명 참여율']], section: '학습 목록', note: '매일 아침 10분, 안전의 첫 걸음', cta: 'Tool Box Meeting 시작', ctaRoute: 'tbm-purpose', rows: [['10분','current'],['10분','upcoming'],['10분','upcoming']] },
+    special: { header: 'Course Special', tag: '고위험군 특화', status: '긴급 이수', title: '특별안전교육 (Special Safety)', description: '로봇, 고전압, 유해물질, 중량물 등 사고 위험이 특히 높은 4대 전문 분야에 최적화된 행동 수칙과 법적 규정을 마스터합니다.', metrics: [['🔥','위험도 등급','고위험 (Level 4)'],['📝','학습 수','4개 학습'],['🏆','이수 기준','최종 시험 90점']], section: '특별 안전 학습 목록', note: '미이수 시 규정에 따라 현장 출입이 제한될 수 있습니다.', cta: '고위험 특화 교육 개시', ctaRoute: 'special-robot-work', rows: [['20분','current'],['25분','upcoming'],['20분','upcoming'],['25분','upcoming']] }
+  };
   const modeName = document.querySelector('[data-selected-learning-mode]');
   const modeDescription = document.querySelector('[data-selected-mode-description]');
   const globalPager = document.querySelector('.document > .chapter-pager');
+  const legacySiteHeader = document.querySelector('.site-header');
+  const legacySidebar = document.querySelector('.academy-shell > .sidebar');
+  const legacySiteHeaderAnchor = document.createComment('legacy-site-header-anchor');
+  const legacySidebarAnchor = document.createComment('legacy-sidebar-anchor');
+  legacySiteHeader?.before(legacySiteHeaderAnchor);
+  legacySidebar?.before(legacySidebarAnchor);
+  const desktopHomeMedia = window.matchMedia('(min-width: 800px)');
+  const desktopGlobalHeader = document.createElement('header');
+  desktopGlobalHeader.className = 'desktop-academy-global-header';
+  desktopGlobalHeader.hidden = true;
+  desktopGlobalHeader.innerHTML = `<a href="#home"><i>O</i><strong>ONOFF Academy</strong></a><nav aria-label="Academy Global Navigation"><a href="#home">학습 라이브러리</a><span aria-disabled="true" title="V2 예정">나의 강의실</span><span aria-disabled="true" title="V2 예정">안전 자료실</span><b title="V2 예정">● 홍길동 작업자</b></nav>`;
+  document.querySelector('.academy-shell')?.before(desktopGlobalHeader);
+  const syncDesktopHomeShell = (route) => {
+    const useDesktopAcademyShell = desktopHomeMedia.matches;
+    const useFigmaHomeShell = route === 'home' && useDesktopAcademyShell;
+    const useCourseLandingHeader = useDesktopAcademyShell && entryCourseCatalog.some((course) => course.route === route);
+    document.body.classList.toggle('is-figma-desktop-home', useFigmaHomeShell);
+    document.body.classList.toggle('is-academy-desktop-shell', useDesktopAcademyShell);
+    if (useDesktopAcademyShell) {
+      legacySiteHeader?.remove();
+      legacySidebar?.remove();
+      desktopGlobalHeader.hidden = useFigmaHomeShell || useCourseLandingHeader;
+      return;
+    }
+    desktopGlobalHeader.hidden = true;
+    if (legacySiteHeader && !legacySiteHeader.isConnected) legacySiteHeaderAnchor.after(legacySiteHeader);
+    if (legacySidebar && !legacySidebar.isConnected) legacySidebarAnchor.after(legacySidebar);
+  };
   const lessonStickyStack = document.createElement('div');
   lessonStickyStack.className = 'lesson-sticky-stack';
   lessonStickyStack.hidden = true;
@@ -35,21 +80,216 @@
   if (breadcrumb) lessonStickyStack.append(breadcrumb);
   let activeStickyChapterHeader = null;
   document.querySelectorAll('.academy-hero,.home-discovery,.library-section,.book-overview,.learning-mode-section,.book-complete-view,.book-platform-link,.my-academy-card').forEach((element) => element.remove());
+  const entryHome = homeSection?.querySelector('.academy-flow-home');
+  if (entryHome) {
+    [...homeSection.children].forEach((child) => { if (child !== entryHome) child.remove(); });
+    entryHome.className = 'academy-flow-home figma-academy-home';
+    const homeCourseState = [
+      { status: '이수완료', title: 'ONOFF Safety Platform 이해', summary: '제품과 Workflow 이해 · 4개 학습', desktopDescription: '안전 관리 플랫폼의 전체적인 설계 사상 및 작업 선택부터 실제 서명까지의 핵심 Workflow를 익힙니다.', progress: '진행상황: 100%', cta: '복습하기 →' },
+      { status: '학습진행', tag: '핵심 과정', summary: '위험 발견 및 수준 결정 가이드 · 4개 학습', desktopDescription: '산업현장의 잠재적 유해·위험요인을 사전에 스스로 발견하여 그 크기를 결정하고 감소대책을 세웁니다.', progress: '진행상황: 50%', cta: '이어 학습하기 →' },
+      { status: '대기중', tag: '실무 서식', summary: '현장 양식 기반 실제 문서 작성 실습 · 4개 학습', desktopDescription: '다양한 업종별 표준 예시 시나리오를 바탕으로 위험성평가 서식을 누락없이 정확히 작성해 봅니다.', progress: '진행상황: 0%', cta: '시작하기 →' },
+      { status: '대기중', summary: '안전 규정 숙지 및 현장 준수 · 4개 학습', desktopDescription: '제조 및 정비 등 모든 위험 공정의 안전 수칙을 시각화하고 올바른 이행 상태를 기록하는 법을 학습합니다.' },
+      { status: '대기중', summary: 'Tool Box Meeting 안전 소통 지침 · 3개 학습', desktopDescription: '작업 개시 전 현장 부근에서 감독자를 중심으로 한 10분 미팅을 실질적으로 안전하게 소통하는 가이드입니다.' },
+      { status: '고위험', tag: '고위험군', summary: '로봇, 전력, 화학 물질별 특화 수칙 · 4 Topics', desktopDescription: '산업용 로봇 작업, 전기 작업, 유해물질 취급, 중량물 인양 등 위험도 상위 분야 전문 행동 수칙을 마스터합니다.' }
+    ];
+    entryHome.innerHTML = `<header class="figma-home-header"><div><i>O</i><strong>ONOFF Academy</strong></div><nav><a href="#home">학습 라이브러리</a><a href="#my-academy">나의 강의실</a><span>안전 자료실</span><b>● 홍길동 작업자</b></nav><em></em></header><section class="figma-home-hero"><p>PREMIUM INDUSTRIAL SAFETY SYSTEM</p><small>ONOFF ACADEMY</small><h1><span>안전을 이해하고, 현장에서 실행하는 방법을 배웁니다.</span><b>안전을 이해하고,<br>현장에서 실행하는 법</b></h1><div class="figma-home-desktop-meta"><span>전체 6개 과정 · 23개 학습 챕터 완비</span><i></i><span data-academy-total-progress>내 학습 진행률 0%</span><b data-academy-total-progress-bar></b></div><blockquote>“안전한 작업은 시작하기 전에 결정됩니다.”</blockquote></section><main class="figma-home-content"><section class="figma-home-courses" aria-labelledby="figma-home-courses-title"><header><h2 id="figma-home-courses-title"><span>전체 학습 과정</span><b>과정 목록 (6)</b></h2><a href="#home">필수 이수 과정 보기 →</a></header><div>${entryCourseCatalog.map((course,index) => { const state = homeCourseState[index]; const priorityClass = course.id === 'risk' ? ' is-core' : course.id === 'special' ? ' is-red is-high-risk' : ''; return `<a class="figma-home-course${priorityClass}" href="#${course.route}" data-progress-course="${course.id}"><div class="figma-home-course-cover" aria-hidden="true"><span></span><img src="assets/academy-home/course-${course.number}.png" alt=""><i></i><b></b><img src="assets/academy-home/cover-overlay.png" alt=""></div><div class="figma-home-course-details"><header><span>${course.number}</span><small class="desktop-tag">${state.tag || course.tag}</small><strong>${state.title || course.title}</strong><small class="mobile-status" data-course-state>대기중</small></header><p class="desktop-description">${state.desktopDescription}</p><p class="mobile-summary">${state.summary}</p><footer><em>${course.id === 'special' ? '4 대 주제 핵심 교육' : `${course.chapters.length} 챕터 구성`}</em><b class="desktop-cta" data-course-cta>시작하기 <i aria-hidden="true">→</i></b><span data-course-progress>진행상황: 0%</span><b class="mobile-cta" data-course-cta>시작하기 →</b></footer></div></a>`; }).join('')}</div></section><aside class="figma-home-report"><h2>나의 학업 리포트</h2><dl><div><dt>수강 중인 과정</dt><dd data-home-active-courses>0개 과정</dd></div><div><dt>남은 평가 시험</dt><dd data-home-pending-assessments>0개 대기</dd></div></dl><div><strong>TBM 매뉴얼 개정안 알림</strong><p>최근 고용노동부 지침에 따른 중대재해 감축 대책 가이드라인 자료가 업데이트 되었습니다.</p></div><a href="#tbm-course">이어서 안전학습하기</a></aside></main>`;
+    const reservedHomeLink = entryHome.querySelector('.figma-home-header a[href="#my-academy"]');
+    if (reservedHomeLink) reservedHomeLink.outerHTML = '<span aria-disabled="true" title="V2 예정">나의 강의실</span>';
+    entryHome.querySelector('.figma-home-header nav span:not([aria-disabled])')?.setAttribute('aria-disabled', 'true');
+    entryHome.querySelector('.figma-home-header nav span:not([title])')?.setAttribute('title', 'V2 예정');
+    entryHome.querySelector('.figma-home-header nav b')?.setAttribute('title', 'V2 예정');
+    entryHome.querySelector('.figma-home-report > a')?.setAttribute('data-academy-continue', '');
+  }
+  const desktopLandingCatalog = {
+    platform: {
+      time: '1시간 30분', audience: '모든 신규·기존 현장 작업자',
+      points: [['스마트 안전 모바일 앱 흐름 이해','작업 개시부터 종료 시각 측정까지 전체 수명 주기의 안전 흐름을 이해합니다.'],['안전 검토 자동화 연동','위험 수준과 현장 상태 검증이 클라우드에서 연결되는 방식을 확인합니다.'],['작업 기록의 디지털 증적 확보','안전활동 이력과 서명을 신뢰할 수 있는 디지털 기록으로 남깁니다.']]
+    },
+    risk: {
+      time: '2시간', audience: '관리감독자 및 안전관리 책임자',
+      points: [['잠재 유해·위험요인 식별 규칙','공정과 작업환경에 숨어 있는 위험요인을 빠짐없이 찾는 기준을 익힙니다.'],['위험성 크기 결정 매트릭스','가능성과 중대성을 조합하여 위험 수준을 일관되게 판단합니다.'],['감소대책 설계 및 지속 피드백','우선순위에 따라 대책을 수립하고 현장 실행 결과를 계속 점검합니다.']]
+    },
+    practical: {
+      time: '3시간', audience: '현장 안전 담당 서기 및 공장 관리자',
+      pointsTitle: '실전 서식 기입 학습 포인트',
+      points: [['현장 양식 실전 기입 가이드','실제 FORM 양식의 항목별 작성 순서와 판단 기준을 익힙니다.'],['자주 하는 실수 클리닉','누락되거나 모호하게 작성하기 쉬운 항목을 사례로 바로잡습니다.'],['실제 공정 가상 작성 피드백','가상 공정을 기준으로 작성 결과를 검토하고 보완합니다.']]
+    },
+    sop: {
+      time: '1시간 45분', audience: '생산 설비 담당 기능직 및 정비 전임자',
+      points: [['표준작업 지침 설계 로직','안전한 작업 순서를 누구나 동일하게 실행할 수 있도록 구조화합니다.'],['비정상 및 변경 상황 식별','표준에서 벗어난 조건을 발견하고 작업중지와 보고 기준을 확인합니다.'],['ONOFF 실시간 연동 이행 기록','절차 수행 결과와 변경 이력을 플랫폼 기록으로 연결합니다.']]
+    },
+    tbm: {
+      time: '1시간', audience: '현장 모든 반장, 팀장 및 소그룹 근로자',
+      actions: [['도입','Introduction','상태 및 컨디션 점검, 보호구 상호 체결 검사'],['위험지적','Identify','당일 고위험 요인을 브리핑하고 피하는 대책 주지'],['확인','Commitment','조치 사항 복창, 슬로건 합창 및 안전 서명']],
+      points: [['TBM 10분 미팅 주도 리더십','매일 아침 팀원들과 함께 위험 요인을 10분 이내로 효율적으로 공유하는 소통 비법을 익힙니다.'],['오늘의 주의사항 시각 공유','스마트 기기나 현장 모니터를 활용해 교대 근무자에게 당일 위험사항을 명확히 고지합니다.'],['개인 보호구와 피지컬 체크','서로의 컨디션과 보건 안전 수준을 직접 피드백하고 준비 상태를 교차 검증합니다.']]
+    },
+    special: {
+      themes: [
+        ['special-robot-work','01','Robot Safety','산업용 로봇 작업','로봇의 위험구역과 정비·티칭 작업 시 정지 및 안전확인 절차를 학습합니다.','assets/special/chapter-06/robot-work-source.png'],
+        ['special-live-work-75v','02','Electrical Safety','전기작업','전원 차단, LOTO, 무전압 확인과 감전 예방 행동수칙을 학습합니다.','assets/special/chapter-04/electrical-work-source.png'],
+        ['special-hazardous-chemicals','03','Chemical Safety','유해물질 취급','SDS 확인, 환기, 보호구 착용과 안전한 보관 기준을 학습합니다.','assets/special/chapter-05/chemical-handling-source.png'],
+        ['special-cargo-handling','04','Material Handling','중량물 취급·운반','운반장비 점검, 이동경로 통제와 화물 낙하 예방수칙을 학습합니다.','assets/special/chapter-03/material-handling-source.png']
+      ]
+    }
+  };
+  const renderDesktopCourseHeader = () => `<header class="figma-course-global-header"><a href="#home"><i>O</i><strong>ONOFF Academy</strong></a><div><a href="#home">← 학습 라이브러리</a><span class="is-reserved" aria-disabled="true" title="V2 예정">나의 강의실</span><span class="is-reserved" aria-disabled="true" title="V2 예정">안전 자료실</span><span class="user-context">● 홍길동 작업자</span></div></header>`;
+  const renderDesktopCourseHero = (course) => `<section class="academy-course-hero figma-course-hero" style="--course-art:url('${course.hero}')">${course.id === 'platform' ? `<div class="figma-platform-hero-artwork" aria-hidden="true"><img class="figma-platform-art-image" src="${course.hero}" alt=""><span class="figma-platform-art-multiply"></span><span class="figma-platform-art-color"></span><span class="figma-platform-art-left"></span><img class="figma-platform-art-top" src="assets/course-heroes/platform-gradient-top.png" alt=""><img class="figma-platform-art-bottom" src="assets/course-heroes/platform-gradient-bottom.png" alt=""><span class="figma-platform-art-right"></span></div>` : `<img class="academy-course-hero-artwork" src="${course.finalHero}" alt="" aria-hidden="true">`}<div class="figma-course-hero-copy"><div class="figma-course-module"><b>${course.number}</b><span><small>COURSE MODULE</small>${course.tag}</span><em>${course.tag}</em></div><h1>${course.title}</h1><strong>${course.description}</strong><div class="figma-course-hero-actions"><a href="#${course.chapters[0][0]}" data-course-continue>학습 시작하기 <i>→</i></a></div></div></section>`;
+  const renderDesktopLearningPoints = (data) => `<section class="academy-course-section academy-course-learning-points figma-course-intro"><h2>${data.pointsTitle || '무엇을 배우게 되나요? <small>(What You Will Learn)</small>'}</h2><div>${data.points.map(([title,description],index) => `<article><span>${String(index+1).padStart(2,'0')}</span><div><strong>${title}</strong><p>${description}</p></div></article>`).join('')}</div></section>`;
+  const renderDesktopCurriculum = (course) => `<section class="academy-course-section academy-course-curriculum figma-course-curriculum"><header><h2>커리큘럼 및 학습 목차</h2><span data-course-progress>0% · 0/${course.chapters.length} 완료</span></header><ol>${course.chapters.map(([route,title,description],index) => `<li class="is-not-started" data-progress-learning="${route}"><a href="#${route}"><span>${String(index+1).padStart(2,'0')}</span><div><strong>학습 ${String(index+1).padStart(2,'0')} — ${title}</strong><p>${description}</p></div><em data-learning-state>미진입</em></a></li>`).join('')}</ol></section>`;
+  const renderDesktopCourseInfo = (course,data) => `<aside class="academy-course-info figma-course-info"><small>COURSE INFORMATION</small><dl><div><dt>권장 학습시간</dt><dd>${data.time}</dd></div><div><dt>대상자</dt><dd>${data.audience}</dd></div><div><dt>진행 상태</dt><dd data-course-state>대기중</dd></div></dl><div><strong>필수 안전 점검 과정</strong><p>이수 기준: ${course.standard}</p></div><a href="#${course.chapters[0][0]}" data-course-continue>바로 학습하기 <i>→</i></a></aside>`;
+  const renderDesktopCourseBody = (course,data) => {
+    const actions = data.actions ? `<section class="figma-tbm-actions" aria-labelledby="tbm-actions-title"><h2 id="tbm-actions-title">TBM 핵심 3단계 ACTION</h2><div>${data.actions.map(([title,en,description],index) => `<article><span>${index+1}</span><div><strong>${title} <small>${en}</small></strong><p>${description}</p></div></article>`).join('')}</div></section>` : '';
+    const workflow = course.id === 'practical' ? `<section class="figma-practical-workflow"><div><small>FIELD DOCUMENT WORKFLOW</small><h2>FORM 기반 위험성평가 작성 흐름</h2><ol><li><b>01</b><span>위험요인 분류</span></li><li><b>02</b><span>빈도 × 강도</span></li><li><b>03</b><span>감소대책 수립</span></li><li><b>04</b><span>완료 확인</span></li></ol></div><figure><img src="assets/risk-practical/forms/form-04.png" alt="FORM-04 유해·위험요인 파악 실제 양식"><figcaption>FORM-04 · 유해·위험요인 파악</figcaption></figure></section>` : '';
+    return `<section class="academy-course-layout figma-course-body"><main class="academy-course-main figma-course-main">${workflow}${actions}${renderDesktopLearningPoints(data)}${renderDesktopCurriculum(course)}</main>${renderDesktopCourseInfo(course,data)}</section>`;
+  };
+  const renderDesktopSpecialThemes = (course,data) => `<section class="academy-course-special-themes figma-special-themes"><header><small>SPECIALIZED SAFETY TRAINING</small><h2>고위험 작업 분야별 4대 전문 학습 테마</h2><p>현장의 고위험 작업 유형을 선택해 분야별 핵심 행동수칙을 학습합니다.</p></header><div>${data.themes.map(([route,number,en,title,description,image]) => `<article data-progress-learning="${route}"><img src="${image}" alt=""><div><span>${number}</span><small>${en}</small><h3>${title}</h3><p>${description}</p></div><a href="#${route}">이 분야 전문 수칙 시작하기 <i>→</i></a></article>`).join('')}</div></section>`;
+  const renderCourseLanding = (course) => {
+    const section = document.createElement('section');
+    section.className = `book-home academy-desktop-course figma-course-landing${course.accent ? ` is-${course.accent}` : ''}`;
+    section.dataset.progressCourse = course.id;
+    section.id = course.view;
+    section.hidden = true;
+    const desktopData = desktopLandingCatalog[course.id];
+    section.innerHTML = `${renderDesktopCourseHeader()}${renderDesktopCourseHero(course)}${course.id === 'special' ? renderDesktopSpecialThemes(course,desktopData) : renderDesktopCourseBody(course,desktopData)}`;
+    const mobile = mobileLandingCatalog[course.id];
+    const mobileRows = course.chapters.map(([route,title,description],index) => {
+      const [duration] = mobile.rows[index];
+      const content = `<span><small>학습</small>${String(index+1).padStart(2,'0')}</span><div><strong>${title}</strong><p>${description}</p></div><aside><small>${duration}</small><em data-learning-state>미진입</em></aside>`;
+      return `<li class="is-not-started" data-progress-learning="${route}"><a href="#${route}">${content}</a></li>`;
+    }).join('');
+    section.insertAdjacentHTML('afterbegin', `<article class="figma-mobile-course-landing${course.id === 'practical' ? ' is-light' : ''}${course.id === 'special' ? ' is-special' : ''}"><header><a href="#home">← <span>ONOFF Home</span></a><strong>${mobile.header}</strong></header><section><div><small>${mobile.tag}</small><em data-course-state>대기중</em></div><h1>${mobile.title || course.title}</h1><p>${mobile.description}</p></section><dl>${mobile.metrics.map(([icon,label,value]) => `<div><span>${icon}</span><dt>${label}</dt><dd>${value}</dd></div>`).join('')}</dl><div class="figma-mobile-curriculum"><h2>${mobile.section}</h2><ol>${mobileRows}</ol></div><footer><small data-course-progress>0% · 0/${course.chapters.length} 완료</small><a href="#${mobile.ctaRoute}" data-course-continue>시작하기</a></footer></article>`);
+    homeSection?.append(section);
+  };
+  entryCourseCatalog.forEach(renderCourseLanding);
+  const riskPracticalLearning = [
+    {
+      id: 'risk-practical-01', number: '01', title: '작업 확인과 위험요인 파악', description: '실제 양식 작성의 첫 단계로 무엇을 평가할지 정하고 어디에 위험이 있는지 찾습니다.',
+      forms: ['02','03','04'],
+      sections: [
+        ['STEP 01','작업 및 안전보건정보 확인','평가 대상 작업을 선정하고 현장 설비 현황, 사용 물질, 과거 사고와 아차사고 이력을 취합합니다.'],
+        ['STEP 02','유해·위험요인 파악','위험요인을 기계·물질·작업환경 영역에서 찾고 대분류, 중분류, 소분류로 구체적으로 기록합니다.']
+      ],
+      practice: { question: "Q1. 위험성평가 양식 작성 시 가장 표준적이고 올바르게 기술된 '유해·위험요인 파악' 문구는 무엇입니까?", answer: 'B', choices: [['A','서보 모터 주변 작업은 모터가 뜨겁고 무거우므로 기계 손상이 우려됨'],['B','도어 시운전 중 정비 문을 열고 내부 조작 시 실린더 불시 작동으로 구동부 틈새에 손가락이 끼임'],['C','현장 제어 라인이 복잡하므로 특별 안전교육을 철저히 실시할 것']], explanation: '작업 상황, 위험원과 예상 재해가 구체적으로 연결된 문구를 작성합니다.' }
+    },
+    {
+      id: 'risk-practical-02', number: '02', title: '최초 위험성과 안전조치', description: '위험의 크기를 판단하고 현재 어떤 조치를 통해 관리하고 있는지 확인합니다.',
+      forms: ['01','05'],
+      sections: [
+        ['STEP 03','가능성과 중대성 판단','가능성 4단계와 중대성 5단계를 조합하여 위험의 크기를 객관적으로 판단합니다.'],
+        ['STEP 04','최초 위험성 결정','가능성(빈도) = (사고이력 + 작업빈도) ÷ 2, 위험성 = 가능성 × 중대성 공식으로 안전조치 전 최초 위험등급을 산정합니다.'],
+        ['STEP 05–06','현재 안전조치와 잔여위험','제거·대체, 공학적 제어, 관리적 제어, 개인보호구 순으로 현재 조치를 확인하고 잔여위험을 다시 산정합니다.']
+      ],
+      practice: { question: 'Q. 고소작업 위험을 줄이기 위해 우선 검토할 공학적 조치는 무엇입니까?', answer: 'C', choices: [['A','구두 경고와 팀 안전교육'],['B','접근 통제 유도 라인 설치'],['C','법적 규격에 맞는 고정형 표준 안전난간대 설치']], explanation: '사람의 주의보다 설비와 구조로 위험을 통제하는 공학적 조치를 우선 검토합니다.' }
+    },
+    {
+      id: 'risk-practical-03', number: '03', title: '감소대책과 재평가', description: '추가 개선이 필요한 경우 더 근본적인 대책을 세우고 위험이 실제로 낮아졌는지 다시 확인합니다.',
+      forms: ['05','06'],
+      sections: [
+        ['STEP 07','개선대상 여부 판단','허용 가능, 조건부 허용, 허용 불가 기준으로 개선이 필요한 위험을 구분합니다.'],
+        ['STEP 08','감소대책 수립','본질적 대책, 공학적 제어, 관리적 제어, 개인보호구 순으로 더 효과적인 대책을 선택합니다.'],
+        ['STEP 09','개선 후 위험성 재평가','대책 적용 후 가능성과 중대성을 다시 산정하여 위험수준이 실제로 낮아졌는지 확인합니다.'],
+        ['CASE','Before vs After 비교','시운전 중 위험구역 접근 사례에서 관리적 대책보다 조작방식과 설비 구조를 개선하는 공학적 대책을 우선 검토하고 잔여위험 변화를 확인합니다.']
+      ],
+      practice: { question: 'Q. 위험성평가 감소대책을 수립할 때 가장 기본적이고 최우선적인 태도는 무엇입니까?', answer: 'C', choices: [['A','안전수칙 경고 표지판을 여러 곳에 부착한다'],['B','비용을 줄이기 위해 가상 평점만 낮춘다'],['C','물리적 센서나 안전 연동 기구 등 공학적인 보호수단을 우선 설계한다']], explanation: '주의 표지나 규정에 앞서 위험을 구조적으로 줄이는 본질적·공학적 대책을 우선 검토합니다.' }
+    },
+    {
+      id: 'risk-practical-04', number: '04', title: '개선 실행과 완료 확인', description: '승인된 대책을 현장에 적용하고 완료 근거와 담당자 확인까지 기록합니다.',
+      forms: ['07'],
+      sections: [
+        ['FLOW','감소대책 실행 사이클','감소대책 수립 → 현장 적용 → 개선 후 위험성 재평가 → 개선 완료 확인 → 결과 반영 순서로 진행합니다.'],
+        ['STEP 10','감소대책 실행과 완료 확인','대책 실행내용, 개선완료일, 담당자, 완료 확인자와 사진·도면 등 개선완료 근거를 기록합니다.'],
+        ['SUMMARY','위험성평가 10단계 완결','작업 확인, 위험요인 파악, 가능성·중대성 판단, 최초·현재 등급 산출, 개선대상 판단, 감소대책, 재평가와 실행 완료 확인까지 하나의 흐름으로 마무리합니다.']
+      ],
+      practices: [
+        { question: "Q1. 4×5 Matrix에서 '최종 위험성 등급'을 결정하는 원리는 무엇입니까?", answer: 'B', choices: [['A','가능성과 중대성의 덧셈'],['B','가능성과 중대성의 곱셈'],['C','과거 사고 건수의 통계적 편차']], explanation: '최종 위험성은 가능성 등급과 중대성 등급을 곱하여 산정합니다.' },
+        { question: 'Q2. 감소대책 우선순위에서 가장 마지막으로 검토할 조치는 무엇입니까?', answer: 'A', choices: [['A','개인보호구 지급 및 착용 강화'],['B','관리감독자의 일일 구두 교육'],['C','원천 제거를 위한 설계 변경']], explanation: '개인보호구는 위험원을 제거하지 못하므로 제거·대체와 공학적·관리적 조치 뒤에 검토합니다.' }
+      ]
+    }
+  ];
+  const renderRiskPracticalPractice = (practice) => `<section class="risk-practical-practice" data-answer="${practice.answer}"><b>PRACTICE</b><h2>실무 작성 자가진단</h2><p class="risk-practical-question">${practice.question}</p><div>${practice.choices.map(([value,label]) => `<button type="button" data-risk-practical-answer="${value}"><span>${value}</span>${label}</button>`).join('')}</div><button type="button" data-risk-practical-check disabled>정답 확인</button><aside hidden aria-live="polite"><strong></strong><p>정답: ${practice.answer}</p><p>${practice.explanation}</p><button type="button" data-risk-practical-retry>다시 풀기</button></aside></section>`;
+  const documentRoot = document.querySelector('.document');
+  riskPracticalLearning.forEach((learning) => {
+    const section = document.createElement('section');
+    section.className = 'manual-section risk-practical-learning';
+    section.id = learning.id;
+    section.hidden = true;
+    section.innerHTML = `<section class="risk-practical-content"><header class="risk-practical-hero"><p>COURSE 03 · RISK PRACTICAL · 학습 ${learning.number}</p><strong>${learning.number}</strong><h2>${learning.title}</h2><span>${learning.description}</span><div><small>진행률 ${Number(learning.number) * 25}%</small><small>학습 ${learning.number} / 04</small></div></header><div class="risk-practical-sections">${learning.sections.map(([tag,title,body]) => `<section><b>${tag}</b><h2>${title}</h2><p>${body}</p></section>`).join('')}</div><section class="risk-practical-forms"><header><b>ACTUAL FORM</b><h2>실제 양식에서 확인하기</h2><p>확대하여 실제 작성 영역과 항목을 확인합니다.</p></header><div>${learning.forms.map((form) => `<figure><img src="assets/risk-practical/forms/form-${form}.png" alt="FORM-${form} 위험성평가 실무 양식" loading="lazy"><figcaption>FORM-${form}</figcaption></figure>`).join('')}</div></section>${(learning.practices || [learning.practice]).map(renderRiskPracticalPractice).join('')}${learning.number === '04' ? '<section class="risk-practical-course-complete"><b>COURSE COMPLETE</b><h2>위험성평가 실무 작성 교육 완료</h2><p>위험요인 확인부터 현장 개선 완료 증빙까지 실무 작성의 전체 흐름을 확인했습니다.</p></section>' : ''}</section><nav class="chapter-reading-nav" aria-label="학습 이동"></nav>`;
+    documentRoot?.append(section);
+    chapters.push(section);
+    chapterIndex.push({ id: learning.id, title: learning.title, description: learning.description });
+    section.querySelectorAll('.risk-practical-practice').forEach((practiceRoot) => {
+      const choices = [...practiceRoot.querySelectorAll('[data-risk-practical-answer]')];
+      const check = practiceRoot.querySelector('[data-risk-practical-check]');
+      const result = practiceRoot.querySelector(':scope > aside');
+      choices.forEach((choice) => choice.addEventListener('click', () => { choices.forEach((item) => item.classList.toggle('is-selected', item === choice)); check.disabled = false; }));
+      check.addEventListener('click', () => { const selected = choices.find((item) => item.classList.contains('is-selected')); if (!selected) return; const correct = selected.dataset.riskPracticalAnswer === practiceRoot.dataset.answer; choices.forEach((item) => { item.disabled = true; item.classList.remove('is-selected'); item.classList.toggle('is-correct', item.dataset.riskPracticalAnswer === practiceRoot.dataset.answer); item.classList.toggle('is-incorrect', item === selected && !correct); }); check.disabled = true; result.hidden = false; result.querySelector('strong').textContent = correct ? 'Correct' : 'Incorrect'; });
+      practiceRoot.querySelector('[data-risk-practical-retry]').addEventListener('click', () => { choices.forEach((item) => { item.disabled = false; item.classList.remove('is-selected','is-correct','is-incorrect'); }); check.disabled = true; result.hidden = true; choices[0]?.focus(); });
+    });
+  });
+  const academyImageViewer = document.createElement('dialog');
+  academyImageViewer.className = 'academy-image-viewer';
+  academyImageViewer.setAttribute('aria-labelledby', 'academy-image-viewer-title');
+  academyImageViewer.innerHTML = `<header class="academy-image-viewer-toolbar"><button type="button" data-image-viewer-back><span>←</span> 돌아가기</button><h2 id="academy-image-viewer-title">학습 이미지</h2><div><small>ESC</small><button type="button" data-image-viewer-close>닫기 <span>✕</span></button></div></header><div class="academy-image-viewer-separator"></div><div class="academy-image-viewer-canvas"><img alt=""></div>`;
+  document.body.append(academyImageViewer);
+  const academyViewerImage = academyImageViewer.querySelector('img');
+  const academyViewerTitle = academyImageViewer.querySelector('h2');
+  let academyViewerTrigger = null;
+  let academyViewerHistoryActive = false;
+  let academyViewerScrollY = 0;
+  const closeAcademyImageViewer = ({ fromHistory = false } = {}) => {
+    if (!academyImageViewer.open) return;
+    academyImageViewer.close();
+    document.body.classList.remove('is-academy-image-viewer-open');
+    if (!fromHistory && academyViewerHistoryActive) history.back();
+    academyViewerHistoryActive = false;
+    window.scrollTo({ top: academyViewerScrollY, behavior: 'auto' });
+    academyViewerTrigger?.focus({ preventScroll: true });
+  };
+  const openAcademyImageViewer = ({ src, alt, title, trigger }) => {
+    if (!src || !academyViewerImage || !academyViewerTitle) return;
+    academyViewerTrigger = trigger;
+    academyViewerScrollY = window.scrollY;
+    academyViewerImage.src = src;
+    academyViewerImage.alt = alt || title || '확대된 학습 이미지';
+    academyViewerTitle.textContent = title || alt || '학습 이미지';
+    document.body.classList.add('is-academy-image-viewer-open');
+    academyImageViewer.showModal();
+    history.pushState({ academyImageViewer: true }, '');
+    academyViewerHistoryActive = true;
+  };
+  academyImageViewer.querySelector('[data-image-viewer-back]').addEventListener('click', () => closeAcademyImageViewer());
+  academyImageViewer.querySelector('[data-image-viewer-close]').addEventListener('click', () => closeAcademyImageViewer());
+  academyImageViewer.addEventListener('cancel', (event) => { event.preventDefault(); closeAcademyImageViewer(); });
+  window.addEventListener('popstate', () => { if (academyImageViewer.open) closeAcademyImageViewer({ fromHistory: true }); });
+  document.querySelectorAll('.manual-section figure img').forEach((image) => {
+    image.tabIndex = 0;
+    image.setAttribute('role', 'button');
+    image.setAttribute('aria-label', `${image.alt || '학습 이미지'} 확대 보기`);
+  });
+  const openLearningFigure = (image) => openAcademyImageViewer({ src: image.currentSrc || image.src, alt: image.alt, title: image.closest('figure')?.querySelector('figcaption')?.textContent.trim() || image.alt, trigger: image });
+  document.addEventListener('click', (event) => {
+    const image = event.target.closest?.('.manual-section figure img');
+    if (image) openLearningFigure(image);
+  });
+  document.addEventListener('keydown', (event) => {
+    const image = event.target.closest?.('.manual-section figure img');
+    if (image && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); openLearningFigure(image); }
+  });
   const bookChapterForm = [
-    { id: 'philosophy', book: 'platform', part: '01', partTitle: 'Platform', chapter: '01', title: 'Platform Philosophy', next: 'workflow' },
+    { id: 'philosophy', book: 'platform', part: '01', partTitle: 'Platform', chapter: '01', title: 'ONOFF의 안전철학과 Platform 구조', next: 'workflow' },
     { id: 'workflow', book: 'platform', chapter: '02', title: '전체 Workflow', previous: 'philosophy', next: 'daily-work' },
     { id: 'daily-work', book: 'platform', part: '02', partTitle: 'Daily Safety', chapter: '03', title: "Today's Work", previous: 'workflow', next: 'safety-report' },
     { id: 'safety-report', book: 'platform', part: '03', partTitle: 'Safety Operation', chapter: '04', title: 'Safety Report', previous: 'daily-work' },
-    { id: 'tbm-purpose', book: 'tbm', chapter: '01', title: 'TBM이란 무엇인가?' },
+    { id: 'tbm-purpose', book: 'tbm', chapter: '01', title: 'TBM의 목적과 기본 원칙' },
     { id: 'tbm-nine-steps', book: 'tbm', chapter: '02', title: 'TBM 진행 9단계' },
     { id: 'tbm-scenario', book: 'tbm', chapter: '03', title: 'TBM 진행 시나리오' },
     { id: 'tbm-life-rules', book: 'tbm', chapter: '04', title: '생명안전수칙 10' },
-    { id: 'sop-purpose', book: 'sop', chapter: '01', title: 'SOP란 무엇인가?', progressTotal: 4 },
+    { id: 'sop-purpose', book: 'sop', chapter: '01', title: 'SOP의 목적과 핵심 구조', progressTotal: 4 },
     { id: 'sop-reading', book: 'sop', chapter: '02', title: 'SOP 읽는 방법', progressTotal: 4 },
     { id: 'sop-structure', book: 'sop', chapter: '03', title: 'SOP 구성과 작성 구조', progressTotal: 4 },
     { id: 'sop-practice', book: 'sop', chapter: 'PRACTICE', label: 'PRACTICE 01', title: '작업순서와 Safety Step 찾아보기', progressTotal: 4, countInProgress: false },
     { id: 'sop-platform', book: 'sop', part: '2', chapter: '04', title: 'Platform에서 SOP 활용', progressTotal: 4 },
-    { id: 'risk-assessment-purpose', book: 'risk', part: '1', chapter: '01', title: '위험성평가란 무엇인가?', progressTotal: 4 },
+    { id: 'risk-assessment-purpose', book: 'risk', part: '1', chapter: '01', title: '위험성평가의 목적과 기본 원칙', progressTotal: 4 },
     { id: 'risk-assessment-structure', book: 'risk', part: '1', chapter: '02', title: '위험성평가 구성 이해', progressTotal: 5 },
     { id: 'risk-assessment-stra', book: 'risk', part: '1', chapter: '03', title: 'S-TRA 위험성 판단 이해', progressTotal: 5 },
     { id: 'risk-assessment-daily-safety', book: 'risk', part: '2', chapter: '04', title: 'Daily Safety', progressTotal: 5 },
@@ -61,6 +301,10 @@
     ,{ id: 'special-hazardous-chemicals', book: 'special', chapter: '05', title: '35번 · 유해물질 제조·취급 작업', progressTotal: 7 }
     ,{ id: 'special-robot-work', book: 'special', chapter: '06', title: '36번 · 로봇작업', progressTotal: 7 }
     ,{ id: 'special-daily-work', book: 'special', part: '02', chapter: '07', title: 'Daily Work 연계', progressTotal: 7 }
+    ,{ id: 'risk-practical-01', book: 'practical', part: '1', chapter: '01', title: '작업 확인과 위험요인 파악', progressTotal: 4 }
+    ,{ id: 'risk-practical-02', book: 'practical', part: '1', chapter: '02', title: '최초 위험성과 안전조치', progressTotal: 4 }
+    ,{ id: 'risk-practical-03', book: 'practical', part: '2', chapter: '03', title: '감소대책과 재평가', progressTotal: 4 }
+    ,{ id: 'risk-practical-04', book: 'practical', part: '2', chapter: '04', title: '개선 실행과 완료 확인', progressTotal: 4 }
   ];
   bookChapterForm.forEach((item) => {
     const chapter = document.getElementById(item.id);
@@ -68,19 +312,409 @@
     chapter.classList.add('book-chapter-reading');
     chapter.dataset.chapter = item.chapter;
     const sourceHeading = chapter.querySelector('.section-heading, .chapter-header');
-    const description = sourceHeading?.querySelector('p:last-child')?.textContent.trim() || 'Chapter의 핵심 Workflow를 학습합니다.';
+    const description = sourceHeading?.querySelector('p:last-child')?.textContent.trim() || '이 학습의 핵심 Workflow를 확인합니다.';
     const start = document.createElement('header');
     start.className = 'book-chapter-start';
-    const chapterLabel = item.label || (item.part ? `PART ${item.part} · CHAPTER ${item.chapter}` : `CHAPTER ${item.chapter}`);
+    const chapterLabel = item.label || (item.part ? `PART ${item.part} · 학습 ${item.chapter}` : `학습 ${item.chapter}`);
     start.innerHTML = `<p>${chapterLabel}</p><h1>${item.title}</h1><span>${description}</span>`;
     chapter.insertAdjacentElement('afterbegin', start);
   });
 
+  const desktopLearningCatalog = {
+    platform: { number: '01', label: 'PLATFORM', sequence: [['philosophy','01','ONOFF Safety Platform 이해','31:4'],['workflow','02','오늘 작업과 Daily Safety','48:5'],['daily-work','03','Safety Start','78:4'],['safety-report','04','작업 중과 작업 종료','103:2']] },
+    risk: { number: '02', label: 'RISK ASSESSMENT', sequence: [['risk-assessment-purpose','01','위험성평가의 이해','174:4'],['risk-assessment-structure','02','위험성 판단과 감소대책','174:332'],['risk-assessment-stra','03','현장 실행과 지속 관리','174:658'],['risk-assessment-platform','04','ONOFF Platform 연결','174:999']] },
+    practical: { number: '03', label: 'RISK PRACTICAL', sequence: [['risk-practical-01','01','작업 확인과 위험요인 파악','208:514'],['risk-practical-02','02','최초 위험성과 안전조치','208:688'],['risk-practical-03','03','감소대책과 재평가','208:940'],['risk-practical-04','04','개선 실행과 완료 확인','208:1120']] },
+    sop: { number: '04', label: 'SOP', sequence: [['sop-purpose','01','SOP의 이해','190:117'],['sop-reading','02','작업 준비와 실행','190:414'],['sop-structure','03','변경과 비정상 상황','190:650'],['sop-platform','04','ONOFF Platform 연결','191:117']] },
+    tbm: { number: '05', label: 'TBM', sequence: [['tbm-purpose','INTRO','TBM Intro','243:575'],['tbm-nine-steps','01','사람 확인과 준비','243:576'],['tbm-scenario','02','위험 공유와 사고사례','243:577'],['tbm-life-rules','03','대응 준비와 작업 시작','243:578']] },
+    special: { number: '06', label: 'SPECIAL SAFETY', sequence: [['special-education-intro','INTRO','특별안전교육 공통 Intro','236:437'],['special-robot-work','01','Robot Safety','236:438'],['special-live-work-75v','02','Electrical Safety','236:439'],['special-hazardous-chemicals','03','Chemical Safety','236:440'],['special-cargo-handling','04','Material Handling','236:441'],['special-daily-work','COMPLETE','Course Complete','236:442']] }
+  };
+  Object.entries(desktopLearningCatalog).forEach(([courseId,course]) => course.sequence.forEach(([chapterId,learningNumber,title],index) => {
+    const chapter = document.getElementById(chapterId);
+    const legacyStart = chapter?.querySelector('.book-chapter-start');
+    if (!chapter || !legacyStart || chapter.querySelector('.desktop-learning-hero')) return;
+    const intro = legacyStart.querySelector('span')?.textContent.trim() || '이 학습의 핵심 안전행동과 현장 적용 기준을 확인합니다.';
+    const hero = document.createElement('header');
+    hero.className = 'desktop-learning-hero';
+    hero.dataset.desktopCourse = courseId;
+    hero.innerHTML = `<div class="desktop-learning-hero-grid"><div class="desktop-learning-hero-copy"><p>COURSE ${course.number} · ${course.label}</p><h1>${learningNumber === 'INTRO' || learningNumber === 'COMPLETE' ? title : `학습 ${learningNumber} · ${title}`}</h1><span>${intro}</span><div class="desktop-learning-position"><small>현재 학습</small><strong>${index + 1} / ${course.sequence.length}</strong></div></div><aside><small>${learningNumber === 'COMPLETE' ? 'COURSE COMPLETE' : 'LEARNING FOCUS'}</small><strong>${title}</strong><p>${learningNumber === 'COMPLETE' ? '학습 내용을 현장 안전행동과 연결하고 완료 상태를 확인합니다.' : '교육 내용을 읽고 Visual, Practice와 완료 단계를 순서대로 확인합니다.'}</p></aside></div></header>`;
+    legacyStart.insertAdjacentElement('afterend', hero);
+    if (!chapter.querySelector('.chapter-reading-nav')) chapter.insertAdjacentHTML('beforeend', '<nav class="chapter-reading-nav" aria-label="학습 이동"></nav>');
+  }));
+
+  const philosophyChapter = document.getElementById('philosophy');
+  if (philosophyChapter && !philosophyChapter.querySelector('.figma-ready-desktop-learning')) {
+    philosophyChapter.insertAdjacentHTML('beforeend', `
+      <article class="figma-ready-desktop-learning platform-ready-01" data-figma-source="31:4" data-ready-inventory="understand|philosophy|brand-story|direction|key-point-roles|key-point-structure|complete" aria-labelledby="figma-ready-philosophy-title">
+        <aside class="platform-ready-01-sidebar" aria-label="Platform 학습 목록">
+          <a href="#platform-course">← 과정 홈</a>
+          <p>COURSE 01</p><h2>ONOFF Safety Platform</h2>
+          <nav>
+            <a class="is-active" href="#philosophy" aria-current="page"><b>01</b><span>Platform 이해</span></a>
+            <a href="#workflow"><b>02</b><span>Safety Start</span></a>
+            <a href="#daily-work"><b>03</b><span>Daily Safety</span></a>
+            <a href="#safety-report"><b>04</b><span>작업 중 · 종료</span></a>
+          </nav>
+        </aside>
+        <main class="platform-ready-01-workspace">
+        <header class="ready-learning-header">
+          <nav aria-label="현재 위치"><span>Academy</span><i>›</i><span>Platform</span><i>›</i><strong>학습 01</strong></nav>
+          <p>PART 01 · PLATFORM 이해</p>
+          <h1 id="figma-ready-philosophy-title">ONOFF Safety Platform 이해</h1>
+          <div class="ready-learning-subtitle">안전자료를 보관하는 시스템을 넘어,<br>오늘의 작업과 필요한 안전을 연결합니다.</div>
+          <div class="ready-learning-progress" data-platform-l01-progress><span aria-hidden="true">▣</span><strong>학습 진행</strong><em>학습 01 / 04</em><b data-platform-l01-percent>0%</b><i><span data-platform-l01-bar></span></i></div>
+        </header>
+
+        <section class="ready-learning-section ready-editorial" data-ready-section="understand">
+          <b class="ready-section-tag">UNDERSTAND</b><h2>왜 안전 플랫폼이 필요한가</h2>
+          <p>안전자료가 없어서 사고가 발생하는 것은 아닙니다.</p><p>위험성평가도 있고, SOP도 있고, TBM도 하고, 교육도 합니다.</p>
+          <p>문제는 그 많은 안전정보가 오늘 내가 하는 작업과 연결되어 있는가입니다.</p>
+          <p>위험성평가는 Drive에 있고, SOP는 다른 폴더에 있고, TBM은 별도로 진행하고, 교육기록은 또 다른 곳에 존재할 수 있습니다.</p>
+          <p>각각의 자료는 존재하지만 작업자는 작업을 시작하는 순간 스스로 판단해야 합니다.</p>
+          <blockquote>“오늘 나는 무엇을 확인해야 하지?”</blockquote>
+          <p>ONOFF Safety Platform은 여기서 출발합니다.</p>
+          <aside class="ready-key-message"><strong>안전자료를 더 많이 만드는 것이 아니라,</strong><strong>필요한 안전을 필요한 순간에 연결하는 것.</strong></aside>
+        </section>
+
+        <section class="ready-learning-section ready-editorial" data-ready-section="philosophy">
+          <header><b>OUR PHILOSOPHY</b><h2>우리가 생각하는 안전</h2></header>
+          <p>안전은 서류를 완성하는 순간 시작되는 것이 아닙니다.</p>
+          <p>작업자가 오늘의 작업을 알고, 위험을 확인하고, 필요한 절차를 이해하고, 스스로 확인한 뒤 작업을 시작할 때 비로소 안전은 현장에서 작동합니다.</p>
+          <blockquote class="ready-manifesto">기록을 위한 안전에서,<br><strong>행동으로 이어지는 안전으로.</strong></blockquote>
+        </section>
+
+        <section class="ready-learning-section" data-ready-section="brand-story">
+          <div class="ready-editorial"><header><b>BRAND STORY</b><h2>ONOFF에 담은 생각</h2></header><small>WHY ONOFF</small><h3>왜 ‘ONOFF’인가</h3>
+          <p>작업에는 시작과 끝이 있습니다. 하지만 안전은 작업 시작 버튼을 누르는 순간 갑자기 생기는 것이 아닙니다.</p>
+          <aside class="ready-accent-block"><strong>작업을 ON 하기 전에 안전이 먼저 ON 되어야 합니다.</strong><span>작업을 OFF 하기 전에는 놓친 위험이나 남겨야 할 기록이 없는지 다시 확인합니다.</span></aside></div>
+          <div class="ready-life-cycle"><b>ONOFF Life Cycle</b><div>${[['PRE-WORK','SAFETY ON'],['START','WORK ON'],['END','WORK OFF'],['ARCHIVE','SAFETY RECORD']].map(([a,b]) => `<article><small>${a}</small><strong>${b}</strong></article>`).join('<i>→</i>')}</div></div>
+        </section>
+
+        <section class="ready-learning-section" data-ready-section="direction">
+          <div class="ready-editorial"><header><b>OUR DIRECTION</b><h2>우리가 만들고자 하는 안전</h2></header><p>ONOFF는 작업자에게 더 많은 버튼을 누르게 만드는 것을 목표로 하지 않습니다. 필요한 순간에 필요한 확인만 남기고, 이미 확인한 정보는 다시 찾기 쉽게 만들고, 작업자는 안전하게 행동하고, 관리자는 그 흐름을 확인할 수 있게 합니다.</p></div>
+          <div class="ready-direction-grid"><article><b>SAFETY PLATFORM</b><strong>행동을 연결합니다.</strong><span>오늘 무엇을 해야 하는가.</span></article><article><b>ONOFF ACADEMY</b><strong>지식을 연결합니다.</strong><span>왜 그렇게 해야 하는가.</span></article></div>
+          <p class="ready-progression">알고 하는 안전 → 확인하고 하는 안전 → 기록으로 남는 안전</p>
+        </section>
+
+        <section class="ready-learning-section ready-editorial" data-ready-section="key-point-roles">
+          <b class="ready-section-tag">KEY POINT ①</b><h2>Safety Platform은 어떻게 움직이는가</h2><p>Platform의 운영 원리를 이해하기 위해 세 가지 역할을 알아야 합니다.</p>
+          <div class="ready-role-stack">${[['WORKER','작업을 수행합니다.'],['SUPERVISOR','작업과 안전 운영을 관리합니다.'],['ADMINISTRATOR','Platform System을 관리합니다.']].map(([role,text]) => `<article><b>${role}</b><span>${text}</span></article>`).join('')}</div>
+          <div class="ready-concept-grid"><article><small>CONCEPT 01</small><strong>ROLE</strong><span>누가 어떤 책임을 가지는가</span></article><article><small>CONCEPT 02</small><strong>MODE</strong><span>지금 어떤 행동을 하려는가</span></article></div>
+          <aside class="ready-summary-callout">• Role은 책임을 정의하고, Mode는 지금 하려는 행동을 정의합니다.</aside>
+        </section>
+
+        <section class="ready-learning-section" data-ready-section="key-point-structure">
+          <div class="ready-editorial"><b class="ready-section-tag">KEY POINT ②</b><h2>ONOFF 전체 구조</h2></div>
+          <div class="ready-ecosystem"><header><small>ONOFF SAFETY ECOSYSTEM</small><strong>ONOFF 안전 생태계</strong></header><b>ONOFF</b>
+            <div class="ready-ecosystem-branches"><article><strong>SAFETY PLATFORM</strong><small>오늘 안전하게 일하기</small><ul>${['Daily Safety','Project & Work','Safety Start','Electronic Documents','Safety Report'].map(item => `<li>${item}</li>`).join('')}</ul></article><article><strong>ONOFF ACADEMY</strong><small>이해하고 배우기</small><ul>${['Platform','TBM','SOP','위험성평가','특별안전교육','설비안전','비상대응','사고사례'].map(item => `<li>${item}</li>`).join('')}</ul></article></div>
+            <i>⌄</i><footer>현장의 안전<br><strong>SAFETY IN THE FIELD</strong></footer>
+          </div>
+        </section>
+
+        <section class="ready-learning-complete" data-ready-section="complete">
+          <div class="ready-editorial"><b>COMPLETE</b><h2>ONOFF Safety Platform 이해</h2><ol>${['안전자료를 더 만드는 것이 아니라 필요한 순간에 연결합니다.','작업을 ON 하기 전에 안전이 먼저 ON 되어야 합니다.','Platform은 행동을 연결하고, Academy는 지식을 연결합니다.'].map((item) => `<li><strong aria-hidden="true">✓</strong><span>${item}</span></li>`).join('')}</ol></div>
+          <nav class="ready-bottom-navigation" aria-label="학습 이동"><span aria-disabled="true">← 이전 학습</span><a href="#platform-course">학습 목록</a><a href="#workflow" data-complete-on-navigation="philosophy">다음 학습 →</a></nav>
+        </section>
+        </main>
+      </article>`);
+  }
+
+  const readySectionInventory = {
+    '48:5': ['lesson-01','product-screen-01','why','product-screen-02','lesson-02','lesson-03','lesson-04','practice','complete'],
+    '78:4': ['lesson-01','workflow-visual','lesson-02','product-screen-01','lesson-03','lesson-04','product-screen-02','lesson-05','product-screen-03','lesson-06','checklist','product-screen-04','practice','complete'],
+    '103:2': ['lesson-01','product-screen-01','lesson-02','daily-work-flow','safety-report-branch','lesson-03','product-screen-02','lesson-04','product-screen-03','daily-safety-loop','practice','complete'],
+    '174:4': ['why','what','definition','flow','find','example','method','chain-diagram','perspective','seven-step-flow','summary','practice','complete'],
+    '174:332': ['visual-example','risk-matrix','decision-flow','step-matrix','rating-cards','scenarios','hierarchy-diagram','practice','complete'],
+    '174:658': ['execution','key-concept','participation','documentation','change-management','trigger-cards','flow-diagram','continuous-cycle','step-summary','practice','complete'],
+    '174:999': ['daily-safety','key-concept','flow-visualizer','path-a','path-b','summary','comparison-table','practice','course-complete'],
+    '208:514': ['step-01','step-02','practice'],
+    '208:688': ['step-04','form-01','step-03','step-05','form-05','step-06','practice'],
+    '208:940': ['step-07','step-08','form','step-09','form-05','practice'],
+    '208:1120': ['flow','form-cta','step-10','form-07','guide-points','sprint-summary','practice','course-complete'],
+    '190:117': ['why','read','concept','field-context','complete'],
+    '190:414': ['prepare','follow','warning','watch','hazard-cards','practice','complete'],
+    '190:650': ['change','flow-visual','abnormal','mindset','result','practice','complete'],
+    '191:117': ['onoff','platform-visual','practice','complete'],
+    '243:575': ['why','tbm-flow','start','next'],
+    '243:576': ['action-01','action-02','action-03','action-04','summary'],
+    '243:577': ['action-05','action-06','share-summary','next'],
+    '243:578': ['action-07','action-08','action-09','practice','complete','connection','next'],
+    '236:437': ['why','learning-path','connection','course-map'],
+    '236:438': ['why','situation','hazard','check','field-point','practice'],
+    '236:439': ['why','situation','hazard','check','field-point','practice'],
+    '236:440': ['risk','check','practice'],
+    '236:441': ['scenario','hazard','check','practice'],
+    '236:442': ['summary-robot','summary-electrical','summary-chemical','summary-material','connection']
+  };
+
+  const mountRemainingReadyDesktopLearning = () => {
+    if (!desktopHomeMedia.matches) return;
+    Object.entries(desktopLearningCatalog).forEach(([courseId,course]) => course.sequence.forEach(([chapterId,learningNumber,title,figmaNode],index) => {
+      if (courseId === 'platform' || courseId === 'risk') return;
+      const chapter = document.getElementById(chapterId);
+      const legacyStart = chapter?.querySelector(':scope > .book-chapter-start');
+      if (!chapter || !legacyStart || chapter.querySelector(':scope > .figma-ready-desktop-learning')) return;
+      const excludedClasses = ['platform-mobile-header','platform-mobile-route-hero','book-chapter-start','desktop-learning-hero','chapter-complete-label','chapter-reading-nav','platform-figma-mobile-chapter'];
+      const contentNodes = [...chapter.children].filter((element) => !excludedClasses.some((className) => element.classList.contains(className)) && ![...element.classList].some((className) => className.startsWith('mobile-')));
+      const inventory = readySectionInventory[figmaNode] || [];
+      const ready = document.createElement('article');
+      ready.className = 'figma-ready-desktop-learning ready-migrated-learning';
+      ready.dataset.figmaSource = figmaNode;
+      ready.dataset.readyCourse = courseId;
+      ready.dataset.readyInventory = inventory.join('|');
+      const intro = legacyStart.querySelector('span')?.textContent.trim() || '이 학습의 핵심 내용과 현장 적용 방법을 확인합니다.';
+      const progress = learningNumber === 'INTRO' ? 0 : learningNumber === 'COMPLETE' ? 100 : Math.round(((index + 1) / course.sequence.length) * 100);
+      ready.innerHTML = `<header class="ready-learning-header ready-course-hero"><nav aria-label="현재 위치"><span>Academy</span><i>›</i><span>${course.label}</span><i>›</i><strong>${learningNumber === 'INTRO' || learningNumber === 'COMPLETE' ? learningNumber : `Chapter ${learningNumber}`}</strong></nav><p>COURSE ${course.number} · ${course.label}</p><h1>${title}</h1><div class="ready-learning-subtitle">${intro}</div><div class="ready-learning-progress"><span aria-hidden="true">▣</span><strong>진도율 상태</strong><em>${learningNumber === 'INTRO' ? 'Course Intro' : learningNumber === 'COMPLETE' ? 'Course Complete' : `Learning ${learningNumber} · 진행`}</em><b>${progress}% 완료</b><i><span style="width:${progress}%"></span></i></div></header><div class="ready-migrated-content"></div>`;
+      const content = ready.querySelector('.ready-migrated-content');
+      contentNodes.forEach((element,nodeIndex) => {
+        element.hidden = false;
+        element.classList.remove('academy-lesson');
+        element.classList.add('ready-bound-section');
+        element.dataset.readySection = inventory[nodeIndex] || `content-${nodeIndex + 1}`;
+        content.append(element);
+      });
+      const previous = course.sequence[index - 1];
+      const next = course.sequence[index + 1];
+      const tocTarget = entryCourseCatalog.find((entry) => entry.id === courseId)?.route || 'home';
+      ready.insertAdjacentHTML('beforeend', `<section class="ready-learning-complete ready-migrated-complete"><div class="ready-editorial"><b>${learningNumber === 'COMPLETE' ? 'COURSE COMPLETE' : 'LEARNING COMPLETE'}</b><h2>${title}</h2><button type="button" data-learning-complete="${chapterId}">학습 완료</button></div>${next ? `<a class="ready-next-learning" href="#${next[0]}"><span><small>다음 학습</small><strong>${next[2]}</strong></span><b>바로가기 →</b></a>` : ''}<nav class="ready-bottom-navigation" aria-label="학습 이동">${previous ? `<a href="#${previous[0]}">‹ 이전 학습</a>` : '<span aria-disabled="true">‹ 이전 학습</span>'}<a href="#${tocTarget}">▤ 학습 목록</a>${next ? `<a href="#${next[0]}">다음 학습 ›</a>` : '<a href="#home">Academy로 ›</a>'}</nav></section>`);
+      chapter.classList.add('has-ready-desktop-learning');
+      chapter.append(ready);
+    }));
+  };
+  mountRemainingReadyDesktopLearning();
+
+  const mountExactPlatformDesktopLearning = () => {
+    if (!desktopHomeMedia.matches) return;
+
+    const workflow = document.getElementById('workflow');
+    if (workflow && !workflow.querySelector(':scope > .platform-ready-desktop-learning')) {
+      workflow.insertAdjacentHTML('beforeend', `
+        <article class="figma-ready-desktop-learning platform-ready-desktop-learning platform-ready-02" data-figma-source="48:5" data-ready-inventory="learning-flow|prepare|why|key-point|action|product-management|product-registration|practice|complete" aria-labelledby="platform-ready-02-title">
+          <aside class="platform-ready-02-sidebar" aria-label="Platform 학습 목록"><section><b>HOME</b><a href="#home">Academy Home</a></section><section><b>PLATFORM</b><nav><a href="#philosophy">Platform 이해</a><a class="is-active" href="#workflow" aria-current="page">Safety Start</a><a href="#daily-work">Daily Safety</a><a href="#safety-report">작업 중 · 종료</a></nav></section><section><b>LIBRARY</b><nav><a href="#tbm-course">TBM</a><a href="#sop-course">SOP</a><a href="#risk-course">위험성평가</a><a href="#special-course">특별안전교육</a><span>설비안전</span><span>비상대응</span><span>사고사례</span></nav></section></aside>
+          <main class="platform-ready-02-workspace">
+            <header class="ready-learning-header"><nav aria-label="현재 위치"><span>Academy</span><i>›</i><span>Platform</span><i>›</i><strong>학습 02</strong></nav><p>PART 02 · 작업 전 안전과정</p><h1 id="platform-ready-02-title">Safety Start</h1><div class="ready-learning-subtitle">작업에 필요한 안전정보가 어떻게 준비되고 연결되는지 이해합니다.</div><div class="ready-learning-progress" data-platform-l02-progress><span aria-hidden="true">▣</span><strong>학습 진행</strong><em>학습 02 / 04</em><b data-platform-l02-percent>0% 완료</b><i><span data-platform-l02-bar></span></i></div></header>
+            <section class="platform-ready-02-flow" data-ready-section="learning-flow"><header><b>LEARNING FLOW · 학습 흐름</b><small>TIP</small></header><ol><li>✓ <strong>학습 02 · Safety Start</strong></li><li>✓ <strong>Safety Start의 목적과 역할 이해</strong></li><li>✓ <strong>Project/Work 기본정보 준비 과정 이해</strong></li><li>→ <strong>준비된 정보가 Daily Safety의 기준이 됨</strong></li></ol></section>
+            <section class="platform-ready-02-editorial platform-ready-02-prepare" data-ready-section="prepare"><header><b>PREPARE</b><h2>Safety Start는 어떤 준비를 하는가?</h2></header><p>작업자는 매일 안전정보를 처음부터 새로 만드는 것이 아닙니다. Project와 Work의 준비 단계에서 누가, 어디에서, 언제, 어떤 작업을 수행하는지 기본정보를 먼저 정의하고, 해당 작업에 필요한 안전정보를 사전에 준비하고 연결합니다. 이렇게 준비된 정보가 Daily Safety의 기준으로 사용됩니다.</p><ol class="platform-ready-02-steps"><li>Project / Work</li><li>기본 작업정보 준비</li><li><strong>안전정보 준비 및 연결</strong><small>위험성평가 · SOP · TBM 등</small></li><li>DAILY SAFETY READY</li></ol><aside class="platform-ready-02-relation"><small>준비된 안전정보 → Daily Safety에서 사용</small><div><span><b>위험성평가</b>위험과 대책</span><span><b>SOP</b>작업 절차</span><span><b>TBM</b>현장 안전 공유</span></div><em>→ 각 항목별 상세 자료 확인 가능</em></aside><blockquote>Safety Start의 핵심: Daily Safety에서 사용할 기준을 미리 준비합니다.</blockquote></section>
+            <section class="platform-ready-02-editorial" data-ready-section="why"><header><b>WHY</b><h2>왜 안전정보를 미리 준비하는가?</h2></header><p>안전자료가 없어서 사고가 발생하는 것이 아닙니다. 위험성평가도 있고, SOP도 있고, TBM도 합니다. 문제는 이 정보가 실제 작업과 연결되어 있는지, 오늘 작업에 필요한 기준으로 준비되어 있는지입니다. Safety Start는 이 정보를 사전에 정의하고 연결하여, Daily Safety에서 바로 확인할 수 있도록 준비합니다.</p><blockquote>준비된 정보가 있어야 Daily Safety에서 확인할 수 있습니다.</blockquote></section>
+            <section class="platform-ready-02-editorial platform-ready-02-keypoint" data-ready-section="key-point"><b class="ready-section-tag">KEY POINT</b><h2>Safety Start에서 준비하는 것</h2><p>Safety Start는 Project와 Work 수행에 필요한 기본정보와 안전정보를 사전에 준비합니다.</p><div><article><small>PROJECT INFO</small><h3>Project / Work 기본정보</h3><p>누가, 어디에서, 언제, 어떤 작업을 수행하는지 기본정보를 정의합니다. 프로젝트명, 고객사, 현장, 관리자, 시작일/종료일, 기본 작업내용을 등록합니다.</p></article><article><small>SAFETY INFO</small><h3>안전정보 준비 및 연결</h3><p>해당 작업에 필요한 안전정보를 사전에 준비하고 연결합니다. 위험성평가, SOP, TBM 등 필요한 안전자료가 작업에 맞게 연결되어, Daily Safety에서 바로 확인할 수 있도록 합니다.</p></article></div><p>이렇게 준비된 정보는 이후 Daily Safety의 기준으로 사용됩니다. Project에 속하지 않는 작업도 기타 작업으로 선택하여 동일한 Safety Start 흐름을 진행할 수 있습니다.</p></section>
+            <section class="platform-ready-02-action" data-ready-section="action"><b>ACTION</b><h2>Project 확인과 안전정보 준비</h2><p>Safety Start의 준비는 Project 정보를 정의하는 것에서 시작합니다. 누가, 어디에서, 언제, 어떤 작업을 수행하는지 기본정보를 등록하고, 해당 작업에 필요한 안전정보를 연결합니다.</p></section>
+            <section class="platform-ready-02-product ready-platform-screen" data-ready-section="product-management"><b>PRODUCT SCREEN · Project Management</b><figure><img src="assets/platform/figma-ready/ch02/project-management.png" alt="Project Management 프로젝트 목록과 안전준비 상태 화면"></figure><p>Safety Start의 준비는 Project 정보를 정의하는 것에서 시작합니다. 등록된 Project 목록에서 프로젝트명, 고객사, 현장, 관리자, 안전준비 상태를 확인할 수 있습니다.</p></section>
+            <section class="platform-ready-02-product ready-platform-screen" data-ready-section="product-registration"><b>PRODUCT SCREEN · 프로젝트 등록</b><figure><img src="assets/platform/figma-ready/ch02/project-registration.png" alt="프로젝트 기본정보와 참여 Worker 등록 화면"></figure><p>누가(End User, 관리자), 어디에서(고객사, 현장), 언제(시작일/종료일), 어떤 작업(기본 작업내용)을 수행하는지 Safety Start의 기본정보를 등록합니다. 참여 Worker를 선택하여 작업 대상을 지정합니다.</p></section>
+            <section class="platform-ready-02-practice ready-practice" data-ready-section="practice" data-ready-answer="02"><b>PRACTICE · 학습 확인</b><h2>Safety Start에서 준비하는 정보의 주된 목적은 무엇입니까?</h2><div class="ready-practice-options">${[['01','관리자의 작업 현황 보고를 위해'],['02','Daily Safety에서 사용할 안전확인 기준을 준비하기 위해'],['03','작업자 출퇴근 관리를 위해'],['04','안전교육 이수 현황을 기록하기 위해']].map(([value,label])=>`<button type="button" data-ready-choice="${value}"><span>${value}</span>${label}</button>`).join('')}</div><button type="button" data-ready-check disabled>정답 확인</button><aside hidden aria-live="polite"><strong></strong><p>Safety Start는 Project/Work의 기본정보와 안전정보를 사전에 준비하여 Daily Safety에서 바로 확인할 수 있도록 하는 과정입니다. 관리 보고나 출퇴근이 아니라, 작업 안전의 기준을 준비하는 것이 핵심입니다.</p><button type="button" data-ready-retry>다시 풀기</button></aside></section>
+            <section class="platform-ready-02-complete" data-ready-section="complete"><div><b>COMPLETE</b><h2>Safety Start</h2><ol>${['Safety Start는 Daily Safety에서 사용할 작업·안전정보를 사전에 준비하는 과정입니다.','Project/Work 기본정보를 정의하고, 필요한 안전정보를 준비하여 연결합니다.','이제 준비된 정보를 오늘 작업에서 어떻게 사용하는지 확인합니다.'].map((item)=>`<li><strong aria-hidden="true">✓</strong><span>${item}</span></li>`).join('')}</ol></div><nav class="ready-bottom-navigation" aria-label="학습 이동"><a href="#philosophy">← 이전 학습</a><a href="#platform-course">학습 목록</a><a href="#daily-work" data-complete-on-navigation="workflow">다음 학습 →</a></nav></section>
+          </main>
+        </article>`);
+    }
+
+    const readyPlatformProduct = (section,image,alt,annotations,caption) => `<section class="platform-ready-03-product ready-platform-screen" data-ready-section="${section}"><b>PRODUCT SCREEN · 실제 Platform 화면</b><div><figure><img src="${image}" alt="${alt}"></figure><ol>${annotations.map((item,index)=>`<li><span>0${index+1}</span><strong>${item}</strong></li>`).join('')}</ol></div><p>${caption}</p></section>`;
+    const dailyWork = document.getElementById('daily-work');
+    if (dailyWork && !dailyWork.querySelector(':scope > .platform-ready-desktop-learning')) {
+      dailyWork.insertAdjacentHTML('beforeend', `
+        <article class="figma-ready-desktop-learning platform-ready-desktop-learning platform-ready-03" data-figma-source="78:4" data-ready-inventory="understand|understand-flow|key-point|step-01|work-selection|work-selection-compare|step-02|related-materials|step-03|education-rights|step-04|step-05|safety-check|step-06|signature|final-action|work-on|practice|complete" aria-labelledby="platform-ready-03-title">
+          <aside class="platform-ready-03-sidebar" aria-label="Platform 학습 목록"><section><b>HOME</b><a href="#home">Academy Home</a></section><section><b>PLATFORM</b><a href="#platform-course">Platform Course</a><nav><a href="#philosophy">Platform 이해</a><a href="#workflow">Safety Start</a><a class="is-active" href="#daily-work" aria-current="page">Daily Safety</a><a href="#safety-report">작업 중 · 종료</a></nav></section><section><b>LIBRARY</b><nav><a href="#tbm-course">TBM</a><a href="#sop-course">SOP</a><span>위험성평가</span><span>특별안전교육</span><span>설비안전</span><span>비상대응</span><span>사고사례</span></nav></section></aside>
+          <main class="platform-ready-03-workspace">
+            <header class="platform-ready-03-header"><nav aria-label="현재 위치"><span>Academy</span><i>›</i><span>Platform</span><i>›</i><strong>학습 03</strong></nav><div><p>PART 02 · 작업 전 안전과정</p><h1 id="platform-ready-03-title">오늘 작업과 Daily Safety</h1><h2>오늘의 안전확인과 작업 시작</h2><p>준비된 안전정보를 바탕으로 오늘 작업의 안전확인을 실행하고, 실제 작업을 시작하는 과정을 학습합니다.</p></div><div class="platform-ready-03-progress"><span aria-hidden="true">▣</span><strong>예상 진도량</strong><em>학습 시간 약 15 · 20분</em><b data-platform-l03-percent>학습 03 / 04</b><i><span data-platform-l03-bar></span></i></div></header>
+            <section class="platform-ready-03-editorial platform-ready-03-understand" data-ready-section="understand"><b>UNDERSTAND</b><h2>왜 바로 작업을 시작하지 않을까요?</h2><p>오늘 수행할 작업을 선택했다고 바로 실제 작업이 시작되는 것은 아닙니다. ONOFF는 작업자가 실제 작업을 시작하기 전에 필요한 최소 안전확인을 거치도록 합니다. 교육 및 회의 참가 내용을 확인하고, 작업자의 권리와 의무를 인지하고, 핵심 안전사항을 직접 확인한 뒤 전자서명으로 기록을 남깁니다. 이 과정이 Daily Safety입니다.</p><blockquote>Daily Safety는 시스템 버튼이 아니라, 작업 시작 전 안전확인의 전체 흐름입니다.</blockquote></section>
+            <section class="platform-ready-03-flow" data-ready-section="understand-flow"><div><b>DAILY SAFETY FLOW</b><h2>작업 시작 전 안전확인 흐름</h2>${['오늘 작업 선택','교육 및 회의 참가 확인','권리와 의무 확인','작업 전 안전확인','전자서명','작업 시작'].map((item,index)=>`<p class="${index===3?'is-primary':index===5?'is-complete':''}">${item}</p>`).join('<i>▼</i>')}</div></section>
+            <section class="platform-ready-03-editorial platform-ready-03-keypoint" data-ready-section="key-point"><b>KEY POINT</b><h2>Daily Safety는 시스템 버튼이 아니라 안전확인의 전체 과정입니다</h2><p>Daily Safety는 화면의 특정 버튼을 누르는 행위가 아닙니다.<br><br>오늘 작업 선택 → 연결된 안전정보 확인 → 교육 및 회의 참가 확인 → 권리와 의무 → 작업 전 안전확인 → 전자서명까지, 작업 시작 전에 거치는 안전확인의 전체 흐름이 Daily Safety입니다.<br><br>Safety Start에서 준비한 안전정보는 이 과정을 통해 작업자에게 전달됩니다.</p></section>
+            <section class="platform-ready-03-action" data-ready-section="step-01"><b>STEP 01</b><h2>오늘 수행할 작업을 선택합니다</h2><p>Daily Safety의 첫 번째 과정은 오늘 수행할 작업을 선택하는 것입니다.<br><br>로그인 후 나에게 배정된 작업 목록에서 오늘 수행할 작업을 선택하면, 해당 작업에 연결된 안전정보가 Daily Safety 흐름에 자동으로 연결됩니다.<br><br>작업 선택은 단순한 메뉴 선택이 아닙니다. Safety Start에서 준비한 안전정보가 이 선택을 통해 작업자의 Daily Safety로 연결되는 시작점입니다.</p><blockquote>“작업 선택 = Safety Start에서 준비된 안전정보가 나의 Daily Safety로 연결되는 시작점”</blockquote></section>
+            <section class="platform-ready-03-product platform-ready-03-product--intro ready-platform-screen" data-ready-section="work-selection"><b>PRODUCT SCREEN · 실제 Platform 화면</b><figure><img src="assets/platform/figma-ready/ch03/work-selection.png" alt="로그인 후 오늘 수행할 작업을 선택하는 실제 Platform 화면"></figure><p>로그인 후 오늘 수행할 작업을 먼저 선택하도록 안내합니다.</p></section>
+            <section class="platform-ready-03-product platform-ready-03-product--compare ready-platform-screen" data-ready-section="work-selection-compare"><b>PRODUCT SCREEN · 선택 전과 선택 후</b><div><figure><img src="assets/platform/figma-ready/ch03/work-selection-before.png" alt="작업 선택 전 Platform 화면"><i>작업 선택</i><span aria-hidden="true"></span></figure><figure><img src="assets/platform/figma-ready/ch03/work-selection-after.png" alt="작업 선택 후 Platform 화면"></figure></div><ol>${['수행할 작업을 선택합니다.','선택한 작업을 확인합니다.','작업 선택이 완료되면 작업 시작 버튼이 활성화됩니다.'].map((item,index)=>`<li><b>STEP 0${index+1}</b><span>${item}</span></li>`).join('')}</ol></section>
+            <section class="platform-ready-03-action" data-ready-section="step-02"><b>STEP 02</b><h2>연결된 안전정보를 확인합니다</h2><p>작업을 선택하면 Safety Start에서 해당 작업에 연결해둔 안전정보를 확인할 수 있습니다.<br><br>위험성평가, SOP, TBM 등 작업과 관련된 안전자료가 있다면 작업자는 필요할 때 원문 또는 상세 내용을 추가로 확인할 수 있습니다.<br><br>이 자료들은 작업자가 새로 만드는 것이 아니라, Safety Start 단계에서 관리자가 미리 준비하여 작업에 연결해둔 것입니다.</p><blockquote>“관련 안전자료 = Safety Start에서 준비하여 작업에 연결해둔 상세 안전정보”</blockquote></section>
+            <section class="platform-ready-03-materials" data-ready-section="related-materials"><b>RELATED SAFETY MATERIALS · 관련 안전자료</b><p>작업과 연결된 안전자료가 있다면 작업자는 필요할 때 관련 원문 또는 상세 내용을 추가로 확인할 수 있습니다.</p><div><span>위험성평가</span><span>SOP</span><span>TBM</span></div><blockquote>작업 전 안전확인 = 모든 작업자가 작업 전에 거치는 최소 핵심 안전확인<br>관련 안전자료 = 작업과 연결되어 있을 경우 필요한 상세 내용을 추가 확인하기 위한 자료</blockquote></section>
+            <section class="platform-ready-03-editorial" data-ready-section="step-03"><b>STEP 03</b><h2>작업 전에 필요한 교육과 안전활동 내용을 확인합니다</h2><p>Daily Safety에서 보여주는 교육 및 회의 참가 확인은 이 화면에서 새로운 교육을 시작하거나 각 항목을 사용자가 하나씩 체크하는 과정이 아닙니다.<br><br>작업 시작 전에 필요한 교육 및 회의 참가 내용을 확인하는 단계입니다.</p><blockquote>“작업 전에 필요한 교육과 안전활동을 놓치지 않았는지 확인합니다.”</blockquote></section>
+            ${readyPlatformProduct('education-rights','assets/platform/figma-ready/ch03/education-rights.png','교육 및 회의 참가 내용과 작업자의 권리와 의무를 확인하는 실제 Platform 화면',['교육 및 회의 참가 내용 확인','작업자의 권리와 의무 확인','내용 확인 후 작업 전 안전확인으로 이동'],'교육 및 회의 참가 내용과 작업자의 권리와 의무를 확인합니다.')}
+            <section class="platform-ready-03-editorial platform-ready-03-rights" data-ready-section="step-04"><b>STEP 04</b><h2>안전하지 않은 작업을 그대로 시작하지 않습니다</h2><p>안전확인은 작업자의 의무만을 의미하지 않습니다.<br><br>작업자는 안전하게 작업해야 할 의무가 있으며, 동시에 안전이 확보되지 않은 작업을 그대로 수행하지 않을 권리도 있습니다.<br><br>ONOFF는 실제 작업을 시작하기 전에 이 원칙을 다시 확인하도록 합니다.<br><br>현재 Platform에서 사용자는:<br><br>“작업자는 안전이 확보되지 않은 작업을 거부할 권리와 의무가 있습니다.”<br><br>라는 내용을 확인한 뒤<br><br>“위 내용을 확인했습니다.”<br><br>를 체크합니다.</p><blockquote>“안전을 확인하는 것은 작업자의 의무이면서 권리입니다.”</blockquote></section>
+            <section class="platform-ready-03-editorial platform-ready-03-safety-copy" data-ready-section="step-05"><b>STEP 05</b><h2>작업 직전, 핵심 안전사항을 다시 확인합니다</h2><p>작업자가 실제 작업을 시작하기 직전에 놓치지 않아야 할 핵심 안전사항을 직접 확인하는 과정입니다.<br><br>현재 Platform의 작업 전 안전확인 항목:<br><br>· 보호구<br>· 오늘의 주의사항<br>· 작업 준비<br>· 작업 수행상태<br>· 주요 위험요인<br><br>작업자는 각 항목을 예/아니오로 직접 확인합니다.</p></section>
+            ${readyPlatformProduct('safety-check','assets/platform/figma-ready/ch03/safety-check.png','작업 직전 핵심 안전사항을 예 아니오로 확인하는 실제 Platform 화면',['보호구 · 주의사항 · 작업 준비 · 작업 수행상태 확인','각 항목을 예/아니오로 직접 확인','확인 완료 후 전자서명 단계로 이동'],'작업 직전 핵심 안전사항을 예/아니오로 직접 확인합니다.')}
+            <section class="platform-ready-03-editorial platform-ready-03-signature-copy" data-ready-section="step-06"><b>STEP 06</b><h2>확인한 내용을 내 확인으로 남깁니다</h2><p>작업 전 안전확인을 마쳤다면 전자서명으로 확인 내용을 남깁니다.<br><br>전자서명은 단순히 다음 화면으로 이동하기 위한 버튼이 아닙니다.<br><br>작업자가 실제 작업 시작 전에 필요한 안전사항을 직접 확인했다는 흐름을 기록으로 연결하는 단계입니다.</p><blockquote>“확인한 안전을 기록으로 남깁니다.”</blockquote></section>
+            ${readyPlatformProduct('signature','assets/platform/figma-ready/ch03/signature.png','안전확인 내용을 전자서명으로 기록하는 실제 Platform 화면',['선택된 작업 정보 확인','손가락 또는 마우스로 서명','“실제 작업 시작” 버튼으로 Daily Safety 완료'],'안전확인 내용을 전자서명으로 기록합니다.')}
+            <section class="platform-ready-03-editorial platform-ready-03-final" data-ready-section="final-action"><b>FINAL ACTION</b><h2>이제 실제 작업을 시작합니다</h2><p>Daily Safety의 모든 확인 과정을 완료하면 실제 작업 상태로 전환됩니다.<br><br>오늘 작업 선택부터 전자서명까지, 6단계의 안전확인을 거쳐 작업 시작이 활성화됩니다. 이 과정은 Safety Start에서 준비한 안전정보가 작업자에게 전달되고, 작업자가 직접 확인했음을 기록하는 전체 흐름입니다.</p><div>${['오늘 작업 선택','안전정보 확인','교육/회의 · 권리/의무','안전확인 · 전자서명'].map(item=>`<span>✓ <strong>${item}</strong></span>`).join('')}<i>▼</i><b>DAILY SAFETY</b><i>▼</i><em>WORK ON · 작업 시작</em></div></section>
+            ${readyPlatformProduct('work-on','assets/platform/figma-ready/ch03/work-on.png','Daily Safety 완료 후 실제 작업 상태 화면',['작업 진행 상태 및 시작 시간 표시','안전확인 완료 메시지','위험 신고 · 작업 중지 · 작업 종료 기능'],'Daily Safety 완료 후 실제 작업 상태 화면입니다.')}
+            <section class="platform-ready-03-practice ready-practice" data-ready-section="practice" data-ready-answer="02"><b>PRACTICE · 학습 확인</b><h2>ONOFF에서 “작업 전 안전확인”을 진행하는 가장 중요한 이유는 무엇일까요?</h2><div class="ready-practice-options">${[['01','작업자의 지식을 시험하기 위해'],['02','오늘 작업에 필요한 핵심 안전사항을 작업 시작 전에 최소한 직접 확인하기 위해'],['03','관리자가 작업자를 평가하기 위해'],['04','출근 기록을 자동으로 남기기 위해']].map(([value,label])=>`<button type="button" data-ready-choice="${value}"><span>${value}</span>${label}</button>`).join('')}</div><button type="button" data-ready-check disabled>정답 확인</button><aside hidden aria-live="polite"><strong></strong><p>작업 전 안전확인은 작업자의 지식을 평가하는 과정이 아닙니다. 보호구, 오늘의 주의사항, 작업 준비, 작업 수행상태, 주요 위험요인 등 오늘 작업에서 놓치지 않아야 할 핵심 안전사항을 실제 작업 전에 최소한 직접 확인하는 과정입니다.</p><button type="button" data-ready-retry>다시 풀기</button></aside></section>
+            <section class="platform-ready-03-complete" data-ready-section="complete"><div><b>COMPLETE</b><h2>학습 03 · 핵심 정리</h2><ol>${['Daily Safety는 버튼이 아니라 과정입니다. 작업 선택 → 안전정보 확인 → 교육/회의 → 권리/의무 → 안전확인 → 전자서명 → 작업 시작.','Safety Start에서 준비한 안전정보는 작업 선택을 통해 작업자의 Daily Safety로 연결됩니다.','보호구, 오늘의 주의사항, 작업 준비, 작업 수행상태, 주요 위험요인 등 핵심 안전사항을 “작업 전 안전확인”으로 직접 확인합니다.','전자서명은 단순한 다음 버튼이 아니라, 안전확인을 직접 마쳤다는 기록입니다.'].map(item=>`<li><strong>✓</strong><span>${item}</span></li>`).join('')}</ol></div><nav class="ready-bottom-navigation" aria-label="학습 이동"><a href="#workflow">← 이전 학습</a><a href="#platform-course">학습 목록</a><a href="#safety-report" data-complete-on-navigation="daily-work">다음 학습 →</a></nav></section>
+          </main>
+        </article>`);
+    }
+
+    const readyPlatformL04Product = (section,label,image,alt,annotations,caption) => `<section class="platform-ready-04-product ready-platform-screen" data-ready-section="${section}"><b>${label}</b><div><figure><img src="${image}" alt="${alt}"></figure><ol>${annotations.map((item,index)=>`<li><span>0${index+1}</span><strong>${item}</strong></li>`).join('')}</ol></div><p>${caption}</p></section>`;
+    const safetyReport = document.getElementById('safety-report');
+    if (safetyReport && !safetyReport.querySelector(':scope > .platform-ready-desktop-learning')) {
+      safetyReport.insertAdjacentHTML('beforeend', `
+        <article class="figma-ready-desktop-learning platform-ready-desktop-learning platform-ready-04" data-figma-source="103:2" data-ready-inventory="understand|key-point-01|daily-work-flow|key-point-02|key-point-03|key-point-04|report-purpose|work-progress|action-01|end-work-check|action-02|daily-complete|daily-safety-loop|practice|complete" aria-labelledby="platform-ready-04-title">
+          <aside class="platform-ready-04-sidebar" aria-label="Platform 학습 목록"><section><b>HOME</b><a href="#home">Academy Home</a></section><section><b>PLATFORM</b><a href="#platform-course">Platform Course</a><nav><a href="#philosophy">Platform 이해</a><a href="#workflow">Safety Start</a><a href="#daily-work">Daily Safety</a><a class="is-active" href="#safety-report" aria-current="page">작업 중 · 종료</a></nav></section><section><b>LIBRARY</b><nav><a href="#tbm-course">TBM</a><a href="#sop-course">SOP</a><span>위험성평가</span><span>특별안전교육</span><span>설비안전</span><span>비상대응</span><span>사고사례</span></nav></section></aside>
+          <main class="platform-ready-04-workspace">
+            <header class="platform-ready-04-header"><nav aria-label="현재 위치"><span>Academy</span><i>›</i><span>Platform</span><i>›</i><strong>학습 04</strong></nav><div><p>PART 02 · 작업 수행</p><h1 id="platform-ready-04-title">작업 중과 작업 종료</h1><h2>Work &amp; Complete</h2><p>Daily Safety 이후 작업 중 안전활동부터 작업 종료 전 확인과 완료까지의 흐름을 학습합니다.</p></div><div class="platform-ready-04-progress"><span aria-hidden="true">▣</span><strong>예상 진도량</strong><em>학습 시간 약 15 · 20분</em><b data-platform-l04-percent>학습 04 / 04</b><i><span data-platform-l04-bar></span></i></div></header>
+            <section class="platform-ready-04-editorial platform-ready-04-understand" data-ready-section="understand"><b>UNDERSTAND</b><h2>Daily Safety가 완료되면 실제 작업이 시작됩니다</h2><p>작업 전 안전확인과 전자서명을 마치면 작업은 “진행 중” 상태로 전환됩니다.<br><br>이 화면은 단순히 작업시간을 표시하는 화면이 아닙니다.<br><br>작업자가 현재 어떤 작업을 수행하고 있는지, 안전확인이 완료되었는지, 그리고 작업 중 필요한 안전 행동으로 어떻게 이동할 수 있는지를 보여줍니다.</p><blockquote>작업 시작은 안전활동의 끝이 아니라 안전하게 일하기 위한 시작입니다.</blockquote></section>
+            <section class="platform-ready-04-editorial platform-ready-04-during" data-ready-section="key-point-01"><b>KEY POINT ①</b><h2>작업 중에도 안전은 계속됩니다</h2><p>작업을 시작했다고 안전확인이 끝나는 것은 아닙니다.<br><br>작업 중 상황은 언제든 달라질 수 있습니다.<br><br>ONOFF는 작업 중에도 필요한 안전 행동으로 바로 이어질 수 있도록 합니다.<br><br>현재 작업 진행 화면에서는:<br><br>· 위험 신고<br>· 작업 중지<br>· 작업 종료<br><br>등의 행동으로 이동할 수 있습니다.<br><br>또한 작업과 연결된 안전자료가 존재한다면 필요할 때 관련 내용을 다시 확인할 수 있습니다.</p></section>
+            <section class="platform-ready-04-flow platform-ready-04-flow--work" data-ready-section="daily-work-flow"><div><b>DAILY WORK FLOW</b><h2>작업 시작 이후 흐름</h2>${['DAILY SAFETY','작업 진행 중','작업 종료','작업 종료 전 확인'].map(item=>`<p>${item}</p>`).join('<i>▼</i>')}<i>▼</i><div class="platform-ready-04-branch"><strong>Safety Report 필요 여부</strong><span>없음</span><span>있음</span><em>Safety Report</em><b>작업 종료 완료</b></div></div></section>
+            <section class="platform-ready-04-editorial platform-ready-04-compact" data-ready-section="key-point-02"><b>KEY POINT ②</b><h2>작업 중지는 권리와 의무의 연장입니다</h2><p>작업 중지 기능은 학습 03에서 확인한 “권리와 의무”와 개념적으로 연결됩니다.<br><br>작업 전에는 안전하지 않은 작업을 시작하지 않을 권리와 의무를 확인하고, 작업 중에는 상황이 위험해졌을 때 작업 중지라는 행동으로 이어질 수 있습니다.</p></section>
+            <section class="platform-ready-04-editorial platform-ready-04-meaning" data-ready-section="key-point-03"><b>KEY POINT ③</b><h2>작업 종료 전 확인의 의미</h2><p>작업 종료 전 확인은 작업자를 평가하기 위한 절차가 아닙니다. 또한 새로운 안전문서를 작성하게 만드는 단계도 아닙니다.<br><br>목적은 “작업을 끝내기 전에 문제가 남아 있지 않은지 마지막으로 확인한다.”는 것입니다.<br><br>작업 전 안전확인과 동일하게 짧고 현실적인 최소 안전선의 개념을 유지합니다.</p></section>
+            <section class="platform-ready-04-editorial platform-ready-04-compact" data-ready-section="key-point-04"><b>KEY POINT ④</b><h2>Safety Report가 필요한 경우</h2><p>작업 종료 전 확인 결과에 따라 추가적으로 기록할 안전사항이 있는 경우 Safety Report 작성 Flow로 이어질 수 있습니다.<br><br>작업 중 발견했거나 종료 시 남겨야 할 안전사항이 있다면 Safety Report로 기록합니다.</p></section>
+            <section class="platform-ready-04-purpose" data-ready-section="report-purpose"><b>SAFETY REPORT · 목적</b><p>Safety Report는 모든 작업자가 매번 작성하는 보고서가 아닙니다. 작업 중 발견했거나 종료 시 남겨야 할 안전사항이 있을 때 필요한 내용을 기록하기 위한 Flow입니다.</p></section>
+            ${readyPlatformL04Product('work-progress','PRODUCT SCREEN · 실제 Platform 화면','assets/platform/figma-ready/ch04/work-progress.png','Daily Safety 완료 후 실제 작업 상태 화면',['현재 작업과 진행 상태 확인','Daily Safety 완료 상태 확인','작업 중 필요한 안전 행동으로 이동'],'Daily Safety 완료 후 실제 작업 상태로 전환된 화면입니다.')}
+            <section class="platform-ready-04-editorial platform-ready-04-action" data-ready-section="action-01"><b>ACTION ①</b><h2>작업 종료도 확인 없이 끝내지 않습니다</h2><p>작업을 마쳤다고 바로 종료 처리하지 않습니다.<br><br>ONOFF는 작업 종료 전에 현재 작업 상태와 주변 안전상태를 한 번 더 확인하도록 합니다.<br><br>작업 시작 전 최소 안전확인이 있었다면, 작업 종료 전에도 놓치지 않아야 할 마지막 확인이 있습니다.</p><blockquote>시작 전에 확인하고, 끝나기 전 다시 확인합니다.</blockquote></section>
+            ${readyPlatformL04Product('end-work-check','PRODUCT SCREEN · 작업 종료 전 확인','assets/platform/figma-ready/ch04/end-work-check.png','작업 종료 전에 마지막 안전상태를 확인하는 실제 Platform 화면',['작업 종료 전 필수 확인','현재 상태를 예/아니오로 직접 확인','확인 완료 후 종료 Flow 진행'],'작업을 종료하기 전에 마지막 안전상태를 직접 확인합니다.')}
+            <section class="platform-ready-04-editorial platform-ready-04-action" data-ready-section="action-02"><b>ACTION ②</b><h2>오늘의 안전활동을 마무리합니다</h2><p>작업 종료 전 확인을 마치고, 필요한 경우 Safety Report까지 완료하면 오늘 작업의 안전활동이 종료됩니다.<br><br>ONOFF의 Daily Safety는 작업 시작 버튼 하나로 끝나는 기능이 아닙니다.<br><br>작업 전 → 작업 중 → 작업 종료 전까지 하나의 흐름으로 연결됩니다.</p><blockquote>안전은 작업의 시작부터 끝까지 이어집니다.</blockquote></section>
+            ${readyPlatformL04Product('daily-complete','PRODUCT SCREEN · 오늘의 안전활동 완료','assets/platform/figma-ready/ch04/daily-complete.png','오늘 작업과 안전활동 완료 상태를 보여주는 실제 Platform 화면',['오늘 작업 완료 상태','안전활동 완료 확인','다음 행동으로 이동'],'작업 종료 전 확인까지 마치면 오늘 작업의 안전활동이 완료됩니다.')}
+            <section class="platform-ready-04-flow platform-ready-04-flow--loop" data-ready-section="daily-safety-loop"><div><b>DAILY SAFETY LOOP</b><h2>작업의 시작부터 끝까지</h2>${['BEFORE · 작업 전 안전확인','WORK · Daily Safety → 작업 진행','DURING · 안전자료 확인 / 위험 신고 / 작업 중지','END · 작업 종료 전 확인','REPORT · 필요 시 Safety Report','COMPLETE · 오늘의 안전활동 완료'].map(item=>`<p>${item}</p>`).join('<i>▼</i>')}</div></section>
+            <section class="platform-ready-04-practice ready-practice" data-ready-section="practice" data-ready-answer="02"><b>PRACTICE · 학습 확인</b><h2>ONOFF에서 작업 종료 전에 다시 안전상태를 확인하는 가장 중요한 이유는 무엇일까요?</h2><div class="ready-practice-options">${[['01','작업시간을 계산하기 위해'],['02','작업이 끝난 뒤 문제가 남아 있지 않은지 마지막으로 확인하기 위해'],['03','관리자가 작업자를 평가하기 위해'],['04','다음 작업을 자동 배정하기 위해']].map(([value,label])=>`<button type="button" data-ready-choice="${value}"><span>${value}</span>${label}</button>`).join('')}</div><button type="button" data-ready-check disabled>정답 확인</button><aside hidden aria-live="polite"><strong></strong><p>작업 종료 전 확인은 새로운 문서를 작성하기 위한 절차가 아닙니다. 작업을 마치기 전에 작업 상태와 주변 안전상태를 마지막으로 확인하기 위한 최소 안전확인입니다.</p><button type="button" data-ready-retry>다시 풀기</button></aside></section>
+            <section class="platform-ready-04-complete" data-ready-section="complete"><div><b>COMPLETE</b><h2>학습 04 · 핵심 정리</h2><ol>${['작업 시작 이후에도 안전활동은 계속됩니다.','작업 중에는 필요할 때 안전자료 확인, 위험 신고, 작업 중지 등의 안전 행동으로 이어질 수 있습니다.','작업 종료 전에는 마지막 안전상태를 다시 확인합니다.','필요한 경우 Safety Report를 남긴 뒤 오늘 작업의 안전활동을 완료합니다.'].map(item=>`<li><strong>✓</strong><span>${item}</span></li>`).join('')}</ol></div><nav class="ready-bottom-navigation" aria-label="학습 이동"><a href="#daily-work">← 이전 학습</a><a href="#platform-course">학습 목록</a><a href="#platform-course" data-complete-on-navigation="safety-report">과정 완료</a></nav></section>
+          </main>
+        </article>`);
+    }
+
+    document.querySelectorAll('.platform-ready-desktop-learning .ready-practice').forEach((practice) => {
+      practice.querySelectorAll('[data-ready-choice]').forEach((button) => button.addEventListener('click', () => {
+        practice.querySelectorAll('[data-ready-choice]').forEach((choice) => choice.classList.toggle('is-selected', choice === button));
+        practice.querySelector('[data-ready-check]').disabled = false;
+      }));
+      practice.querySelector('[data-ready-check]')?.addEventListener('click', () => {
+        const selected = practice.querySelector('[data-ready-choice].is-selected');
+        if (!selected) return;
+        const correct = selected.dataset.readyChoice === practice.dataset.readyAnswer;
+        practice.querySelectorAll('[data-ready-choice]').forEach((choice) => {
+          choice.disabled = true;
+          choice.classList.remove('is-selected');
+          choice.classList.toggle('is-correct', choice.dataset.readyChoice === practice.dataset.readyAnswer);
+          choice.classList.toggle('is-incorrect', choice === selected && !correct);
+        });
+        practice.querySelector('[data-ready-check]').disabled = true;
+        const result = practice.querySelector(':scope > aside');
+        result.hidden = false;
+        result.querySelector('strong').textContent = correct ? 'Correct' : 'Incorrect · Hint를 확인하고 다시 시도하세요.';
+        practice.querySelector(':scope > [data-ready-retry]')?.toggleAttribute('hidden', correct);
+      });
+      practice.querySelector('[data-ready-retry]')?.addEventListener('click', () => {
+        practice.querySelectorAll('[data-ready-choice]').forEach((choice) => { choice.disabled = false; choice.classList.remove('is-selected','is-correct','is-incorrect'); });
+        practice.querySelector('[data-ready-check]').disabled = true;
+        practice.querySelector(':scope > aside').hidden = true;
+        practice.querySelector(':scope > [data-ready-retry]')?.setAttribute('hidden', '');
+      });
+    });
+    const platformL02Practice = document.querySelector('.platform-ready-02-practice');
+    platformL02Practice?.querySelectorAll('[data-ready-choice]').forEach((choice) => choice.addEventListener('click', () => {
+      platformL02Practice.querySelector('[data-ready-check]')?.click();
+    }));
+    const platformL03Practice = document.querySelector('.platform-ready-03-practice');
+    platformL03Practice?.querySelectorAll('[data-ready-choice]').forEach((choice) => choice.addEventListener('click', () => {
+      platformL03Practice.querySelector('[data-ready-check]')?.click();
+    }));
+    const platformL04Practice = document.querySelector('.platform-ready-04-practice');
+    platformL04Practice?.querySelectorAll('[data-ready-choice]').forEach((choice) => choice.addEventListener('click', () => {
+      platformL04Practice.querySelector('[data-ready-check]')?.click();
+    }));
+    document.querySelectorAll('.platform-ready-desktop-learning .ready-platform-screen img').forEach((image) => {
+      image.tabIndex = 0;
+      image.setAttribute('role', 'button');
+      image.setAttribute('aria-label', `${image.alt || 'Platform 학습 이미지'} 확대 보기`);
+    });
+  };
+
+  const detachedPlatformLegacy = new Map();
+  const syncPurePlatformDesktopContent = () => {
+    ['philosophy','workflow','daily-work','safety-report'].forEach((chapterId) => {
+      const chapter = document.getElementById(chapterId);
+      if (!chapter) return;
+      if (desktopHomeMedia.matches) {
+        const legacy = [...chapter.children].filter((element) => !element.classList.contains('figma-ready-desktop-learning'));
+        if (legacy.length) detachedPlatformLegacy.set(chapterId, legacy);
+        legacy.forEach((element) => element.remove());
+      } else {
+        (detachedPlatformLegacy.get(chapterId) || []).forEach((element) => chapter.append(element));
+        detachedPlatformLegacy.delete(chapterId);
+      }
+    });
+  };
+  desktopHomeMedia.addEventListener('change', () => {
+    mountExactPlatformDesktopLearning();
+    syncPurePlatformDesktopContent();
+  });
+
+  const mountExactRiskDesktopLearning = () => {
+    if (!desktopHomeMedia.matches) return;
+    const flow = (items) => `<ol class="risk-ready-flow">${items.map((item,index)=>`<li><span>${String(index+1).padStart(2,'0')}</span><strong>${item}</strong></li>`).join('')}</ol>`;
+    const cards = (items) => `<div class="risk-ready-cards">${items.map(([title,text],index)=>`<article><small>${String(index+1).padStart(2,'0')}</small><strong>${title}</strong><p>${text}</p></article>`).join('')}</div>`;
+    const practice = (question,answer,choices,explanation) => `<section class="risk-ready-section ready-practice" data-ready-section="practice" data-ready-answer="${answer}"><b class="risk-ready-tag">PRACTICE</b><h2>학습 확인</h2><p>${question}</p><div class="ready-practice-options">${choices.map(([value,label])=>`<button type="button" data-ready-choice="${value}"><span>${value}</span>${label}</button>`).join('')}</div><button type="button" data-ready-check disabled>정답 확인</button><aside hidden aria-live="polite"><strong></strong><p>${explanation}</p><button type="button" data-ready-retry>다시 풀기</button></aside></section>`;
+    const complete = (id,title,items,previous,next) => `<section class="risk-ready-complete" data-ready-section="${next ? 'complete' : 'course-complete'}"><div><b>${next ? 'LEARNING COMPLETE' : 'COURSE COMPLETE'}</b><h2>${title}</h2><ol>${items.map((item,index)=>`<li><strong>0${index+1}</strong><span>${item}</span></li>`).join('')}</ol><button type="button" data-learning-complete="${id}">학습 완료</button></div><nav class="ready-bottom-navigation" aria-label="학습 이동">${previous ? `<a href="#${previous}">‹ 이전 학습</a>` : '<span aria-disabled="true">‹ 이전 학습</span>'}<a href="#risk-course">▤ 학습 목록</a>${next ? `<a href="#${next}">다음 학습 ›</a>` : '<a href="#home">Academy로 ›</a>'}</nav></section>`;
+
+    const risk01 = document.getElementById('risk-assessment-purpose');
+    if (risk01 && !risk01.querySelector(':scope > .risk-ready-desktop-learning')) risk01.insertAdjacentHTML('beforeend', `
+      <article class="risk-ready-desktop-learning" data-figma-source="174:4" data-ready-inventory="why|what|definition|flow|find|example|method|chain-diagram|perspective|seven-step-flow|summary|practice|complete" aria-labelledby="risk-ready-01-title">
+        <header class="risk-ready-hero"><div><p><strong>01</strong><span><b>PART 01 · 위험성평가 기초</b><small>CH01 · 1 / 4 Lessons</small></span></p><h1 id="risk-ready-01-title">위험성평가의 이해</h1><h2>위험을 미리 찾고 체계적으로 이해하는 안전의 첫걸음</h2><p>위험성평가는 사고가 발생하기 전 현장 곳곳의 위험요인을 찾아 개선대책을 세우는 핵심 예방 프로세스입니다.</p></div><aside><b>이 Chapter에서 배울 내용</b>${['위험성평가가 현장에 필요한 이유','숨겨진 유해·위험요인을 찾는 방법','조건에 따라 위험을 바라보는 관점'].map((item,index)=>`<p><span>${index+1}</span>${item}</p>`).join('')}</aside></header>
+        <section class="risk-ready-section" data-ready-section="why"><b class="risk-ready-tag">WHY</b><h2>왜 위험성평가가 필요한가</h2><blockquote>“사고는 예측할 수 없지만, 위험은 미리 찾을 수 있습니다.”</blockquote><div class="risk-ready-compare"><article><strong>위험성평가 없이</strong><p>현장의 고유 위험을 인지하지 못하고 작업을 시작합니다.</p><small>사고 발생 후 대응</small></article><article><strong>위험성평가 후</strong><p>작업 전에 위험요인을 찾아 제거하고 대책을 공유합니다.</p><small>사고 발생 전 예방</small></article></div></section>
+        <section class="risk-ready-section" data-ready-section="what"><b class="risk-ready-tag">WHAT</b><h2>위험성평가란 무엇인가</h2><p>작업의 위험요인을 미리 찾고 위험의 크기를 판단하여 사고가 발생하기 전에 개선하는 현장 안전활동입니다.</p>${cards([['위험요인 발견','작업 과정에서 발생할 수 있는 위험을 찾습니다.'],['위험성 판단','발견한 위험이 얼마나 중요한지 평가합니다.'],['개선대책 수립','위험을 제거하거나 낮출 방법을 결정합니다.'],['작업자 공유','평가 결과와 안전조치를 전달합니다.']])}</section>
+        <section class="risk-ready-section" data-ready-section="definition"><b class="risk-ready-tag">DEFINITION</b><h2>서류가 아니라 예방 활동입니다</h2><p>평가표 작성 자체가 목적이 아닙니다. 현장의 위험이 실제로 낮아지고 작업자가 대책을 이해해야 완료됩니다.</p><aside class="risk-ready-callout">평가표의 완료가 아니라 현장의 위험이 실제로 낮아졌는지 확인합니다.</aside></section>
+        <section class="risk-ready-section" data-ready-section="flow"><b class="risk-ready-tag">FLOW</b><h2>위험성평가 기본 흐름</h2>${flow(['작업 확인','위험요인 발굴','위험성 평가','개선대책','작업자 공유','작업','재평가'])}</section>
+        <section class="risk-ready-section risk-ready-visual" data-ready-section="find"><b class="risk-ready-tag">FIND</b><h2>현장의 위험을 찾습니다</h2><figure><img src="assets/risk-assessment/chapter-01-why-v2.png" alt="작업 정의부터 위험요인 발견, 평가, 안전조치와 재평가까지의 위험성평가 Summary"></figure></section>
+        <section class="risk-ready-section" data-ready-section="example"><b class="risk-ready-tag">EXAMPLE</b><h2>같은 작업도 조건에 따라 위험이 달라집니다</h2>${cards([['설비','가동·정지·정비 상태'],['장소','높이·통로·주변 작업'],['사람','숙련도·협업·접근'],['환경','조도·소음·날씨']])}</section>
+        <section class="risk-ready-section" data-ready-section="method"><b class="risk-ready-tag">METHOD</b><h2>위험을 빠뜨리지 않는 질문</h2>${cards([['무엇을 하는가','작업 단계와 범위'],['무엇 때문에 위험한가','유해·위험요인'],['어떤 사고가 가능한가','재해 형태와 원인'],['어떻게 낮출 것인가','실제 적용할 대책']])}</section>
+        <section class="risk-ready-section" data-ready-section="chain-diagram"><b class="risk-ready-tag">CHAIN</b><h2>위험은 연결되어 사고가 됩니다</h2>${flow(['작업 조건','유해·위험요인','위험 노출','사고 발생','피해 결과'])}</section>
+        <section class="risk-ready-section" data-ready-section="perspective"><b class="risk-ready-tag">PERSPECTIVE</b><h2>작업자가 함께 봐야 합니다</h2><p>관리자의 문서만으로는 실제 작업의 모든 변화를 찾기 어렵습니다. 작업자가 경험한 아차사고와 불편, 조건 변화를 함께 확인합니다.</p><aside class="risk-ready-callout">오늘의 설비·장소·작업 조건에서 새롭게 발생한 위험이 없는지 함께 확인합니다.</aside></section>
+        <section class="risk-ready-section" data-ready-section="seven-step-flow"><b class="risk-ready-tag">7 STEP</b><h2>예방에서 재평가까지</h2>${flow(['작업 범위 확인','위험 발굴','가능성 판단','중대성 판단','대책 수립','현장 적용','개선 후 재평가'])}</section>
+        <section class="risk-ready-section" data-ready-section="summary"><b class="risk-ready-tag">SUMMARY</b><h2>핵심 정리</h2>${cards([['사전 예방','사고가 나기 전에 찾습니다.'],['현장 참여','작업자가 위험 발굴에 참여합니다.'],['실제 반영','SOP와 TBM, 작업에 연결합니다.'],['지속 개선','조치 후 다시 확인합니다.']])}</section>
+        ${practice('위험성평가의 가장 중요한 목적은 무엇일까요?','B',[['A','문서를 많이 만드는 것'],['B','작업 전 위험을 찾아 사고를 예방하는 것'],['C','사고 뒤 책임자를 찾는 것'],['D','모든 작업을 같은 기준으로 처리하는 것']],'정답은 B입니다. 위험성평가는 작업 전에 위험을 찾아 실제 사고 가능성을 낮추는 예방 활동입니다.')}
+        ${complete('risk-assessment-purpose','위험성평가의 이해',['작업 전 위험요인을 찾습니다.','위험의 크기를 판단합니다.','대책을 현장에 적용하고 다시 평가합니다.'],null,'risk-assessment-structure')}
+      </article>`);
+
+    const risk02 = document.getElementById('risk-assessment-structure');
+    if (risk02 && !risk02.querySelector(':scope > .risk-ready-desktop-learning')) risk02.insertAdjacentHTML('beforeend', `
+      <article class="risk-ready-desktop-learning" data-figma-source="174:332" data-ready-inventory="visual-example|risk-matrix|decision-flow|step-matrix|rating-cards|scenarios|hierarchy-diagram|practice|complete" aria-labelledby="risk-ready-02-title">
+        <header class="risk-ready-hero"><div><p><strong>02</strong><span><b>PART 02 · 위험성 판단</b><small>CH02 · 2 / 4 Lessons</small></span></p><h1 id="risk-ready-02-title">위험성 판단과 감소대책</h1><h2>작업과 위험, 판단과 조치를 하나의 흐름으로 읽습니다</h2><p>위험성평가표의 구조를 이해하고 위험수준을 판단한 뒤 가장 효과적인 감소대책을 선택합니다.</p></div><aside><b>이 Chapter에서 배울 내용</b>${['평가표를 읽는 순서','위험수준 판단 기준','감소대책의 우선순위'].map((item,index)=>`<p><span>${index+1}</span>${item}</p>`).join('')}</aside></header>
+        <section class="risk-ready-section risk-ready-visual" data-ready-section="visual-example"><b class="risk-ready-tag">VISUAL EXAMPLE</b><h2>실제 평가표를 왼쪽에서 오른쪽으로 읽습니다</h2><figure><img src="assets/risk-assessment/chapter-02/page-02-work-and-hazard.png" alt="작업과 유해 위험요인을 보여주는 S-TRA 평가표"></figure>${flow(['작업 확인','유해·위험요인','재해·발생원인','최초 위험성','안전조치','현재 위험성'])}</section>
+        <section class="risk-ready-section risk-ready-visual" data-ready-section="risk-matrix"><b class="risk-ready-tag">RISK MATRIX</b><h2>가능성과 중대성으로 위험수준을 판단합니다</h2><figure><img src="assets/risk-assessment/chapter-03/risk-matrix.png" alt="가능성과 중대성을 조합한 위험성 판단 Matrix"></figure></section>
+        <section class="risk-ready-section" data-ready-section="decision-flow"><b class="risk-ready-tag">DECISION FLOW</b><h2>점수보다 판단의 근거가 먼저입니다</h2>${flow(['현재 조건 확인','가능성 판단','중대성 판단','위험등급 결정','허용 여부 판단'])}</section>
+        <section class="risk-ready-section" data-ready-section="step-matrix"><b class="risk-ready-tag">STEP MATRIX</b><h2>하나의 Row를 끝까지 연결합니다</h2>${cards([['작업','무슨 작업인가'],['위험','무엇 때문에 위험한가'],['사고','어떤 결과가 가능한가'],['대책','무엇을 적용했는가'],['재평가','위험이 낮아졌는가']])}</section>
+        <section class="risk-ready-section" data-ready-section="rating-cards"><b class="risk-ready-tag">RATING</b><h2>현재 위험성과 잔여 위험을 구분합니다</h2>${cards([['최초 위험성','조치 전 위험수준을 평가합니다.'],['현재 위험성','기존 조치를 반영한 수준입니다.'],['잔여 위험','추가 대책 뒤에도 남는 위험입니다.']])}</section>
+        <section class="risk-ready-section risk-ready-visual" data-ready-section="scenarios"><b class="risk-ready-tag">SCENARIO</b><h2>수직 사다리 작업 사례</h2><div class="risk-ready-gallery"><img src="assets/risk-assessment/chapter-02/page-03-work.png" alt="수직 사다리 작업"><img src="assets/risk-assessment/chapter-02/page-03-hazard.png" alt="사다리 작업 위험요인"><img src="assets/risk-assessment/chapter-02/page-03-controls.png" alt="사다리 작업 안전조치"><img src="assets/risk-assessment/chapter-02/page-03-current-risk.png" alt="조치 후 현재 위험성"></div></section>
+        <section class="risk-ready-section" data-ready-section="hierarchy-diagram"><b class="risk-ready-tag">CONTROL HIERARCHY</b><h2>위험 감소대책의 우선순위</h2>${flow(['제거','대체','공학적 제어','관리적 제어','개인보호구'])}<aside class="risk-ready-callout">가능하면 위험 자체를 제거하고, 개인보호구는 마지막 방어수단으로 사용합니다.</aside></section>
+        ${practice('위험성평가표를 읽을 때 가장 먼저 확인해야 하는 것은?','A',[['A','평가 대상 작업'],['B','최종 점수'],['C','작성자 이름'],['D','개인보호구 종류']],'정답은 A입니다. 먼저 무슨 작업을 평가하는지 확인한 뒤 위험과 조치를 연결합니다.')}
+        ${complete('risk-assessment-structure','위험성 판단과 감소대책',['평가표는 작업에서 시작해 위험과 대책으로 읽습니다.','가능성과 중대성의 근거를 확인합니다.','감소대책은 제거부터 우선 검토합니다.'],'risk-assessment-purpose','risk-assessment-stra')}
+      </article>`);
+
+    const risk03 = document.getElementById('risk-assessment-stra');
+    if (risk03 && !risk03.querySelector(':scope > .risk-ready-desktop-learning')) risk03.insertAdjacentHTML('beforeend', `
+      <article class="risk-ready-desktop-learning" data-figma-source="174:658" data-ready-inventory="execution|key-concept|participation|documentation|change-management|trigger-cards|flow-diagram|continuous-cycle|step-summary|practice|complete" aria-labelledby="risk-ready-03-title">
+        <header class="risk-ready-hero"><div><p><strong>03</strong><span><b>PART 03 · 현장 실행</b><small>CH03 · 3 / 4 Lessons</small></span></p><h1 id="risk-ready-03-title">현장 실행과 지속 관리</h1><h2>평가 결과를 작업에 적용하고 변화에 따라 다시 확인합니다</h2><p>위험성평가를 현장 행동으로 전환하고 작업자 참여, 기록, 변경관리를 통해 지속적으로 개선합니다.</p></div><aside><b>이 Chapter에서 배울 내용</b>${['평가 결과의 현장 실행','작업자 참여와 기록','변경 시 재평가 기준'].map((item,index)=>`<p><span>${index+1}</span>${item}</p>`).join('')}</aside></header>
+        <section class="risk-ready-section" data-ready-section="execution"><b class="risk-ready-tag">EXECUTION</b><h2>대책이 현장에서 실행되어야 합니다</h2><p>평가표에 적힌 안전조치가 설비, 작업방법, 교육과 보호구에 실제 반영되었는지 확인합니다.</p>${flow(['대책 결정','담당자 지정','현장 적용','작업자 확인','효과 확인'])}</section>
+        <section class="risk-ready-section" data-ready-section="key-concept"><b class="risk-ready-tag">KEY CONCEPT</b><h2>위험성평가는 살아있는 기준입니다</h2><blockquote>작업이 변하면 위험도 다시 봐야 합니다.</blockquote><aside class="risk-ready-callout">한 번 작성한 평가를 영구 기준으로 사용하지 않습니다.</aside></section>
+        <section class="risk-ready-section" data-ready-section="participation"><b class="risk-ready-tag">PARTICIPATION</b><h2>작업자가 위험 발굴에 참여합니다</h2>${cards([['작업 경험','실제 작업에서 느낀 위험'],['아차사고','사고로 이어질 뻔한 상황'],['불편·이상','반복되는 문제와 변화'],['개선 제안','현장에서 가능한 대책']])}</section>
+        <section class="risk-ready-section" data-ready-section="documentation"><b class="risk-ready-tag">DOCUMENTATION</b><h2>판단과 조치의 근거를 남깁니다</h2><p>평가일, 참여자, 작업조건, 판단 근거, 적용한 대책과 확인 결과를 기록해 다음 작업에서 다시 확인할 수 있게 합니다.</p></section>
+        <section class="risk-ready-section" data-ready-section="change-management"><b class="risk-ready-tag">CHANGE MANAGEMENT</b><h2>변경은 재평가의 신호입니다</h2>${cards([['설비 변경','기계·도구·보호장치'],['작업방법 변경','순서·인원·시간'],['물질 변경','원료·화학물질'],['환경 변경','장소·날씨·주변 작업']])}</section>
+        <section class="risk-ready-section" data-ready-section="trigger-cards"><b class="risk-ready-tag">TRIGGER</b><h2>즉시 다시 확인해야 하는 상황</h2>${cards([['사고·아차사고','기존 평가가 충분했는지 확인'],['새로운 위험 발견','평가 대상과 대책에 반영'],['대책 효과 부족','추가 감소대책 검토'],['법규·기준 변경','평가 기준 업데이트']])}</section>
+        <section class="risk-ready-section" data-ready-section="flow-diagram"><b class="risk-ready-tag">FLOW</b><h2>변경 발견에서 재평가까지</h2>${flow(['변경·이상 발견','작업 조건 확인','위험 재판단','추가 대책 적용','작업자 공유','재개 여부 결정'])}</section>
+        <section class="risk-ready-section" data-ready-section="continuous-cycle"><b class="risk-ready-tag">CONTINUOUS CYCLE</b><h2>지속적인 개선 Cycle</h2>${flow(['평가','대책','실행','확인','개선','재평가'])}</section>
+        <section class="risk-ready-section" data-ready-section="step-summary"><b class="risk-ready-tag">SUMMARY</b><h2>현장 실행 핵심</h2>${cards([['실행','정한 대책을 실제 적용합니다.'],['참여','작업자의 경험을 반영합니다.'],['기록','판단과 조치의 근거를 남깁니다.'],['재평가','변화와 결과를 다시 확인합니다.']])}</section>
+        ${practice('작업조건이 기존 평가와 달라졌을 때 가장 먼저 해야 할 행동은?','C',[['A','기존 평가대로 계속 작업'],['B','개인보호구만 추가'],['C','작업을 멈추고 변경된 위험을 다시 확인'],['D','작업 종료 후 기록']],'정답은 C입니다. 조건이 달라졌다면 작업을 계속하기 전에 위험과 추가 조치를 다시 확인합니다.')}
+        ${complete('risk-assessment-stra','현장 실행과 지속 관리',['대책은 현장에 실제 적용되어야 합니다.','작업자 참여와 기록이 필요합니다.','변경이 생기면 위험을 다시 평가합니다.'],'risk-assessment-structure','risk-assessment-platform')}
+      </article>`);
+
+    const risk04 = document.getElementById('risk-assessment-platform');
+    if (risk04 && !risk04.querySelector(':scope > .risk-ready-desktop-learning')) risk04.insertAdjacentHTML('beforeend', `
+      <article class="risk-ready-desktop-learning" data-figma-source="174:999" data-ready-inventory="daily-safety|key-concept|flow-visualizer|path-a|path-b|summary|comparison-table|practice|course-complete" aria-labelledby="risk-ready-04-title">
+        <header class="risk-ready-hero"><div><p><strong>04</strong><span><b>PART 04 · ONOFF PLATFORM PRACTICE</b><small>CH04 · 4 / 4 · COURSE FINAL</small></span></p><h1 id="risk-ready-04-title">ONOFF Platform 연결</h1><h2>위험성평가를 ONOFF에서 어떻게 이어가는가</h2><p>위험성평가 이론과 판단 기준을 Daily Safety의 실제 작업 흐름에 연결합니다.</p></div><aside><b>이 Chapter에서 배울 내용</b>${['Daily Safety 연결 방식','연결·미연결 두 경로의 차이','위험성평가 전체 내용 종합 확인'].map((item,index)=>`<p><span>${index+1}</span>${item}</p>`).join('')}</aside></header>
+        <section class="risk-ready-section" data-ready-section="daily-safety"><b class="risk-ready-tag">ONOFF</b><h2>ONOFF Daily Safety와 위험성평가</h2><p>오늘 작업 확인 후 정식 위험성평가 데이터의 연결 여부에 따라 필요한 안전 확인 경로가 열립니다.</p></section>
+        <section class="risk-ready-section" data-ready-section="key-concept"><b class="risk-ready-tag">KEY CONCEPT</b><h2>실체적 행동으로 이어지는 연결망</h2><blockquote>“위험성평가를 읽는 것에서 오늘의 안전행동으로.”</blockquote></section>
+        <section class="risk-ready-section" data-ready-section="flow-visualizer"><b class="risk-ready-tag">DAILY SAFETY FLOW</b><h2>작업 확인에서 Safety Start까지</h2>${flow(['오늘 작업 확인','위험성평가 매핑','분기 경로 진입','위험·조치 확인','전자서명','Safety Start'])}</section>
+        <section class="risk-ready-section" data-ready-section="path-a"><b class="risk-ready-tag">PATH A · LINKED</b><h2>정식 위험성평가가 있는 작업</h2>${flow(['오늘 작업 선택','연결된 평가 확인','핵심 위험 확인','안전조치 확인','관련 SOP','전자서명','Safety Start'])}<aside class="risk-ready-callout">평가서를 매일 다시 작성하지 않고 오늘도 위험과 조치가 유효한지 확인합니다.</aside></section>
+        <section class="risk-ready-section" data-ready-section="path-b"><b class="risk-ready-tag">PATH B · UNLINKED</b><h2>정식 위험성평가가 없는 작업</h2>${flow(['작업·대응유형 확인','Daily Risk Check','위험유형 선택','핵심 안전조치','관련 SOP','전자서명','Safety Start'])}<aside class="risk-ready-callout">Daily Risk Check는 정식 위험성평가를 즉석에서 작성하거나 대체하는 기능이 아닙니다.</aside></section>
+        <section class="risk-ready-section" data-ready-section="summary"><b class="risk-ready-tag">SUMMARY</b><h2>두 경로의 공통 목표</h2>${cards([['위험 확인','오늘 작업의 실제 위험을 확인합니다.'],['조치 확인','필요한 안전조치의 적용 상태를 봅니다.'],['절차 연결','관련 SOP와 전자서명을 확인합니다.'],['안전 시작','확인 완료 후 Safety Start로 이동합니다.']])}</section>
+        <section class="risk-ready-section" data-ready-section="comparison-table"><b class="risk-ready-tag">COMPARISON</b><h2>Path A와 Path B</h2><div class="risk-ready-table"><div><b>구분</b><b>Path A · 연결됨</b><b>Path B · 미연결</b></div><div><span>기준</span><span>정식 위험성평가</span><span>Daily Risk Check</span></div><div><span>확인</span><span>기존 위험·안전조치</span><span>오늘의 위험유형·조치</span></div><div><span>공통</span><span>관련 SOP · 전자서명 · Safety Start</span><span>관련 SOP · 전자서명 · Safety Start</span></div></div></section>
+        ${practice('정식 위험성평가가 연결되지 않은 작업에서 수행해야 하는 것은?','B',[['A','위험 확인 없이 작업 시작'],['B','Daily Risk Check로 위험유형과 조치 확인'],['C','즉석에서 정식 S-TRA 작성'],['D','SOP 확인 생략']],'정답은 B입니다. 정식 평가가 없으면 Daily Risk Check로 오늘의 위험과 안전조치를 확인합니다.')}
+        ${complete('risk-assessment-platform','ONOFF Platform 연결',['위험성평가는 Daily Safety에서 오늘의 작업과 연결됩니다.','연결 여부에 따라 두 경로로 안전을 확인합니다.','두 경로 모두 SOP, 전자서명, Safety Start로 이어집니다.'],'risk-assessment-stra',null)}
+      </article>`);
+
+    document.querySelectorAll('.risk-ready-desktop-learning .ready-practice').forEach((root) => {
+      root.querySelectorAll('[data-ready-choice]').forEach((button) => button.addEventListener('click', () => { root.querySelectorAll('[data-ready-choice]').forEach((choice)=>choice.classList.toggle('is-selected',choice===button)); root.querySelector('[data-ready-check]').disabled=false; }));
+      root.querySelector('[data-ready-check]')?.addEventListener('click', () => { const selected=root.querySelector('[data-ready-choice].is-selected'); if(!selected)return; const correct=selected.dataset.readyChoice===root.dataset.readyAnswer; root.querySelectorAll('[data-ready-choice]').forEach((choice)=>{choice.disabled=true;choice.classList.remove('is-selected');choice.classList.toggle('is-correct',choice.dataset.readyChoice===root.dataset.readyAnswer);choice.classList.toggle('is-incorrect',choice===selected&&!correct);}); root.querySelector('[data-ready-check]').disabled=true; const result=root.querySelector(':scope > aside'); result.hidden=false; result.querySelector('strong').textContent=correct?'Correct':'Incorrect · Hint를 확인하고 다시 시도하세요.'; });
+      root.querySelector('[data-ready-retry]')?.addEventListener('click', () => { root.querySelectorAll('[data-ready-choice]').forEach((choice)=>{choice.disabled=false;choice.classList.remove('is-selected','is-correct','is-incorrect');}); root.querySelector('[data-ready-check]').disabled=true; root.querySelector(':scope > aside').hidden=true; });
+    });
+  };
+
   const platformMobileChapters = [
-    { id: 'philosophy', chapter: '01', part: 'PART 01 · PLATFORM 이해', title: 'ONOFF Safety Platform 이해' },
-    { id: 'workflow', chapter: '02', part: 'PART 01 · PLATFORM 이해', title: '오늘 작업과 Daily Safety' },
-    { id: 'daily-work', chapter: '03', part: 'PART 02 · 작업 시작', title: 'Safety Start' },
-    { id: 'safety-report', chapter: '04', part: 'PART 02 · 작업 수행', title: '작업 중과 작업 종료' }
+    { id: 'philosophy', chapter: '01', status: '1/5', part: 'COURSE 01 · PLATFORM · 학습 01', title: 'ONOFF의 안전철학과 Platform 구조' },
+    { id: 'workflow', chapter: '02', status: '1/4', part: 'COURSE 01 · PLATFORM · 학습 02', title: '오늘 작업과 Daily Safety' },
+    { id: 'daily-work', chapter: '03', part: 'COURSE 01 · PLATFORM · 학습 03', title: 'Safety Start' },
+    { id: 'safety-report', chapter: '04', status: '4/4', part: 'COURSE 01 · PLATFORM · 학습 04', title: '작업 중과 작업 종료' }
   ];
   const platformMobileToc = document.createElement('dialog');
   platformMobileToc.className = 'platform-mobile-toc';
@@ -99,7 +733,7 @@
     if (!chapter || !start || chapter.querySelector('.platform-mobile-header')) return;
     const header = document.createElement('header');
     header.className = 'platform-mobile-header';
-    header.innerHTML = `<button type="button" data-platform-toc-open aria-label="Platform 목차 열기" aria-controls="platform-mobile-toc"><span aria-hidden="true"></span></button><strong>ONOFF Academy</strong><span>CH${item.chapter} · ${item.chapter}/04</span>`;
+    header.innerHTML = `<button type="button" data-platform-toc-open aria-label="Platform 목차 열기" aria-controls="platform-mobile-toc"><span aria-hidden="true"></span></button><strong>ONOFF Academy</strong><span>CH${item.chapter} · ${item.status || `${item.chapter}/04`}</span>`;
     header.querySelector('[data-platform-toc-open]').addEventListener('click', openPlatformMobileToc);
     start.insertAdjacentElement('beforebegin', header);
     const hero = document.createElement('header');
@@ -108,10 +742,7 @@
     header.insertAdjacentElement('afterend', hero);
   });
   const openPlatformMobileToc = () => {
-    if (platformMobileToc.open) return;
-    platformMobileToc.showModal();
-    document.body.classList.add('is-platform-mobile-toc-open');
-    platformMobileToc.querySelector('[data-platform-toc-close]')?.focus({ preventScroll: true });
+    location.hash = 'platform-course';
   };
   const closePlatformMobileToc = () => {
     if (!platformMobileToc.open) return;
@@ -122,6 +753,76 @@
   platformMobileToc.addEventListener('cancel', (event) => { event.preventDefault(); closePlatformMobileToc(); });
   platformMobileToc.addEventListener('click', (event) => { if (event.target === platformMobileToc) closePlatformMobileToc(); });
   platformMobileToc.querySelectorAll('a').forEach((link) => link.addEventListener('click', closePlatformMobileToc));
+
+  const mobileChapterData = {
+    philosophy: {
+      number: '01', part: 'PART 01 · PLATFORM 이해', kicker: 'ONOFF SAFETY PLATFORM', title: 'ONOFF Safety Platform 이해', description: '안전자료를 보관하는 시스템을 넘어, 오늘의 작업과 필요한 안전을 연결합니다.', quote: '“서류 보관함을 넘어, 행동을 가이드하는 살아있는 안전 플랫폼”', progress: 20,
+      sections: [
+        { badge: 'LESSON 01', title: '왜 안전 플랫폼이 필요한가', lead: '자료의 양보다 연결의 실질성이 더 중요합니다.', body: ['안전자료가 없어서 사고가 발생하는 것은 아닙니다. 우리에겐 위험성평가도 있고, SOP도 있고, TBM도 하고, 법정 안전교육도 이수합니다.', '문제는 그 많은 안전정보와 복잡한 문서들이 오늘 내가 현장에서 직접 수행하는 작업과 긴밀하게 연결되어 있는가입니다.'], callout: '오늘 나는 무엇을 확인해야 하지?', note: '안전자료를 더 만드는 것이 아니라, 이미 존재하는 안전 정보를 필요한 순간에 연결합니다.' },
+        { badge: 'OUR PHILOSOPHY', title: '우리가 생각하는 안전', body: ['안전은 보고서와 서류철을 완성하는 순간에 시작되는 정적인 상태가 아닙니다.', '작업자가 오늘의 작업을 알고, 위험을 확인하고, 필요한 절차를 이해한 뒤 작업을 시작할 때 비로소 안전은 현장에서 작동합니다.'], note: '기록을 위한 안전에서, 행동으로 이어지는 안전으로.' },
+        { badge: 'WHY ONOFF', title: '왜 ONOFF 인가', dark: true, body: ['작업에는 명확한 시작과 끝이 있습니다. 하지만 안전은 작업 개시 버튼을 누르는 순간 갑자기 생겨나는 것이 아닙니다.', '작업을 ON 하기 전에 안전이 먼저 ON 되어야 하고, 작업을 OFF 하기 전에는 놓친 위험이 없는지 재확인합니다.'], steps: [['SAFETY ON','작업 전 실질적인 안전확인 완료'],['WORK ON','안전이 확보된 상태에서 작업 개시'],['WORK OFF','정상 종료 후 잔여 위험 요소 정리'],['SAFETY RECORD','현장의 안전활동이 플랫폼에 기록']] },
+        { badge: 'LESSON 02', title: '현장을 움직이는 역할', lead: 'Role은 책임을, Mode는 지금 하려는 행동을 정의합니다.', cards: [['W','WORKER (작업자)','자신과 동료를 위한 필수 안전활동을 수행합니다.'],['S','SUPERVISOR (관리감독자)','작업과 안전 운영을 관리합니다.'],['A','ADMINISTRATOR (시스템 관리자)','전체 플랫폼 운영 환경과 기준 정보를 통제합니다.']], note: 'Role은 책임을 정의하고, Mode는 지금 하려는 행동을 정의합니다.' },
+        { badge: 'ONOFF SAFETY ECOSYSTEM', title: 'ONOFF 안전 생태계 전체 구조', lead: '실질적 플랫폼 행동과 이론 지식의 입체적인 통합', cards: [['01','SAFETY PLATFORM','Daily Safety · Project & Work · Safety Start · Electronic Documents · Safety Report'],['02','ONOFF ACADEMY','Platform · TBM · SOP · 위험성평가 · 특별안전교육 · 설비안전 · 비상대응 · 사고사례']], note: '알고 하는 안전 → 확인하고 하는 안전 → 기록으로 남는 안전' }
+      ],
+      complete: ['안전자료의 목적은 오늘 작업에 필요한 순간 정확한 행동을 안내하는 것입니다.','작업을 ON 하기 전에 안전이 먼저 ON 되어 있어야 합니다.','Platform은 행동을 연결하고 Academy는 그 이유와 지식을 연결합니다.'],
+      nav: [['toc','학습 목록'],['workflow','학습 02 오늘 작업 →']]
+    },
+    workflow: {
+      number: '02', part: 'PART 02 · 작업 시작', kicker: '오늘 작업과 Daily Safety', title: '오늘 수행할 작업을 선택하고, 그 작업에 필요한 위험과 안전정보를 확인합니다.', quote: '“올바른 작업 선택이 모든 실질적 안전의 첫 걸음입니다.”', progress: 25,
+      sections: [
+        { badge: 'LESSON 01', title: '오늘 작업을 먼저 선택합니다', body: ['ONOFF는 로그인했다고 바로 작업을 시작하지 않습니다. 먼저 오늘 수행할 작업을 선택합니다.','안전정보는 모든 작업에 동일하게 적용되지 않습니다. 오늘 어떤 Project에서 어떤 작업을 수행하는지에 따라 확인해야 할 위험과 절차가 달라집니다.'], note: '작업을 선택하는 것은 오늘의 안전정보를 연결하는 첫 단계입니다.', steps: [['사용자 로그인',''],['오늘 작업 선택',''],['작업 전 최소 안전확인',''],['Safety Start','']], cards: [['✓','위험성평가','작업에 연결된 위험과 대책을 제공합니다.'],['✓','SOP','기기 및 설비의 안전한 작업 절차를 확인합니다.'],['✓','TBM','작업 전 함께 확인할 핵심사항을 연결합니다.']] },
+        { badge: 'LESSON 02', title: '어떤 작업을 선택할까요?', body: ['오늘 수행할 작업의 Project, 위치, 설비와 작업 상태가 실제 현장과 일치하는지 확인합니다.'], cards: [['01','배정된 작업','오늘 수행하도록 배정된 작업인지 확인합니다.'],['02','수행 가능한 상태','현재 시작할 수 있는 상태인지 확인합니다.']] },
+        { badge: 'LESSON 03', title: '작업 전 최소 안전확인', body: ['작업을 시작하기 전에 보호구와 현장 조건, 연결된 안전자료를 직접 확인합니다.'], steps: [['보호구 확인',''],['작업조건 확인',''],['필수 안전자료 확인',''],['이상 없음 확인','']] },
+        { badge: 'LESSON 04', title: '안전자료는 어떻게 연결되나요?', body: ['선택한 작업을 기준으로 위험성평가, SOP, TBM 등 필요한 안전지식이 연결됩니다.'], cards: [['01','작업 정보','오늘의 작업과 현장 조건'],['02','안전 지식','위험성평가 · SOP · TBM'],['03','작업 행동','확인 후 Safety Start']] },
+        { badge: 'LEARNING FLOW', title: 'CH02 · 오늘 작업과 Daily Safety', steps: [['오늘 작업 선택',''],['작업 정보 확인',''],['필요한 안전지식 연결',''],['작업 전 최소 안전확인',''],['CH03 Safety Start로 이동','']] }
+      ],
+      practice: { question: 'Q. 오늘 작업을 먼저 선택하는 가장 중요한 이유는 무엇일까요?', answer: 'B', choices: [['A','작업시간을 자동 계산하기 위해'],['B','작업에 맞는 위험과 안전정보를 연결하기 위해'],['C','관리자에게 출근을 알리기 위해'],['D','모든 작업에 같은 문서를 적용하기 위해']] },
+      complete: ['오늘 수행할 작업을 먼저 정확하게 선택합니다.','선택한 작업에 따라 필요한 위험과 안전정보가 연결됩니다.','작업 전 최소 안전확인을 완료한 뒤 Safety Start로 이동합니다.'],
+      nav: [['philosophy','← 학습 01 Platform'],['toc','학습 목록'],['daily-work','학습 03 Safety Start →']]
+    },
+    'safety-report': {
+      number: '04', part: 'PART 02 · 작업 수행', kicker: 'SAFETY ACTIVE', title: '작업 중과 작업 종료', description: 'Safety Start 이후에도 필요한 안전 행동을 이어가고, 작업 종료 전 마지막 안전상태를 확인합니다.', quote: '“작업 종료 전까지 안전확인은 계속됩니다.”', progress: 80,
+      sections: [
+        { badge: 'WORK ON', title: 'Safety Start 이후 실제 작업', body: ['Safety Start가 완료되면 승인된 범위 안에서 실제 작업을 시작합니다. 작업 중 조건이 달라지면 그대로 진행하지 않습니다.'], mock: 'ACTIVE WORK · 작업 진행 중', cards: [['01','안전자료 확인','필요할 때 연결된 안전자료를 다시 확인합니다.'],['02','위험 신고','새로운 위험을 발견하면 즉시 알립니다.'],['03','작업 중지','안전하지 않으면 작업을 멈춥니다.']] },
+        { badge: 'DURING WORK', title: '작업 중에도 안전은 계속됩니다', body: ['작업을 시작했다고 안전확인이 끝나는 것은 아닙니다. 작업 중 상황은 언제든 달라질 수 있습니다.'], steps: [['SAFETY START',''],['작업 진행 중',''],['작업 종료 시작',''],['작업 종료 전 최종 확인',''],['Safety Report 분기','이슈 유무에 따라 작성 여부 판단'],['작업 완전히 종료 처리','']] },
+        { badge: 'CONNECTION', title: '작업 중지는 권리와 의무의 연장입니다', body: ['작업 전에는 안전하지 않은 작업을 시작하지 않을 권리와 의무를 확인하고, 작업 중에는 위험해졌을 때 작업 중지라는 행동으로 이어집니다.'], note: '위험하거나 안전하지 않은 상황에서는 작업 중지를 선택할 수 있습니다.' },
+        { badge: 'END WORK', title: '작업 종료도 확인 없이 끝내지 않습니다', body: ['작업을 마쳤다고 바로 종료 처리하지 않습니다. 현재 작업 상태와 주변 안전상태를 한 번 더 확인합니다.'], note: '시작 전에 확인하고, 완전히 끝나기 전 다시 한번 확인합니다.', mock: 'CLOSE-OUT CHECK · 작업 종료 전 확인', cards: [['01','작업 종료 전 필수 확인','마지막 안전상태를 직접 확인합니다.'],['02','예/아니오로 직접 확인','각 질문에 적극적으로 답변합니다.'],['03','확인 완료 후 종료','필요한 확인 뒤 종료 Flow를 완료합니다.']] },
+        { badge: 'MEANING', title: '작업 종료 전 확인의 의미', body: ['작업자를 평가하거나 새 문서를 만들기 위한 절차가 아닙니다. 작업을 끝내기 전에 문제가 남아 있지 않은지 마지막으로 확인하는 과정입니다.'] },
+        { badge: 'BRANCH', title: 'Safety Report가 필요한 경우', body: ['작업 종료 전 확인 결과 추가로 기록할 안전사항이 있는 경우 Safety Report 작성 Flow로 이어질 수 있습니다.'], note: 'Safety Report는 모든 작업자가 매번 작성하는 보고서가 아니라, 남겨야 할 안전사항이 있을 때 기록하는 Flow입니다.' },
+        { badge: 'COMPLETE', title: '오늘의 안전활동을 마무리합니다', lead: '안전은 작업의 시작부터 끝까지 이어집니다.', dark: true, steps: [['BEFORE','작업 시작 전 안전확인'],['WORK','Safety Start 후 실제 작업 시작'],['DURING','작업 중 필요한 안전 행동'],['END','작업 종료 전 확인'],['REPORT','선택적 Safety Report 이력 보존'],['COMPLETE','작업 종료']] }
+      ],
+      practice: { question: 'Q. ONOFF에서 작업 종료 전에 다시 안전상태를 확인하는 가장 중요한 이유는 무엇일까요?', answer: 'B', choices: [['A','작업시간을 계산하기 위해'],['B','작업이 끝난 뒤 문제가 남아 있지 않은지 마지막으로 확인하기 위해'],['C','관리자가 작업자를 평가하기 위해'],['D','다음 작업을 자동 배정하기 위해']] },
+      complete: ['Safety Start 이후에도 안전활동은 계속됩니다.','작업 중에는 안전자료 확인, 위험 신고, 작업 중지로 이어질 수 있습니다.','작업 종료 전에는 마지막 안전상태를 다시 확인합니다.','특이 사항이 있으면 Safety Report를 남깁니다.'],
+      nav: [['daily-work','← CH03 Safety Start'],['home','다음 코스 가기 →']]
+    }
+  };
+
+  const renderProductMock = (label) => label.startsWith('CLOSE-OUT')
+    ? `<div class="platform-figma-product"><small>● ${label}</small><p><b>Q1</b><span>작업 도구 및 가설재 정리를 완료했습니까?</span><i>예</i></p><p><b>Q2</b><span>현장 주변 정리정돈 상태가 양호합니까?</span><i>예</i></p><p><b>Q3</b><span>안전조치 원상복구를 확인했습니까?</span><i>예</i></p><button type="button" disabled>정리 확인 및 종료하기</button></div>`
+    : `<div class="platform-figma-product"><small>● ${label}</small><p><b>ACTIVE</b><span>오늘 작업이 진행 중입니다.</span><i>ON</i></p><p><b>SAFETY</b><span>필요한 안전 행동을 선택합니다.</span><i>확인</i></p><div><button type="button" disabled>위험 신고</button><button type="button" disabled>작업 중지</button></div></div>`;
+  const renderMobileChapterSection = (section) => `<section class="platform-figma-section${section.dark ? ' is-dark' : ''}"><b>${section.badge}</b><h2>${section.title}</h2>${section.lead ? `<p class="platform-figma-lead">${section.lead}</p>` : ''}${(section.body || []).map((text) => `<p>${text}</p>`).join('')}${section.callout ? `<blockquote>${section.callout}</blockquote>` : ''}${section.mock ? renderProductMock(section.mock) : ''}${section.steps ? `<ol class="platform-figma-steps">${section.steps.map(([title, detail], index) => `<li><span>${String(index + 1).padStart(2,'0')}</span><div><strong>${title}</strong>${detail ? `<small>${detail}</small>` : ''}</div></li>`).join('')}</ol>` : ''}${section.cards ? `<div class="platform-figma-cards">${section.cards.map(([mark,title,text]) => `<article><span>${mark}</span><div><strong>${title}</strong><p>${text}</p></div></article>`).join('')}</div>` : ''}${section.note ? `<aside><small>KEY INSIGHT</small><strong>${section.note}</strong></aside>` : ''}</section>`;
+  const mountFigmaMobileChapter = (chapterId, data) => {
+    const chapter = document.getElementById(chapterId);
+    if (!chapter || chapter.querySelector('.platform-figma-mobile-chapter')) return;
+    const practice = data.practice ? `<section class="platform-figma-section platform-figma-practice" data-answer="${data.practice.answer}"><b>PRACTICE</b><h2>학습 확인</h2><p class="platform-figma-question">${data.practice.question}</p><div>${data.practice.choices.map(([value,label]) => `<button type="button" data-figma-answer="${value}"><span>${value}</span>${label}</button>`).join('')}</div><button type="button" data-figma-check disabled>정답 확인</button><aside hidden aria-live="polite"><strong></strong><p>정답: ${data.practice.answer}</p><button type="button" data-figma-retry>다시 풀기</button></aside></section>` : '';
+    const nav = `<nav class="platform-figma-navigation" aria-label="학습 이동">${data.nav.map(([route,label]) => route === 'toc' ? `<button type="button" data-platform-toc-open>학습 목록</button>` : `<a href="#${route}">${label}</a>`).join('')}</nav>`;
+    chapter.insertAdjacentHTML('beforeend', `<article class="platform-figma-mobile-chapter" data-figma-source="${chapterId === 'philosophy' ? '160:4' : chapterId === 'workflow' ? '160:206' : '160:451'}"><header class="platform-figma-hero"><div><strong>${data.number}</strong><span>COURSE 01 · PLATFORM · 학습 ${data.number}</span></div><p>${data.kicker}</p><h1>${data.title}</h1>${data.description ? `<span>${data.description}</span>` : ''}<blockquote>${data.quote}</blockquote><div class="platform-figma-progress"><span>진행률 ${data.progress}%</span><span>학습 ${data.number} / 04</span><i style="--progress:${data.progress}%"></i></div></header>${data.sections.map(renderMobileChapterSection).join('')}${practice}<section class="platform-figma-complete"><b>LEARNING COMPLETE · 학습 ${data.number}</b><h2>학습 ${data.number} · 완료</h2><ol>${data.complete.map((item) => `<li>${item}</li>`).join('')}</ol><button type="button" data-learning-complete="${chapterId}">학습 완료</button></section>${nav}</article>`);
+    chapter.querySelectorAll('.platform-figma-mobile-chapter [data-platform-toc-open]').forEach((button) => button.addEventListener('click', openPlatformMobileToc));
+    const practiceRoot = chapter.querySelector('.platform-figma-practice');
+    practiceRoot?.querySelectorAll('[data-figma-answer]').forEach((button) => button.addEventListener('click', () => {
+      practiceRoot.querySelectorAll('[data-figma-answer]').forEach((choice) => choice.classList.toggle('is-selected', choice === button));
+      practiceRoot.querySelector('[data-figma-check]').disabled = false;
+    }));
+    practiceRoot?.querySelector('[data-figma-check]')?.addEventListener('click', () => {
+      const selected = practiceRoot.querySelector('[data-figma-answer].is-selected');
+      if (!selected) return;
+      const correct = selected.dataset.figmaAnswer === practiceRoot.dataset.answer;
+      practiceRoot.querySelectorAll('[data-figma-answer]').forEach((choice) => { choice.disabled = true; choice.classList.remove('is-selected'); choice.classList.toggle('is-correct', choice.dataset.figmaAnswer === practiceRoot.dataset.answer); choice.classList.toggle('is-incorrect', choice === selected && !correct); });
+      practiceRoot.querySelector('[data-figma-check]').disabled = true;
+      const result = practiceRoot.querySelector(':scope > aside'); result.hidden = false; result.querySelector(':scope > strong').textContent = correct ? 'Correct' : 'Incorrect';
+    });
+    practiceRoot?.querySelector('[data-figma-retry]')?.addEventListener('click', () => { practiceRoot.querySelectorAll('[data-figma-answer]').forEach((choice) => { choice.disabled = false; choice.classList.remove('is-selected','is-correct','is-incorrect'); }); practiceRoot.querySelector('[data-figma-check]').disabled = true; practiceRoot.querySelector(':scope > aside').hidden = true; });
+  };
   const workflowChapter = document.getElementById('workflow');
   const workflowChapterStart = workflowChapter?.querySelector('.book-chapter-start');
   if (workflowChapter && workflowChapterStart) {
@@ -308,10 +1009,10 @@
         <header class="mobile-golden-compact-header">
           <button type="button" data-mobile-golden-menu aria-label="Academy 목차 열기" aria-controls="academy-navigation" aria-expanded="false"><span aria-hidden="true"></span></button>
           <strong>ONOFF Academy</strong>
-          <span>CH03 · 3/5</span>
+          <span>학습 03 · 3/5</span>
         </header>
         <header class="mobile-golden-hero">
-          <div class="mobile-golden-chapter-number"><strong>03</strong><span>PART 02 · 작업 시작</span></div>
+          <div class="mobile-golden-chapter-number"><strong>03</strong><span>COURSE 01 · PLATFORM · 학습 03</span></div>
           <div class="mobile-golden-hero-copy"><p>SAFETY START</p><h1>안전하게 작업 시작하기</h1><span>교육 및 회의 참가 확인부터 권리와 의무, 작업 전 안전확인과 전자서명까지 — 실제 작업을 시작하기 전 필요한 과정을 학습합니다.</span></div>
           <blockquote>“안전한 작업은 시작하기 전에 결정됩니다.”</blockquote>
           <div class="mobile-golden-progress"><p><span>진행률 60%</span><span>CH03 / CH05</span></p><div><i></i></div></div>
@@ -329,7 +1030,7 @@
         ${learningUnitMarkup}
         <section class="mobile-golden-after">
           <b>AFTER SAFETY START</b><h2>Safety Start 이후</h2>
-          <p>Safety Start가 완료되면 실제 작업을 수행합니다. 작업 중에도 안전 관련 확인과 보고가 계속됩니다. 다음 Chapter에서 “작업 중과 작업 종료”를 학습합니다.</p>
+          <p>Safety Start가 완료되면 실제 작업을 수행합니다. 작업 중에도 안전 관련 확인과 보고가 계속됩니다. 다음 학습에서 “작업 중과 작업 종료”를 확인합니다.</p>
           <div><strong>RELATED SAFETY MATERIALS</strong><p><span>위험성평가</span><span>SOP</span><span>TBM</span></p><small>작업과 연결된 안전자료가 있다면 필요할 때 원문 또는 상세 내용을 추가로 확인할 수 있습니다.</small></div>
         </section>
         <section class="mobile-golden-practice" data-practice-state="default">
@@ -338,19 +1039,17 @@
           <div class="mobile-golden-options" role="group" aria-label="답변 선택">
             ${[['A', '보호구'], ['B', '오늘의 주의사항'], ['C', '작업 변경 요청'], ['D', '주요 위험요인']].map(([value, label]) => `<button type="button" data-answer="${value}"><span>${value}</span>${label}</button>`).join('')}
           </div>
+          <button type="button" data-practice-check disabled>정답 확인</button>
           <div class="mobile-golden-result" hidden aria-live="polite"><strong></strong><p>정답: C 작업 변경 요청</p><p>작업 변경 요청은 작업 전 안전확인 항목이 아닙니다.<br><br>작업 전 안전확인은 보호구, 오늘의 주의사항, 작업 준비, 작업 수행상태, 주요 위험요인을 확인합니다.</p><button type="button" data-practice-retry>다시 풀기</button></div>
         </section>
         <section class="mobile-golden-complete">
-          <b>CHAPTER COMPLETE</b><h2>CH03 · Safety Start 학습 완료</h2>
+          <b>LEARNING COMPLETE</b><h2>학습 03 · Safety Start 완료</h2>
           <ol><li>Safety Start는 작업 시작 전 필요한 안전사항을 확인하고 실제 작업으로 이어지는 과정입니다.</li><li>교육 및 회의 참가 확인 → 권리와 의무 → 작업 전 안전확인 → 전자서명 순서로 진행합니다.</li><li>작업 전 안전확인에서는 보호구, 오늘의 주의사항, 작업 준비, 작업 수행상태, 주요 위험요인을 확인합니다.</li><li>전자서명은 작업 시작 전 안전사항을 직접 확인했다는 기록입니다.</li></ol>
           <blockquote>“작업이 무엇이든, 안전확인 없이 시작하지 않습니다.”</blockquote>
+          <button type="button" data-learning-complete="daily-work">학습 완료</button>
         </section>
-        <nav class="mobile-golden-navigation" aria-label="Chapter 이동"><a href="#workflow">← CH02 오늘 작업</a><a href="#safety-report">CH04 작업 중과 작업 종료 →</a></nav>
-      </article>
-      <dialog class="mobile-golden-viewer" aria-labelledby="mobile-golden-viewer-title">
-        <header><h2 id="mobile-golden-viewer-title">Product 화면 전체 보기</h2><button type="button" data-viewer-close aria-label="전체 화면 보기 닫기">×</button></header>
-        <div><img alt=""></div>
-      </dialog>`);
+        <nav class="mobile-golden-navigation" aria-label="학습 이동"><a href="#workflow">← 학습 02 오늘 작업</a><button type="button" data-platform-toc-open>학습 목록</button><a href="#safety-report">학습 04 작업 중과 작업 종료 →</a></nav>
+      </article>`);
 
     const mobilePilot = dailyWorkChapter.querySelector('.mobile-golden-ch03');
     const mobileGoldenMenu = mobilePilot?.querySelector('[data-mobile-golden-menu]');
@@ -359,62 +1058,41 @@
       mobileGoldenMenu.setAttribute('aria-expanded', 'true');
     });
     platformMobileToc.addEventListener('close', () => mobileGoldenMenu?.setAttribute('aria-expanded', 'false'));
-    const mobileViewer = dailyWorkChapter.querySelector('.mobile-golden-viewer');
-    const viewerImage = mobileViewer?.querySelector('img');
-    const viewerTitle = mobileViewer?.querySelector('h2');
-    let viewerTrigger = null;
-    let viewerHistoryActive = false;
-    const closeMobileViewer = ({ fromHistory = false } = {}) => {
-      if (!mobileViewer?.open) return;
-      mobileViewer.close();
-      if (viewerImage) {
-        viewerImage.removeAttribute('src');
-        viewerImage.alt = '';
-      }
-      document.body.classList.remove('is-mobile-product-viewer-open');
-      if (!fromHistory && viewerHistoryActive) history.back();
-      viewerHistoryActive = false;
-      viewerTrigger?.focus({ preventScroll: true });
-    };
+    mobilePilot?.querySelector('[data-platform-toc-open]')?.addEventListener('click', openPlatformMobileToc);
     mobilePilot?.querySelectorAll('[data-full-view]').forEach((button) => button.addEventListener('click', () => {
       const unit = mobileLearningUnits[Number(button.dataset.fullView)];
-      if (!unit || !mobileViewer || !viewerImage || !viewerTitle) return;
-      viewerTrigger = button;
-      viewerImage.src = unit.image;
-      viewerImage.alt = unit.alt;
-      viewerTitle.textContent = `${unit.number} ${unit.title} 전체 화면`;
-      document.body.classList.add('is-mobile-product-viewer-open');
-      mobileViewer.showModal();
-      history.pushState({ academyProductViewer: true }, '');
-      viewerHistoryActive = true;
+      if (!unit) return;
+      openAcademyImageViewer({ src: unit.image, alt: unit.alt, title: `${unit.number} ${unit.title}`, trigger: button });
     }));
-    mobileViewer?.querySelector('[data-viewer-close]')?.addEventListener('click', () => closeMobileViewer());
-    mobileViewer?.addEventListener('cancel', (event) => { event.preventDefault(); closeMobileViewer(); });
-    mobileViewer?.addEventListener('click', (event) => { if (event.target === mobileViewer) closeMobileViewer(); });
-    window.addEventListener('popstate', () => {
-      if (mobileViewer?.open) closeMobileViewer({ fromHistory: true });
-    });
 
     const mobilePractice = mobilePilot?.querySelector('.mobile-golden-practice');
     const practiceResult = mobilePractice?.querySelector('.mobile-golden-result');
     mobilePractice?.querySelectorAll('[data-answer]').forEach((button) => button.addEventListener('click', () => {
-      const isCorrect = button.dataset.answer === 'C';
+      mobilePractice.querySelectorAll('[data-answer]').forEach((option) => option.classList.toggle('is-selected', option === button));
+      mobilePractice.querySelector('[data-practice-check]').disabled = false;
+    }));
+    mobilePractice?.querySelector('[data-practice-check]')?.addEventListener('click', () => {
+      const selected = mobilePractice.querySelector('[data-answer].is-selected');
+      if (!selected) return;
+      const isCorrect = selected.dataset.answer === 'C';
       mobilePractice.querySelectorAll('[data-answer]').forEach((option) => {
-        option.classList.toggle('is-selected', option === button);
+        option.classList.remove('is-selected');
         option.classList.toggle('is-correct', option.dataset.answer === 'C');
-        option.classList.toggle('is-incorrect', option === button && !isCorrect);
+        option.classList.toggle('is-incorrect', option === selected && !isCorrect);
         option.disabled = true;
       });
+      mobilePractice.querySelector('[data-practice-check]').disabled = true;
       mobilePractice.dataset.practiceState = isCorrect ? 'correct' : 'incorrect';
       practiceResult.hidden = false;
       practiceResult.querySelector('strong').textContent = isCorrect ? 'Correct' : 'Incorrect';
-    }));
+    });
     mobilePractice?.querySelector('[data-practice-retry]')?.addEventListener('click', () => {
       mobilePractice.dataset.practiceState = 'default';
       mobilePractice.querySelectorAll('[data-answer]').forEach((option) => {
         option.disabled = false;
         option.classList.remove('is-selected', 'is-correct', 'is-incorrect');
       });
+      mobilePractice.querySelector('[data-practice-check]').disabled = true;
       practiceResult.hidden = true;
       mobilePractice.querySelector('[data-answer]')?.focus();
     });
@@ -637,6 +1315,10 @@
     ,{ chapter: 'special-daily-work', book: 'special', key: 'change', title: '작업조건 변경', selector: '#special-platform-change' }
     ,{ chapter: 'special-daily-work', book: 'special', key: 'final', title: 'FINAL WORKFLOW', selector: '#special-platform-final' }
     ,{ chapter: 'special-daily-work', book: 'special', key: 'complete', title: 'HANDBOOK COMPLETE', selector: '#special-platform-complete' }
+    ,{ chapter: 'risk-practical-01', book: 'practical', key: 'learning', title: '작업 확인과 위험요인 파악', selector: '.risk-practical-content' }
+    ,{ chapter: 'risk-practical-02', book: 'practical', key: 'learning', title: '최초 위험성과 안전조치', selector: '.risk-practical-content' }
+    ,{ chapter: 'risk-practical-03', book: 'practical', key: 'learning', title: '감소대책과 재평가', selector: '.risk-practical-content' }
+    ,{ chapter: 'risk-practical-04', book: 'practical', key: 'learning', title: '개선 실행과 완료 확인', selector: '.risk-practical-content' }
   ].map((lesson) => ({ ...lesson, book: lesson.book || 'platform', route: `${lesson.chapter}-${lesson.key}` }));
   const lessonsByChapter = lessonCatalog.reduce((groups, lesson) => {
     const group = groups.get(lesson.chapter) || [];
@@ -1577,6 +2259,36 @@
     practiceRestart.addEventListener('click', resetPractice);
     showAchievement(readAchievements()[achievementId]);
   }
+  Object.entries(mobileChapterData).forEach(([chapterId, data]) => mountFigmaMobileChapter(chapterId, data));
+  document.querySelectorAll('.risk-practice-form').forEach((form) => {
+    form.addEventListener('change', (event) => {
+      const input = event.target.closest('input[type="radio"],input[type="checkbox"]');
+      const step = input?.closest('.risk-practice-step');
+      if (!step) return;
+      step.querySelectorAll(':scope > label').forEach((label) => {
+        const choice = label.querySelector('input');
+        label.classList.toggle('is-selected', Boolean(choice?.checked));
+        label.classList.remove('is-correct', 'is-incorrect');
+      });
+    });
+    form.querySelectorAll('.practice-check').forEach((check) => check.addEventListener('click', () => {
+      const step = check.closest('.risk-practice-step');
+      window.setTimeout(() => {
+        const feedback = step?.querySelector('.practice-feedback');
+        if (!feedback?.textContent.trim()) return;
+        const correct = feedback.classList.contains('is-correct');
+        step.querySelectorAll(':scope > label').forEach((label) => {
+          const selected = Boolean(label.querySelector('input')?.checked);
+          label.classList.remove('is-selected');
+          label.classList.toggle('is-correct', selected && correct);
+          label.classList.toggle('is-incorrect', selected && !correct);
+        });
+      });
+    }));
+    form.closest('.risk-practice')?.querySelector('.practice-restart')?.addEventListener('click', () => window.setTimeout(() => {
+      form.querySelectorAll('.risk-practice-step > label').forEach((label) => label.classList.remove('is-selected', 'is-correct', 'is-incorrect'));
+    }));
+  });
   mountPlatformMobileShell();
   [
     ['philosophy', 'why', '.platform-summary'],
@@ -1591,7 +2303,7 @@
   });
   bookChapterForm.forEach((item) => {
     const chapter = document.getElementById(item.id);
-    chapter?.querySelector('.chapter-reading-nav')?.insertAdjacentHTML('beforebegin', '<p class="chapter-complete-label" hidden>Chapter Complete</p>');
+    chapter?.querySelector('.chapter-reading-nav')?.insertAdjacentHTML('beforebegin', `<div class="chapter-complete-label" hidden><button type="button" data-learning-complete="${item.id}">학습 완료</button></div>`);
   });
   document.querySelectorAll('.book-chapters a[href^="#"]').forEach((link) => {
     const chapterId = link.hash.slice(1);
@@ -1641,6 +2353,171 @@
   });
   (documentScroller || window).addEventListener('scroll', updateFloatingLessonNavigation, { passive: true });
 
+  const progressStorageKey = 'onoff-academy-progress-v1';
+  const progressStorageVersion = 1;
+  const learningStates = new Set(['NOT_STARTED', 'IN_PROGRESS', 'COMPLETED']);
+  const progressCourseByLearning = new Map();
+  entryCourseCatalog.forEach((course) => course.chapters.forEach(([learningId]) => progressCourseByLearning.set(learningId, course.id)));
+  const createDefaultProgress = () => ({
+    version: progressStorageVersion,
+    courses: Object.fromEntries(entryCourseCatalog.map((course) => [course.id, {
+      lastLearning: null,
+      learnings: Object.fromEntries(course.chapters.map(([learningId]) => [learningId, { state: 'NOT_STARTED', completedAt: null }]))
+    }]))
+  });
+  const loadProgress = () => {
+    const fallback = createDefaultProgress();
+    try {
+      const stored = JSON.parse(localStorage.getItem(progressStorageKey));
+      if (!stored || stored.version !== progressStorageVersion || typeof stored.courses !== 'object') return fallback;
+      entryCourseCatalog.forEach((course) => {
+        const storedCourse = stored.courses[course.id];
+        if (!storedCourse || typeof storedCourse.learnings !== 'object') return;
+        course.chapters.forEach(([learningId]) => {
+          const storedLearning = storedCourse.learnings[learningId];
+          if (!storedLearning || !learningStates.has(storedLearning.state)) return;
+          fallback.courses[course.id].learnings[learningId] = {
+            state: storedLearning.state,
+            completedAt: storedLearning.state === 'COMPLETED' && typeof storedLearning.completedAt === 'string' ? storedLearning.completedAt : null
+          };
+        });
+        if (course.chapters.some(([learningId]) => learningId === storedCourse.lastLearning)) fallback.courses[course.id].lastLearning = storedCourse.lastLearning;
+      });
+    } catch (_) {
+      return fallback;
+    }
+    return fallback;
+  };
+  let academyProgress = loadProgress();
+  const saveProgress = () => {
+    try { localStorage.setItem(progressStorageKey, JSON.stringify(academyProgress)); } catch (_) { /* Storage may be unavailable in private or embedded contexts. */ }
+  };
+  const getCourseSummary = (course) => {
+    const storedCourse = academyProgress.courses[course.id];
+    const states = course.chapters.map(([learningId]) => storedCourse.learnings[learningId].state);
+    const completed = states.filter((state) => state === 'COMPLETED').length;
+    const inProgress = states.some((state) => state === 'IN_PROGRESS');
+    const state = completed === course.chapters.length ? 'COMPLETED' : (completed > 0 || inProgress ? 'IN_PROGRESS' : 'NOT_STARTED');
+    const lastInProgress = storedCourse.lastLearning && storedCourse.learnings[storedCourse.lastLearning]?.state === 'IN_PROGRESS' ? storedCourse.lastLearning : null;
+    const target = lastInProgress
+      || course.chapters.find(([learningId]) => storedCourse.learnings[learningId].state === 'IN_PROGRESS')?.[0]
+      || course.chapters.find(([learningId]) => storedCourse.learnings[learningId].state === 'NOT_STARTED')?.[0]
+      || course.chapters[0][0];
+    return { completed, percent: Math.round((completed / course.chapters.length) * 100), state, target };
+  };
+  const statePresentation = {
+    NOT_STARTED: { course: '대기중', learning: '미진입', cta: '시작하기' },
+    IN_PROGRESS: { course: '학습진행', learning: '학습중', cta: '이어 학습하기' },
+    COMPLETED: { course: '이수완료', learning: '✓ 완료', cta: '복습하기' }
+  };
+  const refreshProgressUI = () => {
+    let totalCompleted = 0;
+    let totalLearnings = 0;
+    let activeCourses = 0;
+    let pendingAssessments = 0;
+    entryCourseCatalog.forEach((course) => {
+      const summary = getCourseSummary(course);
+      totalCompleted += summary.completed;
+      totalLearnings += course.chapters.length;
+      if (summary.state !== 'NOT_STARTED') activeCourses += 1;
+      if (summary.state === 'IN_PROGRESS') pendingAssessments += 1;
+      document.querySelectorAll(`[data-progress-course="${course.id}"]`).forEach((scope) => {
+        scope.classList.remove('is-course-not-started', 'is-course-in-progress', 'is-course-completed');
+        scope.classList.add(`is-course-${summary.state.toLowerCase().replace('_', '-')}`);
+        scope.querySelectorAll('[data-course-state]').forEach((element) => { element.textContent = statePresentation[summary.state].course; });
+        scope.querySelectorAll('[data-course-progress]').forEach((element) => {
+          element.textContent = element.closest('.figma-home-course') ? `진행상황: ${summary.percent}%` : `${summary.percent}% · ${summary.completed}/${course.chapters.length} 완료`;
+        });
+        scope.querySelectorAll('[data-course-cta]').forEach((element) => {
+          if (element.classList.contains('desktop-cta')) element.innerHTML = `${statePresentation[summary.state].cta} <i aria-hidden="true">→</i>`;
+          else element.textContent = `${statePresentation[summary.state].cta} →`;
+        });
+        scope.querySelectorAll('[data-course-continue]').forEach((element) => {
+          element.href = `#${summary.target}`;
+          element.innerHTML = `${statePresentation[summary.state].cta} <i aria-hidden="true">→</i>`;
+        });
+        scope.querySelectorAll('[data-progress-learning]').forEach((row) => {
+          const learningState = academyProgress.courses[course.id].learnings[row.dataset.progressLearning]?.state || 'NOT_STARTED';
+          row.classList.remove('is-not-started', 'is-current', 'is-complete');
+          row.classList.add(learningState === 'COMPLETED' ? 'is-complete' : learningState === 'IN_PROGRESS' ? 'is-current' : 'is-not-started');
+          row.querySelectorAll('[data-learning-state]').forEach((element) => { element.textContent = statePresentation[learningState].learning; });
+        });
+      });
+    });
+    const totalPercent = totalLearnings ? Math.round((totalCompleted / totalLearnings) * 100) : 0;
+    document.querySelectorAll('[data-academy-total-progress]').forEach((element) => { element.textContent = `내 학습 진행률 ${totalPercent}%`; });
+    document.querySelectorAll('[data-academy-total-progress-bar]').forEach((element) => { element.style.setProperty('--academy-progress', `${totalPercent}%`); });
+    document.querySelectorAll('[data-home-active-courses]').forEach((element) => { element.textContent = `${activeCourses}개 과정`; });
+    document.querySelectorAll('[data-home-pending-assessments]').forEach((element) => { element.textContent = `${pendingAssessments}개 대기`; });
+    const continueCourse = entryCourseCatalog.find((course) => getCourseSummary(course).state === 'IN_PROGRESS')
+      || entryCourseCatalog.find((course) => getCourseSummary(course).state === 'NOT_STARTED')
+      || entryCourseCatalog[0];
+    const continueSummary = getCourseSummary(continueCourse);
+    document.querySelectorAll('[data-academy-continue]').forEach((link) => {
+      link.href = `#${continueSummary.target}`;
+      link.textContent = continueSummary.state === 'NOT_STARTED' ? '안전학습 시작하기' : continueSummary.state === 'COMPLETED' ? '안전학습 복습하기' : '이어서 안전학습하기';
+    });
+    document.querySelectorAll('[data-learning-complete]').forEach((button) => {
+      const courseId = progressCourseByLearning.get(button.dataset.learningComplete);
+      const completed = courseId && academyProgress.courses[courseId].learnings[button.dataset.learningComplete].state === 'COMPLETED';
+      button.textContent = completed ? '✓ 학습 완료' : '학습 완료';
+      button.disabled = Boolean(completed);
+    });
+    const platformL01State = academyProgress.courses.platform.learnings.philosophy.state;
+    const platformL01Percent = platformL01State === 'COMPLETED' ? 100 : 0;
+    document.querySelectorAll('[data-platform-l01-percent]').forEach((element) => { element.textContent = `${platformL01Percent}%`; });
+    document.querySelectorAll('[data-platform-l01-bar]').forEach((element) => { element.style.width = `${platformL01Percent}%`; });
+    const platformCourseProgress = getCourseSummary(entryCourseCatalog[0]).percent;
+    document.querySelectorAll('[data-platform-l02-percent]').forEach((element) => { element.textContent = `${platformCourseProgress}% 완료`; });
+    document.querySelectorAll('[data-platform-l02-bar]').forEach((element) => { element.style.width = `${platformCourseProgress}%`; });
+    document.querySelectorAll('[data-platform-l03-percent]').forEach((element) => { element.textContent = '학습 03 / 04'; });
+    document.querySelectorAll('[data-platform-l03-bar]').forEach((element) => { element.style.width = `${platformCourseProgress}%`; });
+    document.querySelectorAll('[data-platform-l04-percent]').forEach((element) => { element.textContent = '학습 04 / 04'; });
+    document.querySelectorAll('[data-platform-l04-bar]').forEach((element) => { element.style.width = `${platformCourseProgress}%`; });
+  };
+  const markLearningEntered = (learningId) => {
+    const courseId = progressCourseByLearning.get(learningId);
+    if (!courseId) return;
+    const courseProgress = academyProgress.courses[courseId];
+    if (courseProgress.learnings[learningId].state === 'NOT_STARTED') courseProgress.learnings[learningId].state = 'IN_PROGRESS';
+    courseProgress.lastLearning = learningId;
+    saveProgress();
+    refreshProgressUI();
+  };
+  const markLearningCompleted = (learningId) => {
+    const courseId = progressCourseByLearning.get(learningId);
+    if (!courseId) return;
+    const learning = academyProgress.courses[courseId].learnings[learningId];
+    learning.state = 'COMPLETED';
+    learning.completedAt ||= new Date().toISOString();
+    academyProgress.courses[courseId].lastLearning = learningId;
+    saveProgress();
+    refreshProgressUI();
+  };
+  mountExactPlatformDesktopLearning();
+  syncPurePlatformDesktopContent();
+  mountExactRiskDesktopLearning();
+  document.addEventListener('click', (event) => {
+    const platformL02Retry = event.target.closest?.('.platform-ready-02-practice [data-ready-retry]');
+    if (!platformL02Retry) return;
+    const practice = platformL02Retry.closest('.platform-ready-02-practice');
+    practice.querySelectorAll('[data-ready-choice]').forEach((choice) => { choice.disabled = false; choice.classList.remove('is-selected','is-correct','is-incorrect'); });
+    practice.querySelector('[data-ready-check]').disabled = true;
+    practice.querySelector(':scope > aside').hidden = true;
+    platformL02Retry.hidden = true;
+  });
+  document.querySelectorAll('[data-learning-complete]').forEach((button) => button.addEventListener('click', () => markLearningCompleted(button.dataset.learningComplete)));
+  document.querySelectorAll('[data-complete-on-navigation]').forEach((link) => link.addEventListener('click', () => markLearningCompleted(link.dataset.completeOnNavigation)));
+  window.onoffAcademyProgressQA = Object.freeze({
+    reset() {
+      localStorage.removeItem(progressStorageKey);
+      academyProgress = createDefaultProgress();
+      refreshProgressUI();
+      if (location.hash !== '#home') location.hash = 'home';
+    },
+    inspect() { return JSON.parse(JSON.stringify(academyProgress)); }
+  });
+
   const applyLearningMode = (mode) => {
     selectedLearningMode = mode === 'action' ? 'action' : 'book';
     sessionStorage.setItem('academy-learning-mode', selectedLearningMode);
@@ -1651,11 +2528,16 @@
 
   const renderAcademyFlow = () => {
     const route = location.hash.slice(1) || 'home';
+    syncDesktopHomeShell(route);
     document.body.dataset.academyView = route;
     resetViewScroll();
     const selectedLesson = lessonCatalog.find((lesson) => lesson.route === route)
       || lessonsByChapter.get(route)?.[0]
       || null;
+    const isDesktopLearning = desktopHomeMedia.matches && Boolean(selectedLesson);
+    document.body.classList.toggle('is-academy-desktop-learning', isDesktopLearning);
+    document.body.dataset.desktopLearningCourse = selectedLesson?.book || '';
+    if (selectedLesson) markLearningEntered(selectedLesson.chapter);
     const isPlatformFigmaChapter = selectedLesson?.book === 'platform' && platformMobileChapters.some((item) => item.id === selectedLesson.chapter);
     document.body.classList.toggle('is-platform-figma-chapter', isPlatformFigmaChapter);
     document.body.classList.toggle('is-ch03-mobile-golden', selectedLesson?.chapter === 'daily-work');
@@ -1673,7 +2555,7 @@
       document.getElementById(activeStickyChapterHeader.dataset.chapterOwner)?.insertAdjacentElement('afterbegin', activeStickyChapterHeader);
       activeStickyChapterHeader = null;
     }
-    lessonStickyStack.hidden = !selectedLesson;
+    lessonStickyStack.hidden = !selectedLesson || isDesktopLearning;
     floatingLessonEnabled = false;
     floatingLessonNavigation.hidden = true;
     document.querySelectorAll('.lesson-progress-indicator').forEach((indicator) => indicator.remove());
@@ -1693,7 +2575,7 @@
     if (globalPager) globalPager.hidden = true;
     chapters.forEach((chapter) => { chapter.hidden = isHomeRoute ? chapter.id !== 'home' : chapter.id !== chapterRoute; });
     document.querySelectorAll('.academy-lesson').forEach((lesson) => {
-      lesson.hidden = Boolean(selectedLesson) && (lesson.closest('.manual-section')?.id !== selectedLesson.chapter || lesson.dataset.lesson !== selectedLesson.key);
+      lesson.hidden = Boolean(selectedLesson) && (lesson.closest('.manual-section')?.id !== selectedLesson.chapter || (!isDesktopLearning && lesson.dataset.lesson !== selectedLesson.key));
     });
     if (selectedLesson) {
       const handbookLessons = lessonCatalog.filter((lesson) => lesson.book === selectedLesson.book);
@@ -1703,25 +2585,42 @@
       const previousCrossesChapter = Boolean(previous && previous.chapter !== selectedLesson.chapter);
       const previousItem = previous
         ? previousCrossesChapter
-          ? `<a href="#${previous.route}">← 이전 Chapter</a>`
+          ? `<a href="#${previous.route}">← 이전 학습</a>`
           : `<a href="#${previous.route}">← 이전 Lesson</a>`
         : '<span aria-disabled="true">← 이전 Lesson</span>';
       const isLastLesson = handbookLessons.at(-1) === selectedLesson;
       const nextCrossesChapter = Boolean(next && next.chapter !== selectedLesson.chapter);
       const nextItem = isLastLesson
-        ? '<a class="handbook-complete" href="#home">Academy로 →</a>'
+        ? '<a class="handbook-complete" href="#home">다음 과정 →</a>'
         : nextCrossesChapter
-          ? `<a href="#${next.route}">다음 Chapter →</a>`
+          ? `<a href="#${next.route}">다음 학습 →</a>`
           : `<a href="#${next.route}">다음 Lesson →</a>`;
       const lessonNavigation = document.querySelector(`#${selectedLesson.chapter} .chapter-reading-nav`);
-      const tocTarget = selectedLesson.book === 'tbm' ? 'tbm-book-toc'
-        : selectedLesson.book === 'risk' ? 'risk-book-toc'
-        : selectedLesson.book === 'sop' ? 'sop-book-toc'
-        : selectedLesson.book === 'special' ? 'special-book-toc'
-        : 'safety-book-toc';
-      if (lessonNavigation) lessonNavigation.innerHTML = `${previousItem}<a href="#${tocTarget}">목차</a>${nextItem}`;
+      const tocTarget = selectedLesson.book === 'tbm' ? 'tbm-course'
+        : selectedLesson.book === 'risk' ? 'risk-course'
+        : selectedLesson.book === 'practical' ? 'risk-practical-course'
+        : selectedLesson.book === 'sop' ? 'sop-course'
+        : selectedLesson.book === 'special' ? 'special-course'
+        : 'platform-course';
       const chapterHeader = document.querySelector(`#${selectedLesson.chapter} .book-chapter-start`);
-      if (chapterHeader) {
+      if (isDesktopLearning) {
+        const desktopCourse = desktopLearningCatalog[selectedLesson.book];
+        const desktopIndex = desktopCourse?.sequence.findIndex(([chapterId]) => chapterId === selectedLesson.chapter) ?? -1;
+        const previousChapter = desktopIndex > 0 ? desktopCourse.sequence[desktopIndex - 1] : null;
+        const nextChapter = desktopIndex >= 0 ? desktopCourse.sequence[desktopIndex + 1] : null;
+        const nextCourseIndex = entryCourseCatalog.findIndex((course) => course.id === selectedLesson.book) + 1;
+        const nextCourse = entryCourseCatalog[nextCourseIndex];
+        const desktopPrevious = previousChapter
+          ? `<a href="#${previousChapter[0]}">← 이전 학습</a>`
+          : '<span aria-disabled="true">← 이전 학습</span>';
+        const desktopNext = nextChapter
+          ? `<a href="#${nextChapter[0]}">다음 학습 →</a>`
+          : `<a class="handbook-complete" href="#${nextCourse?.route || 'home'}">다음 과정 →</a>`;
+        if (lessonNavigation) lessonNavigation.innerHTML = `${desktopPrevious}<a href="#${tocTarget}">학습 목록</a>${desktopNext}`;
+      } else if (lessonNavigation) {
+        lessonNavigation.innerHTML = `${previousItem}<a href="#${tocTarget}">학습 목록</a>${nextItem}`;
+      }
+      if (chapterHeader && !isDesktopLearning) {
         chapterHeader.dataset.chapterOwner = selectedLesson.chapter;
         lessonStickyStack.append(chapterHeader);
         activeStickyChapterHeader = chapterHeader;
@@ -1729,16 +2628,16 @@
       const handbookChapters = bookChapterForm.filter((chapter) => chapter.book === selectedLesson.book && chapter.countInProgress !== false);
       const chapterProgressIndex = handbookChapters.findIndex((chapter) => chapter.id === selectedLesson.chapter) + 1;
       const chapterProgressTotal = handbookChapters.find((chapter) => chapter.id === selectedLesson.chapter)?.progressTotal || handbookChapters.length;
-      chapterHeader?.insertAdjacentHTML('beforeend', `<div class="lesson-progress-indicator"><span>Chapter Progress</span><strong>${chapterProgressIndex} / ${chapterProgressTotal}</strong></div>`);
-      floatingLessonEnabled = true;
-      floatingLessonNavigation.innerHTML = `${previousItem}<a href="#${tocTarget}">목차</a>${nextItem}`;
-      updateFloatingLessonNavigation();
+      if (!isDesktopLearning) {
+        chapterHeader?.insertAdjacentHTML('beforeend', `<div class="lesson-progress-indicator"><span>학습 진행</span><strong>${chapterProgressIndex} / ${chapterProgressTotal}</strong></div>`);
+        floatingLessonEnabled = true;
+        floatingLessonNavigation.innerHTML = `${previousItem}<a href="#${tocTarget}">학습 목록</a>${nextItem}`;
+        updateFloatingLessonNavigation();
+      }
       const chapterLessons = lessonsByChapter.get(selectedLesson.chapter) || [];
       const completeLabel = document.querySelector(`#${selectedLesson.chapter} .chapter-complete-label`);
       if (completeLabel) {
-        completeLabel.hidden = chapterLessons.at(-1) !== selectedLesson;
-        completeLabel.textContent = isLastLesson ? '' : 'Chapter Complete';
-        completeLabel.hidden = isLastLesson || chapterLessons.at(-1) !== selectedLesson;
+        completeLabel.hidden = isDesktopLearning ? false : chapterLessons.at(-1) !== selectedLesson;
       }
     }
     if (!homeSection || !isHomeRoute) {
@@ -1770,10 +2669,14 @@
     }
   };
 
+  mountRemainingReadyDesktopLearning();
   document.querySelectorAll('[data-learning-mode-choice]').forEach((link) => link.addEventListener('click', () => applyLearningMode(link.dataset.learningModeChoice)));
   window.addEventListener('hashchange', renderAcademyFlow);
+  desktopHomeMedia.addEventListener('change', renderAcademyFlow);
+  desktopHomeMedia.addEventListener('change', syncPurePlatformDesktopContent);
   window.addEventListener('pageshow', resetViewScroll);
   applyLearningMode(selectedLearningMode);
+  refreshProgressUI();
   renderAcademyFlow();
   const chapterGroups = {
     home: '시작하기', philosophy: '시작하기', workflow: '업무 Workflow', project: '업무 Workflow', 'daily-work': '업무 Workflow',
@@ -1802,7 +2705,7 @@
   document.querySelector('.search-close')?.addEventListener('click', () => setSearchOpen(false));
   searchPanel?.addEventListener('click', (event) => { if (event.target === searchPanel) setSearchOpen(false); });
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { setSearchOpen(false); closeDrawer(); } });
-  const renderResults = (query) => { if (!searchResults) return; const value = query.trim().toLocaleLowerCase('ko'); const results = value ? chapterIndex.filter((item) => `${item.title} ${item.description}`.toLocaleLowerCase('ko').includes(value)) : []; searchResults.innerHTML = !value ? '<p>검색어를 입력하면 관련 Chapter가 표시됩니다.</p>' : results.length ? results.map((item) => `<a href="#${item.id}"><strong>${item.title}</strong><span>${item.description}</span></a>`).join('') : '<p>일치하는 문서를 찾지 못했습니다.</p>'; };
+  const renderResults = (query) => { if (!searchResults) return; const value = query.trim().toLocaleLowerCase('ko'); const results = value ? chapterIndex.filter((item) => `${item.title} ${item.description}`.toLocaleLowerCase('ko').includes(value)) : []; searchResults.innerHTML = !value ? '<p>검색어를 입력하면 관련 학습이 표시됩니다.</p>' : results.length ? results.map((item) => `<a href="#${item.id}"><strong>${item.title}</strong><span>${item.description}</span></a>`).join('') : '<p>일치하는 문서를 찾지 못했습니다.</p>'; };
   const runHeroSearch = () => {
     if (!searchInput || !heroSearchInput) return;
     searchInput.value = heroSearchInput.value;
@@ -1860,7 +2763,7 @@
       const next = document.createElement('nav');
       next.className = 'learning-next';
       next.setAttribute('aria-label', '추천 학습');
-      next.innerHTML = `<div><span>CONTINUE LEARNING</span><strong>다음 학습으로 이어가기</strong><p>현재 Chapter와 연결되는 Workflow를 계속 확인하세요.</p></div>${profile.next.map(([label, target]) => `<a href="#${target}">${label}<span>→</span></a>`).join('')}`;
+      next.innerHTML = `<div><span>CONTINUE LEARNING</span><strong>다음 학습으로 이어가기</strong><p>현재 학습과 연결되는 Workflow를 계속 확인하세요.</p></div>${profile.next.map(([label, target]) => `<a href="#${target}">${label}<span>→</span></a>`).join('')}`;
       chapter.append(next);
     }
   });
