@@ -6,6 +6,22 @@ Academy 콘텐츠는 페이지별 스타일을 새로 만들지 않고 공통 Co
 
 `Academy → Library → Book → Table of Contents → Chapter → Read → Learn → Practice → Complete`
 
+Content Architecture v2의 상위 분류는 `Platform Academy`와 `Safety Library`입니다. 기존 Book·Chapter·Scene Component 계약은 두 영역이 공유하며, Presentation 구조가 학습 목적의 구분을 대신하지 않습니다.
+
+### Content Classification
+
+- `UNIVERSAL`: ONOFF를 사용하지 않는 사람에게도 독립적인 안전지식 가치가 있음 → Safety Library 후보
+- `PLATFORM-SPECIFIC`: ONOFF 화면·기능·Workflow·Operation 설명 → Platform Academy 후보
+- `MIXED`: Knowledge와 Product 사용법이 한 콘텐츠에 섞임 → 원본 가치를 보존하며 분리 후보
+- `MERGE`: 독립 Chapter로 유지할 깊이나 고유 학습목표가 부족함 → Lesson/Section 통합 후보
+- `HOLD`: 제품 Truth가 변하거나 미구현 상태임 → 안정화 전 선행 제작 금지
+
+주제가 존재한다는 이유만으로 Chapter를 만들지 않습니다. Chapter는 하나의 학습목표를 충분히 완결할 때만 사용하고, 짧거나 중복된 콘텐츠는 Lesson/Section으로 통합합니다.
+
+Safety Library는 필요 깊이에 따라 `WHY → CONCEPT → HOW → CASE → PRACTICE → COMPLETE`를 사용하고, Platform Academy는 `WHY → ACTUAL USER FLOW → ACTUAL PRODUCT SCREEN → ACTION → PRACTICE`를 우선합니다. 두 흐름을 모든 주제에 기계적으로 강제하지 않습니다.
+
+Knowledge와 Product를 연결할 때는 콘텐츠를 복제하지 않고 상호 Link를 사용합니다. 확정되지 않은 Product 기능, 가상 Screen과 추정 Workflow는 Platform Academy 콘텐츠로 먼저 만들지 않습니다.
+
 - `academy-components.css`: 재사용 가능한 Presentation Component와 반응형·Print 규칙
 - `content-architecture.json`: Block 계약, Chapter 필수 정보와 Template Recipe
 - `index.html`: 실제 콘텐츠를 조립하는 소비자
@@ -108,3 +124,4 @@ Book Architecture의 기준 계층은 `Book → Part → Chapter → Scene`입�
 - 이미지 종류는 `data-media`만 변경하고 Frame 구조는 공유합니다.
 - Quiz와 Practice는 이번 Sprint에서 구조만 정의하며 동작을 구현하지 않습니다.
 - Desktop, Mobile, A4 Print는 동일 Markup을 공유하고 Presentation만 반응형으로 변경합니다.
+- Workflow, 공식 용어, Role 행동, UX·데이터 의미, Platform Philosophy 등 Golden-impacting change는 관련 코드와 기준문서 갱신을 같은 Sprint에서 완료합니다. 단순 spacing, color, border, typography Micro UI는 Golden 의미를 바꾸지 않는 한 필수 동기화 대상이 아닙니다.

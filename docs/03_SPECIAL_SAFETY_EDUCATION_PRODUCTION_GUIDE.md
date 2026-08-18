@@ -1,6 +1,8 @@
 # Special Safety Education Handbook Production Guide
 
-Status: **CH01 PRODUCTION GUIDE READY**
+Status: **SUPERSEDED AS CURRENT TOC / HISTORICAL PRODUCTION GUIDE**
+
+> 이 문서는 SED-003 당시 제작 기준을 보존합니다. 현재 구현된 CH01~CH07 콘텐츠의 상태나 Academy Architecture v2의 확정 TOC로 사용하지 않습니다. 특별안전교육의 범용 지식은 Safety Library 후보이며, `Daily Work 연계`는 Platform-specific 콘텐츠로 분리 검토합니다. Architecture 원칙은 Repository `README.md`와 `components/README.md`를 따릅니다.
 
 Sprint: **SED-003**
 

@@ -8,7 +8,7 @@ Scope: ONOFF Academy 전체 Handbook
 
 ## 1. 기본 원칙
 
-- Academy는 Library 기반 Platform Documentation이다.
+- Academy는 공통 Library Design System 위에서 `Platform Academy`와 `Safety Library`를 제공하는 Knowledge Center다. Platform Documentation은 두 축 중 Product 학습 영역이다.
 - Reference UI의 구조, 정보 계층, Navigation과 배치를 따른다.
 - 새로운 UI, Flow, Navigation 또는 Component를 발명하지 않는다.
 - 모든 Handbook은 동일한 Component와 간격을 재사용한다.
