@@ -19,6 +19,22 @@
   font-family: Inter, Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Segoe UI", sans-serif;
 }
 
+.academy-learning-admin { margin-bottom: 24px; }
+.academy-learning-admin > header { display:flex; align-items:end; justify-content:space-between; gap:16px; }
+.academy-learning-admin > header output { color:var(--muted); font-weight:800; }
+.academy-learning-admin form { margin-top:18px; display:grid; grid-template-columns:minmax(200px,1fr) minmax(130px,180px) repeat(2,minmax(130px,180px)) auto; gap:8px; }
+.academy-learning-admin :is(input,select,button) { min-height:40px; padding:0 12px; border:1px solid var(--border); border-radius:8px; background:#fff; font:inherit; }
+.academy-learning-admin form button { color:#fff; border-color:var(--blue); background:var(--blue); font-weight:800; }
+.academy-learning-admin-summary { margin-top:16px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px; }
+.academy-learning-admin-summary article { padding:12px; border:1px solid var(--border); border-radius:8px; background:var(--soft); }
+.academy-learning-admin-summary :is(strong,small) { display:block; }
+.academy-learning-admin-summary small { margin-top:5px; color:var(--muted); }
+.academy-learning-admin .table-wrap { margin-top:16px; overflow:auto; }
+.academy-learning-admin table { width:100%; border-collapse:collapse; font-size:13px; }
+.academy-learning-admin :is(th,td) { padding:11px 10px; border-bottom:1px solid var(--border); text-align:left; white-space:nowrap; }
+.academy-learning-admin th { color:var(--muted); background:var(--soft); }
+@media (max-width:700px){.academy-learning-admin form{grid-template-columns:1fr}.academy-learning-admin .table-wrap{max-width:100%}}
+
 /* Academy Design System · ADS-003 UI Reference */
 body.is-lesson-view,
 body.is-toc-view { background: #fff; }

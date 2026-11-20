@@ -1339,6 +1339,19 @@
 
         <section class="manual-section" id="administration">
           <header class="section-heading"><div><p class="eyebrow">ADMINISTRATION</p><h2>Administration</h2></div><p>현장 운영과 안전 검토 기준을 관리합니다.</p></header>
+          <section class="academy-learning-admin info-card" data-learning-admin hidden aria-labelledby="academy-learning-admin-title">
+            <header><div><p class="eyebrow">LEARNING STATUS</p><h3 id="academy-learning-admin-title">학습 현황</h3></div><output data-learning-admin-count>0건</output></header>
+            <form data-learning-admin-filters role="search">
+              <input name="query" type="search" placeholder="직원 또는 과정 검색" aria-label="직원 또는 과정 검색">
+              <input name="organization" type="search" placeholder="조직 필터" aria-label="조직 필터">
+              <select name="courseId" aria-label="과정"><option value="">전체 과정</option><option value="platform">ONOFF Safety Platform</option><option value="risk">위험성평가</option><option value="practical">위험성평가 실무</option><option value="sop">SOP</option><option value="tbm">TBM</option><option value="special">특별안전교육</option></select>
+              <select name="state" aria-label="상태"><option value="">전체 상태</option><option value="NOT_STARTED">미시작</option><option value="IN_PROGRESS">진행 중</option><option value="COMPLETED">완료</option></select>
+              <button type="submit">조회</button>
+            </form>
+            <div class="academy-learning-admin-summary" data-learning-admin-summary aria-label="과정별 학습 현황"></div>
+            <div class="table-wrap"><table><thead><tr><th>직원</th><th>조직</th><th>과정</th><th>진척률</th><th>상태</th><th>공식 이수</th><th>최종 활동</th></tr></thead><tbody data-learning-admin-rows></tbody></table></div>
+            <p data-learning-admin-empty hidden>조건에 맞는 학습 기록이 없습니다.</p>
+          </section>
           <ul class="check-list"><li>승인 대기 및 검토 중 작업 확인</li><li>Project 안전준비 체크리스트 검토</li><li>Safety Start 승인 또는 반려</li><li>Safety Report 조치 상태 확인</li><li>전자문서 제출 및 서명 현황 확인</li></ul>
         </section>
 

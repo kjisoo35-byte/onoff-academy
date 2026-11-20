@@ -1,10 +1,14 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
+const { LearningProgressStore } = require('./lib/learning-progress');
 
 const root = __dirname;
+const staticRoot = process.env.ACADEMY_STATIC_ROOT ? path.resolve(process.env.ACADEMY_STATIC_ROOT) : root;
+const watchEnabled = process.env.ACADEMY_DISABLE_WATCH !== '1';
 const port = Number(process.env.PORT || 4174);
 const clients = new Set();
+const progressStore = new LearningProgressStore(process.env.ACADEMY_PROGRESS_FILE || path.join(root, '.academy-data', 'progress.json'));
 const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.xml': 'application/xml; charset=utf-8', '.txt': 'text/plain; charset=utf-8' };
 const reloadClient = `<script>new EventSource('/__academy_reload').onmessage=()=>location.reload()</script>`;
 
@@ -135,8 +139,53 @@ const previewShell = `<!doctype html>
 </body>
 </html>`;
 
-const server = http.createServer((request, response) => {
+const sendJson = (response, statusCode, payload) => {
+  response.writeHead(statusCode, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+  response.end(JSON.stringify(payload));
+};
+const readJson = (request) => new Promise((resolve, reject) => {
+  let body = '';
+  request.on('data', (chunk) => {
+    body += chunk;
+    if (body.length > 1024 * 1024) reject(Object.assign(new Error('payload_too_large'), { statusCode: 413 }));
+  });
+  request.on('end', () => {
+    try { resolve(body ? JSON.parse(body) : {}); } catch { reject(Object.assign(new Error('invalid_json'), { statusCode: 400 })); }
+  });
+  request.on('error', reject);
+});
+const getIdentity = (request) => {
+  const allowTestHeaders = process.env.ACADEMY_TEST_AUTH === '1';
+  const id = allowTestHeaders ? request.headers['x-academy-user-id'] : process.env.ACADEMY_USER_ID;
+  if (!id) return null;
+  return {
+    id: String(id),
+    name: String((allowTestHeaders && request.headers['x-academy-user-name']) || process.env.ACADEMY_USER_NAME || id),
+    role: String((allowTestHeaders && request.headers['x-academy-user-role']) || process.env.ACADEMY_USER_ROLE || 'learner'),
+    organization: String((allowTestHeaders && request.headers['x-academy-organization']) || process.env.ACADEMY_USER_ORGANIZATION || '') || null
+  };
+};
+
+const server = http.createServer(async (request, response) => {
   const requestPath = decodeURIComponent(request.url.split('?')[0]);
+  if (requestPath.startsWith('/api/academy/')) {
+    const identity = getIdentity(request);
+    if (!identity) return sendJson(response, 401, { error: 'authentication_required' });
+    try {
+      if (requestPath === '/api/academy/session' && request.method === 'GET') return sendJson(response, 200, { user: identity });
+      if (requestPath === '/api/academy/progress/me' && request.method === 'GET') return sendJson(response, 200, progressStore.get(identity));
+      if (requestPath === '/api/academy/progress/events' && request.method === 'POST') return sendJson(response, 200, progressStore.apply(identity, await readJson(request)));
+      if (requestPath === '/api/academy/progress/import' && request.method === 'POST') return sendJson(response, 200, progressStore.importLegacy(identity, await readJson(request)));
+      if (requestPath === '/api/academy/admin/progress' && request.method === 'GET') {
+        if (!['administrator', 'supervisor'].includes(identity.role)) return sendJson(response, 403, { error: 'forbidden' });
+        const url = new URL(request.url, 'http://localhost');
+        return sendJson(response, 200, { rows: progressStore.summary(Object.fromEntries(url.searchParams)) });
+      }
+      return sendJson(response, 404, { error: 'not_found' });
+    } catch (error) {
+      return sendJson(response, error.statusCode || 500, { error: error.message || 'server_error' });
+    }
+  }
   if (requestPath === '/__academy_reload') {
     response.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache, no-store', Connection: 'keep-alive' });
     response.write('retry: 500\n\n');
@@ -150,27 +199,29 @@ const server = http.createServer((request, response) => {
     return;
   }
   const relativePath = requestPath === '/' ? 'index.html' : requestPath.replace(/^\/+/, '');
-  const filePath = path.resolve(root, relativePath);
-  if (!filePath.startsWith(root) || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+  const filePath = path.resolve(staticRoot, relativePath);
+  if (!filePath.startsWith(staticRoot) || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
     response.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
-    response.end(fs.readFileSync(path.join(root, '404.html')));
+    response.end(fs.readFileSync(path.join(staticRoot, '404.html')));
     return;
   }
   const extension = path.extname(filePath).toLowerCase();
   let body = fs.readFileSync(filePath);
-  if (extension === '.html') body = Buffer.from(body.toString('utf8').replace('</body>', `${reloadClient}</body>`));
+  if (watchEnabled && extension === '.html') body = Buffer.from(body.toString('utf8').replace('</body>', `${reloadClient}</body>`));
   response.writeHead(200, { 'Content-Type': mime[extension] || 'application/octet-stream', 'Cache-Control': 'no-store, max-age=0' });
   response.end(body);
 });
 
-let reloadTimer;
-fs.watch(root, { recursive: true }, (_event, filename) => {
-  if (!filename || filename.includes('.git') || filename.includes('node_modules')) return;
-  clearTimeout(reloadTimer);
-  reloadTimer = setTimeout(() => {
-    clients.forEach((client) => client.write(`data: reload:${Date.now()}\n\n`));
-    console.log(`[reload] ${filename}`);
-  }, 80);
-});
+if (watchEnabled) {
+  let reloadTimer;
+  fs.watch(root, { recursive: true }, (_event, filename) => {
+    if (!filename || filename.includes('.git') || filename.includes('node_modules')) return;
+    clearTimeout(reloadTimer);
+    reloadTimer = setTimeout(() => {
+      clients.forEach((client) => client.write(`data: reload:${Date.now()}\n\n`));
+      console.log(`[reload] ${filename}`);
+    }, 80);
+  });
+}
 
 server.listen(port, '127.0.0.1', () => console.log(`ONOFF Academy: http://127.0.0.1:${port}`));

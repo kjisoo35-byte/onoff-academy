@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+
+const academy=process.env.ACADEMY_PREVIEW_URL,work=process.env.WORK_PREVIEW_URL,loginId=process.env.WORK_QA_LOGIN,password=process.env.WORK_QA_PASSWORD,adminLogin=process.env.WORK_QA_ADMIN_LOGIN,adminPassword=process.env.WORK_QA_ADMIN_PASSWORD;
+if(![academy,work].every(value=>/^https:\/\/[a-z0-9.-]+\.pages\.dev$/i.test(value||''))||![loginId,password,adminLogin,adminPassword].every(Boolean))throw new Error('missing_staging_e2e_configuration');
+const cookie=(response,name)=>{const value=(response.headers.getSetCookie?.()||[response.headers.get('set-cookie')||'']).join(',').match(new RegExp(`${name}=([^;,]+)`));return value?`${name}=${value[1]}`:''};
+const status=(response,expected,label)=>assert.equal(response.status,expected,`${label}:${response.status}`);
+const workLogin=async(id,pw)=>{const response=await fetch(`${work}/api/auth/login`,{method:'POST',redirect:'manual',headers:{'content-type':'application/json'},body:JSON.stringify({login_id:id,password:pw})});status(response,200,'work_login');return cookie(response,'onoff_work_session')};
+const academyLogin=async workCookie=>{const start=await fetch(`${academy}/api/academy/auth/start?return_to=/index.html`,{redirect:'manual'});status(start,302,'academy_start');const stateCookie=cookie(start,'onoff_academy_login_state'),location=start.headers.get('location');assert.ok(location?.startsWith(work));const assertionResponse=await fetch(location,{redirect:'manual',headers:{cookie:workCookie}});status(assertionResponse,200,'work_assertion');const token=(await assertionResponse.text()).match(/name="assertion" value="([^"]+)"/)?.[1];assert.ok(token);const exchange=await fetch(`${academy}/api/academy/auth/exchange`,{method:'POST',redirect:'manual',headers:{cookie:stateCookie,'content-type':'application/x-www-form-urlencoded'},body:new URLSearchParams({assertion:token})});status(exchange,303,'academy_exchange');return cookie(exchange,'onoff_academy_session')};
+const request=(path,{academyCookie='',method='GET',body}={})=>fetch(`${academy}${path}`,{method,redirect:'manual',headers:{...(academyCookie?{cookie:academyCookie}:{}),...(body?{'content-type':'application/json',origin:academy}:{})},body:body?JSON.stringify(body):undefined});
+const event=(academyCookie,value)=>request('/api/academy/progress/events',{academyCookie,method:'POST',body:value});
+const stamp=Date.now();
+const workCookie=await workLogin(loginId,password),learner=await academyLogin(workCookie);
+status(await request('/api/academy/session',{academyCookie:learner}),200,'academy_session');
+status(await event(learner,{id:`work-${stamp}-enter`,type:'lesson.entered',courseId:'sop',lessonId:'sop-purpose'}),200,'lesson_enter');
+status(await request('/api/academy/auth/logout',{academyCookie:learner,method:'POST',body:{}}),200,'academy_logout');
+const resumed=await academyLogin(workCookie),restored=await (await request('/api/academy/progress/me',{academyCookie:resumed})).json();assert.equal(restored.courses.sop.lastLessonId,'sop-purpose');
+status(await request('/api/academy/admin/progress',{academyCookie:resumed}),403,'worker_admin_block');
+status(await event(resumed,{id:`work-${stamp}-required`,type:'practice.required',courseId:'sop',practiceId:'sop-final'}),200,'practice_required');
+for(const lessonId of ['sop-purpose','sop-reading','sop-structure','sop-platform'])status(await event(resumed,{id:`work-${stamp}-${lessonId}`,type:'lesson.completed',courseId:'sop',lessonId}),200,lessonId);
+status(await event(resumed,{id:`work-${stamp}-fail`,type:'practice.result',courseId:'sop',practiceId:'sop-final',passed:false,score:40}),200,'practice_fail');
+let record=await (await request('/api/academy/progress/me',{academyCookie:resumed})).json();assert.equal(record.courses.sop.officiallyCompleted,false);
+status(await event(resumed,{id:`work-${stamp}-pass`,type:'practice.result',courseId:'sop',practiceId:'sop-final',passed:true,score:100}),200,'practice_pass');
+record=await (await request('/api/academy/progress/me',{academyCookie:resumed})).json();assert.equal(record.courses.sop.officiallyCompleted,true);
+const admin=await academyLogin(await workLogin(adminLogin,adminPassword)),summary=await request('/api/academy/admin/progress?courseId=sop',{academyCookie:admin});status(summary,200,'admin_summary');const rows=(await summary.json()).rows;assert.ok(rows.some(row=>row.officiallyCompleted&&row.organization==='STAGING-QA'));
+process.stdout.write(`WORK_STAGING_E2E_PASS learner=${record.user.id} revision=${record.revision} rows=${rows.length}\n`);

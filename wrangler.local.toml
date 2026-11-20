@@ -1,0 +1,12 @@
+name = "onoff-academy-local"
+pages_build_output_dir = "."
+compatibility_date = "2026-10-21"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "onoff-academy-local"
+database_id = "00000000-0000-0000-0000-000000000001"
+migrations_dir = "migrations"
+
+[vars]
+WORK_ACADEMY_LOGIN_URL = "https://work.invalid/api/academy/assertion"

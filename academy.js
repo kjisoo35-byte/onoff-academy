@@ -55,8 +55,10 @@
   const desktopGlobalHeader = document.createElement('header');
   desktopGlobalHeader.className = 'desktop-academy-global-header';
   desktopGlobalHeader.hidden = true;
-  const defaultDesktopHeaderMarkup = `<a href="#home"><i>O</i><strong>ONOFF Academy</strong></a><nav aria-label="Academy Global Navigation"><a href="#home">학습 라이브러리</a><span aria-disabled="true" title="V2 예정">나의 강의실</span><span aria-disabled="true" title="V2 예정">안전 자료실</span><b title="V2 예정">● 홍길동 작업자</b></nav>`;
-  const sopLearning01HeaderMarkup = `<div class="desktop-learning-brand"><a href="#home"><strong>ONOFF Academy</strong></a><span>SOP COURSE · 학습 01</span></div><nav aria-label="Academy Global Navigation"><a href="#home">Courses</a><span aria-disabled="true">Library</span><span aria-disabled="true">Support</span><i aria-hidden="true"></i><b>홍길동</b><em aria-hidden="true">KO</em></nav>`;
+  const defaultDesktopHeaderMarkup = `<a href="#home"><i>O</i><strong>ONOFF Academy</strong></a><nav aria-label="Academy Global Navigation"><a href="#home">학습 라이브러리</a><span aria-disabled="true" title="V2 예정">나의 강의실</span><span aria-disabled="true" title="V2 예정">안전 자료실</span><b title="V2 예정">● <span data-academy-user-name>학습자</span></b></nav>`;
+  const sopLearning01HeaderMarkup = `<div class="desktop-learning-brand"><a href="#home"><strong>ONOFF Academy</strong></a><span>SOP COURSE · 학습 01</span></div><nav aria-label="Academy Global Navigation"><a href="#home">Courses</a><span aria-disabled="true">Library</span><span aria-disabled="true">Support</span><i aria-hidden="true"></i><b data-academy-user-name>학습자</b><em aria-hidden="true">KO</em></nav>`;
+  let academyUserLabel = '학습자';
+  const refreshAuthenticatedUserUI = () => document.querySelectorAll('[data-academy-user-name]').forEach((element) => { element.textContent = academyUserLabel; });
   desktopGlobalHeader.innerHTML = defaultDesktopHeaderMarkup;
   document.querySelector('.academy-shell')?.before(desktopGlobalHeader);
   const syncDesktopHomeShell = (route) => {
@@ -67,6 +69,7 @@
     desktopGlobalHeader.classList.toggle('is-sop-learning-01', useSopLearning01Header);
     const expectedDesktopHeaderMarkup = useSopLearning01Header ? sopLearning01HeaderMarkup : defaultDesktopHeaderMarkup;
     if (desktopGlobalHeader.innerHTML !== expectedDesktopHeaderMarkup) desktopGlobalHeader.innerHTML = expectedDesktopHeaderMarkup;
+    refreshAuthenticatedUserUI();
     document.body.classList.toggle('is-figma-desktop-home', useFigmaHomeShell);
     document.body.classList.toggle('is-academy-desktop-shell', useDesktopAcademyShell);
     if (useDesktopAcademyShell) {
@@ -99,6 +102,8 @@
       { status: '고위험', tag: '고위험군', summary: '로봇, 전력, 화학 물질별 특화 수칙 · 4 Topics', desktopDescription: '산업용 로봇 작업, 전기 작업, 유해물질 취급, 중량물 인양 등 위험도 상위 분야 전문 행동 수칙을 마스터합니다.' }
     ];
     entryHome.innerHTML = `<header class="figma-home-header"><div><i>O</i><strong>ONOFF Academy</strong></div><nav><a href="#home">학습 라이브러리</a><a href="#my-academy">나의 강의실</a><span>안전 자료실</span><b>● 홍길동 작업자</b></nav><em></em></header><section class="figma-home-hero"><p>PREMIUM INDUSTRIAL SAFETY SYSTEM</p><small>ONOFF ACADEMY</small><h1><span>안전을 이해하고, 현장에서 실행하는 방법을 배웁니다.</span><b>안전을 이해하고,<br>현장에서 실행하는 법</b></h1><div class="figma-home-desktop-meta"><span>전체 6개 과정 · 23개 학습 챕터 완비</span><i></i><span data-academy-total-progress>내 학습 진행률 0%</span><b data-academy-total-progress-bar></b></div><blockquote>“안전한 작업은 시작하기 전에 결정됩니다.”</blockquote></section><main class="figma-home-content"><section class="figma-home-courses" aria-labelledby="figma-home-courses-title"><header><h2 id="figma-home-courses-title"><span>전체 학습 과정</span><b>과정 목록 (6)</b></h2><a href="#home">필수 이수 과정 보기 →</a></header><div>${entryCourseCatalog.map((course,index) => { const state = homeCourseState[index]; const priorityClass = course.id === 'risk' ? ' is-core' : course.id === 'special' ? ' is-red is-high-risk' : ''; return `<a class="figma-home-course${priorityClass}" href="#${course.route}" data-progress-course="${course.id}"><div class="figma-home-course-cover" aria-hidden="true"><span></span><img src="assets/academy-home/course-${course.number}.png" alt=""><i></i><b></b><img src="assets/academy-home/cover-overlay.png" alt=""></div><div class="figma-home-course-details"><header><span>${course.number}</span><small class="desktop-tag">${state.tag || course.tag}</small><strong>${state.title || course.title}</strong><small class="mobile-status" data-course-state>대기중</small></header><p class="desktop-description">${state.desktopDescription}</p><p class="mobile-summary">${state.summary}</p><footer><em>${course.id === 'special' ? '4 대 주제 핵심 교육' : `${course.chapters.length} 챕터 구성`}</em><b class="desktop-cta" data-course-cta>시작하기 <i aria-hidden="true">→</i></b><span data-course-progress>진행상황: 0%</span><b class="mobile-cta" data-course-cta>시작하기 →</b></footer></div></a>`; }).join('')}</div></section><aside class="figma-home-report"><h2>나의 학업 리포트</h2><dl><div><dt>수강 중인 과정</dt><dd data-home-active-courses>0개 과정</dd></div><div><dt>남은 평가 시험</dt><dd data-home-pending-assessments>0개 대기</dd></div></dl><div><strong>TBM 매뉴얼 개정안 알림</strong><p>최근 고용노동부 지침에 따른 중대재해 감축 대책 가이드라인 자료가 업데이트 되었습니다.</p></div><a href="#tbm-course">이어서 안전학습하기</a></aside></main>`;
+    const homeUserLabel = entryHome.querySelector('.figma-home-header nav b');
+    if (homeUserLabel) homeUserLabel.innerHTML = `● <span data-academy-user-name>${academyUserLabel}</span>`;
     const reservedHomeLink = entryHome.querySelector('.figma-home-header a[href="#my-academy"]');
     if (reservedHomeLink) reservedHomeLink.outerHTML = '<span aria-disabled="true" title="V2 예정">나의 강의실</span>';
     entryHome.querySelector('.figma-home-header nav span:not([aria-disabled])')?.setAttribute('aria-disabled', 'true');
@@ -138,8 +143,9 @@
       ]
     }
   };
-  const renderDesktopCourseHeader = () => `<header class="figma-course-global-header"><a href="#home"><i>O</i><strong>ONOFF Academy</strong></a><div><a href="#home">← 아카데미 홈으로 돌아가기</a><span class="user-context"><i aria-hidden="true"></i>홍길동 작업자</span></div></header>`;
+  const renderDesktopCourseHeader = () => `<header class="figma-course-global-header"><a href="#home"><i>O</i><strong>ONOFF Academy</strong></a><div><a href="#home">← 아카데미 홈으로 돌아가기</a><span class="user-context"><i aria-hidden="true"></i><span data-academy-user-name>${academyUserLabel}</span></span></div></header>`;
   const renderDesktopCourseHero = (course) => {
+    const heroUrl = new URL(course.hero, document.baseURI).href;
     const primaryLabel = course.id === 'practical' ? '실습 템플릿 열기 (Start Practice)' : '학습 시작하기 (Start Learning)';
     const descriptionBreaks = {
       platform: '설계 사상과',
@@ -155,7 +161,7 @@
       ? `<div class="figma-platform-hero-artwork" aria-hidden="true"><img class="figma-platform-art-image" src="${course.hero}" alt=""><span class="figma-platform-art-multiply"></span><span class="figma-platform-art-color"></span><span class="figma-platform-art-left"></span><img class="figma-platform-art-top" src="assets/course-heroes/platform-gradient-top.png" alt=""><img class="figma-platform-art-bottom" src="assets/course-heroes/platform-gradient-bottom.png" alt=""><span class="figma-platform-art-right"></span></div>`
       : `<div class="academy-course-hero-artwork" aria-hidden="true"><img src="${course.finalHero}" alt=""></div>`;
     const secondary = course.id === 'practical' ? '' : '<span>교안 PDF 다운로드</span>';
-    return `<section class="academy-course-hero figma-course-hero" style="--course-art:url('${course.hero}')">${artwork}<div class="figma-course-hero-copy"><div class="figma-course-module"><b>${course.number}</b><span><small>COURSE MODULE</small>${course.tag}</span><em>${course.tag}</em></div><div class="figma-course-title-group"><h1>${course.title}</h1><strong>${heroDescription}</strong></div><div class="figma-course-hero-actions"><a href="#${course.chapters[0][0]}" data-course-continue data-hero-fixed-label>${primaryLabel}</a>${secondary}</div></div></section>`;
+    return `<section class="academy-course-hero figma-course-hero" style="--course-art:url('${heroUrl}')">${artwork}<div class="figma-course-hero-copy"><div class="figma-course-module"><b>${course.number}</b><span><small>COURSE MODULE</small>${course.tag}</span><em>${course.tag}</em></div><div class="figma-course-title-group"><h1>${course.title}</h1><strong>${heroDescription}</strong></div><div class="figma-course-hero-actions"><a href="#${course.chapters[0][0]}" data-course-continue data-hero-fixed-label>${primaryLabel}</a>${secondary}</div></div></section>`;
   };
   const renderDesktopLearningPoints = (data) => `<section class="academy-course-section academy-course-learning-points figma-course-intro"><h2>${data.pointsTitle || '무엇을 배우게 되나요? <small>(What You Will Learn)</small>'}</h2><div>${data.points.map(([title,description],index) => `<article><span>${String(index+1).padStart(2,'0')}</span><div><strong>${title}</strong><p>${description}</p></div></article>`).join('')}</div></section>`;
   const renderDesktopCurriculum = (course) => {
@@ -2732,6 +2738,8 @@
   (documentScroller || window).addEventListener('scroll', updateFloatingLessonNavigation, { passive: true });
 
   const progressStorageKey = 'onoff-academy-progress-v1';
+  const progressOwnerStorageKey = 'onoff-academy-progress-owner-v1';
+  const unownedProgressBackupKey = 'onoff-academy-progress-unowned-v1';
   const progressStorageVersion = 1;
   const tbmIntroSeenStorageKey = 'onoff-academy-tbm-intro-seen-v1';
   const hasSeenTbmIntro = () => {
@@ -2780,6 +2788,88 @@
     return fallback;
   };
   let academyProgress = loadProgress();
+  let academyServerReady = false;
+  let academyServerUser = null;
+  const applyServerProgress = (record) => {
+    if (!record?.courses) return;
+    entryCourseCatalog.forEach((course) => {
+      const serverCourse = record.courses[course.id];
+      if (!serverCourse) return;
+      const target = academyProgress.courses[course.id];
+      target.lastLearning = serverCourse.lastLessonId || target.lastLearning;
+      getProgressLearningIds(course).forEach((learningId) => {
+        const lesson = serverCourse.lessons?.[learningId];
+        if (!lesson) return;
+        target.learnings[learningId] = { state: lesson.state, completedAt: lesson.completedAt || null };
+      });
+    });
+    saveProgress();
+  };
+  const requestProgress = async (path, options = {}) => {
+    const response = await fetch(path, { ...options, headers: { 'Content-Type': 'application/json', ...(options.headers || {}) } });
+    if (!response.ok) throw new Error((await response.json().catch(() => ({}))).error || `progress_${response.status}`);
+    return response.json();
+  };
+  const renderLearningAdmin = async (form = document.querySelector('[data-learning-admin-filters]')) => {
+    const root = document.querySelector('[data-learning-admin]');
+    if (!root || !academyServerUser || !['administrator', 'supervisor'].includes(academyServerUser.role)) return;
+    root.hidden = false;
+    const params = new URLSearchParams(new FormData(form));
+    [...params].forEach(([key, value]) => { if (!value) params.delete(key); });
+    const { rows } = await requestProgress(`/api/academy/admin/progress?${params}`);
+    const titles = Object.fromEntries(entryCourseCatalog.map((course) => [course.id, course.title]));
+    const states = { NOT_STARTED: '미시작', IN_PROGRESS: '진행 중', COMPLETED: '완료' };
+    const summary = root.querySelector('[data-learning-admin-summary]');
+    const byCourse = Object.groupBy ? Object.groupBy(rows, (row) => row.courseId) : rows.reduce((groups, row) => ((groups[row.courseId] ||= []).push(row), groups), {});
+    summary.replaceChildren(...Object.entries(byCourse).map(([courseId, courseRows]) => {
+      const article = document.createElement('article');
+      const completionRate = courseRows.length ? Math.round((courseRows.filter((row) => row.officiallyCompleted).length / courseRows.length) * 100) : 0;
+      const averageProgress = courseRows.length ? Math.round(courseRows.reduce((sum, row) => sum + row.progressPercent, 0) / courseRows.length) : 0;
+      const strong = document.createElement('strong'); strong.textContent = titles[courseId] || courseId;
+      const small = document.createElement('small'); small.textContent = `평균 진척 ${averageProgress}% · 이수율 ${completionRate}%`;
+      article.append(strong, small); return article;
+    }));
+    const body = root.querySelector('[data-learning-admin-rows]');
+    body.replaceChildren(...rows.map((row) => {
+      const tr = document.createElement('tr');
+      [row.name, row.organization || '—', titles[row.courseId] || row.courseId, `${row.progressPercent}%`, states[row.state] || row.state, row.officiallyCompleted ? '이수' : '미이수', row.lastActivityAt ? new Date(row.lastActivityAt).toLocaleString('ko-KR') : '—'].forEach((value) => {
+        const td = document.createElement('td'); td.textContent = value; tr.append(td);
+      });
+      return tr;
+    }));
+    root.querySelector('[data-learning-admin-count]').textContent = `${rows.length}건`;
+    root.querySelector('[data-learning-admin-empty]').hidden = rows.length > 0;
+  };
+  const progressEventId = () => globalThis.crypto?.randomUUID?.() || `academy-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  const syncAcademyProgress = async () => {
+    try {
+      const session = await requestProgress('/api/academy/session');
+      academyServerUser = session.user;
+      const authenticatedName = String(academyServerUser?.name || '').trim();
+      academyUserLabel = authenticatedName
+        ? `${authenticatedName} ${academyServerUser.role === 'administrator' ? '관리자' : '작업자'}`
+        : (academyServerUser.role === 'administrator' ? 'Academy 관리자' : 'Academy 학습자');
+      refreshAuthenticatedUserUI();
+      const localOwner = localStorage.getItem(progressOwnerStorageKey);
+      if (localOwner !== academyServerUser.id) {
+        if (!localOwner) {
+          const unownedProgress = localStorage.getItem(progressStorageKey);
+          if (unownedProgress && !localStorage.getItem(unownedProgressBackupKey)) localStorage.setItem(unownedProgressBackupKey, unownedProgress);
+        }
+        academyProgress = createDefaultProgress();
+      }
+      const imported = await requestProgress('/api/academy/progress/import', { method: 'POST', body: JSON.stringify(academyProgress) });
+      applyServerProgress(imported);
+      localStorage.setItem(progressOwnerStorageKey, academyServerUser.id);
+      academyServerReady = true;
+      document.body.dataset.academyProgressStorage = 'server';
+      refreshProgressUI();
+      await renderLearningAdmin();
+    } catch (_) {
+      academyServerReady = false;
+      document.body.dataset.academyProgressStorage = 'unavailable';
+    }
+  };
   const saveProgress = () => {
     try { localStorage.setItem(progressStorageKey, JSON.stringify(academyProgress)); } catch (_) { /* Storage may be unavailable in private or embedded contexts. */ }
   };
@@ -2868,7 +2958,7 @@
     document.querySelectorAll('[data-platform-l04-percent]').forEach((element) => { element.textContent = '학습 04 / 04'; });
     document.querySelectorAll('[data-platform-l04-bar]').forEach((element) => { element.style.width = `${platformCourseProgress}%`; });
   };
-  const markLearningEntered = (learningId) => {
+  const markLearningEntered = async (learningId) => {
     const courseId = progressCourseByLearning.get(learningId);
     if (!courseId) return;
     const courseProgress = academyProgress.courses[courseId];
@@ -2876,16 +2966,42 @@
     courseProgress.lastLearning = learningId;
     saveProgress();
     refreshProgressUI();
+    if (!academyServerReady) return;
+    try {
+      let record = await requestProgress('/api/academy/progress/events', { method: 'POST', body: JSON.stringify({ id: progressEventId(), type: 'lesson.entered', courseId, lessonId: learningId, occurredAt: new Date().toISOString() }) });
+      if (document.getElementById(learningId)?.querySelector('[data-ready-section="practice"],.risk-practice,.special-education-practice')) {
+        record = await requestProgress('/api/academy/progress/events', { method: 'POST', body: JSON.stringify({ id: `practice-required:${courseId}:${learningId}`, type: 'practice.required', courseId, practiceId: `${learningId}:practice`, required: true }) });
+      }
+      applyServerProgress(record);
+      document.body.dataset.academyProgressSave = 'saved';
+    } catch (_) { document.body.dataset.academyProgressSave = 'failed'; }
   };
-  const markLearningCompleted = (learningId) => {
+  const recordPracticeResult = async (learningId, passed, score = passed ? 100 : 0) => {
+    const courseId = progressCourseByLearning.get(learningId);
+    if (!academyServerReady || !courseId) return;
+    try {
+      applyServerProgress(await requestProgress('/api/academy/progress/events', { method: 'POST', body: JSON.stringify({ id: progressEventId(), type: 'practice.result', courseId, practiceId: `${learningId}:practice`, required: true, passed, score }) }));
+      document.body.dataset.academyProgressSave = 'saved';
+    } catch (_) { document.body.dataset.academyProgressSave = 'failed'; }
+  };
+  const markLearningCompleted = async (learningId, trigger = null) => {
     const courseId = progressCourseByLearning.get(learningId);
     if (!courseId) return;
-    const learning = academyProgress.courses[courseId].learnings[learningId];
-    learning.state = 'COMPLETED';
-    learning.completedAt ||= new Date().toISOString();
-    academyProgress.courses[courseId].lastLearning = learningId;
-    saveProgress();
-    refreshProgressUI();
+    if (!academyServerReady) {
+      if (trigger) { trigger.disabled = false; trigger.textContent = '저장 실패 · 다시 시도'; }
+      document.body.dataset.academyProgressSave = 'failed';
+      return;
+    }
+    if (trigger) { trigger.disabled = true; trigger.textContent = '저장 중…'; }
+    try {
+      const record = await requestProgress('/api/academy/progress/events', { method: 'POST', body: JSON.stringify({ id: progressEventId(), type: 'lesson.completed', courseId, lessonId: learningId, occurredAt: new Date().toISOString() }) });
+      applyServerProgress(record);
+      document.body.dataset.academyProgressSave = 'saved';
+      refreshProgressUI();
+    } catch (_) {
+      if (trigger) { trigger.disabled = false; trigger.textContent = '저장 실패 · 다시 시도'; }
+      document.body.dataset.academyProgressSave = 'failed';
+    }
   };
   mountExactPlatformDesktopLearning();
   syncPurePlatformDesktopContent();
@@ -2900,8 +3016,22 @@
     practice.querySelector(':scope > aside').hidden = true;
     platformL02Retry.hidden = true;
   });
-  document.querySelectorAll('[data-learning-complete]').forEach((button) => button.addEventListener('click', () => markLearningCompleted(button.dataset.learningComplete)));
-  document.querySelectorAll('[data-complete-on-navigation]').forEach((link) => link.addEventListener('click', () => markLearningCompleted(link.dataset.completeOnNavigation)));
+  document.querySelectorAll('[data-learning-complete]').forEach((button) => button.addEventListener('click', () => markLearningCompleted(button.dataset.learningComplete, button)));
+  document.querySelectorAll('[data-complete-on-navigation]').forEach((link) => link.addEventListener('click', (event) => {
+    if (!academyServerReady) event.preventDefault();
+    markLearningCompleted(link.dataset.completeOnNavigation, link);
+  }));
+  document.addEventListener('click', (event) => {
+    const check = event.target.closest?.('[data-ready-check],[data-figma-check],.practice-check');
+    if (!check) return;
+    const learningId = location.hash.slice(1);
+    window.setTimeout(() => {
+      const practice = check.closest('[data-ready-section="practice"],.risk-practice,.special-education-practice');
+      const passed = Boolean(practice?.querySelector('.is-correct, .practice-feedback.is-correct, aside:not([hidden]) strong'))
+        && !practice?.querySelector('.is-incorrect, .practice-feedback:not(.is-correct):not(:empty)');
+      recordPracticeResult(learningId, passed);
+    }, 0);
+  });
   document.querySelector('.tbm-ready-intro .tbm-ready-nav a[href="#tbm-nine-steps"]')?.addEventListener('click', () => {
     markTbmIntroSeen();
     refreshProgressUI();
@@ -2909,12 +3039,18 @@
   window.onoffAcademyProgressQA = Object.freeze({
     reset() {
       localStorage.removeItem(progressStorageKey);
+      localStorage.removeItem(progressOwnerStorageKey);
       localStorage.removeItem(tbmIntroSeenStorageKey);
       academyProgress = createDefaultProgress();
       refreshProgressUI();
       if (location.hash !== '#home') location.hash = 'home';
     },
-    inspect() { return JSON.parse(JSON.stringify(academyProgress)); }
+    inspect() { return JSON.parse(JSON.stringify({ progress: academyProgress, serverReady: academyServerReady, user: academyServerUser })); }
+  });
+  syncAcademyProgress();
+  document.querySelector('[data-learning-admin-filters]')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    renderLearningAdmin(event.currentTarget).catch(() => { document.body.dataset.academyProgressSave = 'failed'; });
   });
 
   const applyLearningMode = (mode) => {
