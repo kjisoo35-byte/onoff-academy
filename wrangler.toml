@@ -4,6 +4,12 @@ compatibility_date = "2026-08-08"
 
 [env.production]
 
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "onoff-academy-production"
+database_id = "c8d5a5ff-711b-410f-892c-160f116eb7cd"
+migrations_dir = "migrations"
+
 [[env.preview.d1_databases]]
 binding = "DB"
 database_name = "onoff-academy-staging"

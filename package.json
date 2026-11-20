@@ -5,7 +5,8 @@
   "description": "ONOFF Academy official documentation site",
   "scripts": {
     "dev": "node dev-server.js",
-    "prepare:pages": "node scripts/prepare-pages.mjs",
+    "prepare:pages": "npm run check:release-config && node scripts/prepare-pages.mjs",
+    "check:release-config": "node scripts/verify-production-config.mjs",
     "check": "node --check academy.js && node --check dev-server.js && node --check lib/learning-progress.js && node --check src/server/work-auth.js && node --check src/server/academy-auth.js && node --check src/server/d1-learning-repository.js && node --check functions/api/academy/[[path]].js && node --check integration/work/academy-assertion.js",
     "test": "node --test test/*.test.js test/*.test.mjs"
   }
