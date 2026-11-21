@@ -46,6 +46,21 @@
   const modeDescription = document.querySelector('[data-selected-mode-description]');
   const globalPager = document.querySelector('.document > .chapter-pager');
   const legacySiteHeader = document.querySelector('.site-header');
+  const workReturnControl = document.querySelector('.work-return-control');
+  const workReturnLink = workReturnControl?.querySelector('[data-work-return]');
+  const workReturnStatus = workReturnControl?.querySelector('[role="status"]');
+  const mountWorkReturn = () => {
+    if (!workReturnControl) return;
+    document.querySelectorAll('.has-work-return').forEach((header) => header.classList.remove('has-work-return'));
+    const selectors = desktopHomeMedia.matches
+      ? '.desktop-academy-global-header,.figma-home-header,.figma-course-global-header'
+      : '.figma-home-header,.figma-mobile-course-landing > header,.mobile-golden-compact-header,.platform-mobile-header,.site-header';
+    const header = [...document.querySelectorAll(selectors)].find((element) => element.getClientRects().length && getComputedStyle(element).visibility !== 'hidden');
+    if (!header) return;
+    const actions = desktopHomeMedia.matches ? (header.querySelector('nav') || header.querySelector(':scope > div')) : null;
+    (actions || header).append(workReturnControl);
+    header.classList.add('has-work-return');
+  };
   const legacySidebar = document.querySelector('.academy-shell > .sidebar');
   const legacySiteHeaderAnchor = document.createComment('legacy-site-header-anchor');
   const legacySidebarAnchor = document.createComment('legacy-sidebar-anchor');
@@ -2790,6 +2805,8 @@
   let academyProgress = loadProgress();
   let academyServerReady = false;
   let academyServerUser = null;
+  const pendingLearningSaves = new Set();
+  const failedLearningSaves = new Map();
   const applyServerProgress = (record) => {
     if (!record?.courses) return;
     entryCourseCatalog.forEach((course) => {
@@ -2806,7 +2823,7 @@
     saveProgress();
   };
   const requestProgress = async (path, options = {}) => {
-    const response = await fetch(path, { ...options, headers: { 'Content-Type': 'application/json', ...(options.headers || {}) } });
+    const response = await fetch(path, { ...options, signal: options.signal || AbortSignal.timeout(15000), headers: { 'Content-Type': 'application/json', ...(options.headers || {}) } });
     if (!response.ok) throw new Error((await response.json().catch(() => ({}))).error || `progress_${response.status}`);
     return response.json();
   };
@@ -2841,6 +2858,26 @@
     root.querySelector('[data-learning-admin-empty]').hidden = rows.length > 0;
   };
   const progressEventId = () => globalThis.crypto?.randomUUID?.() || `academy-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  const saveLearningEvents = (events) => {
+    const key = events[0].id;
+    const operation = (async () => {
+      try {
+        let record;
+        for (const event of events) record = await requestProgress('/api/academy/progress/events', { method: 'POST', body: JSON.stringify(event) });
+        applyServerProgress(record);
+        failedLearningSaves.delete(key);
+        document.body.dataset.academyProgressSave = failedLearningSaves.size ? 'failed' : 'saved';
+      } catch (error) {
+        failedLearningSaves.set(key, events);
+        document.body.dataset.academyProgressSave = 'failed';
+        throw error;
+      }
+    })();
+    pendingLearningSaves.add(operation);
+    document.body.dataset.academyProgressSave = 'saving';
+    operation.then(() => pendingLearningSaves.delete(operation), () => pendingLearningSaves.delete(operation));
+    return operation;
+  };
   const syncAcademyProgress = async () => {
     try {
       const session = await requestProgress('/api/academy/session');
@@ -2968,20 +3005,18 @@
     refreshProgressUI();
     if (!academyServerReady) return;
     try {
-      let record = await requestProgress('/api/academy/progress/events', { method: 'POST', body: JSON.stringify({ id: progressEventId(), type: 'lesson.entered', courseId, lessonId: learningId, occurredAt: new Date().toISOString() }) });
+      const events = [{ id: progressEventId(), type: 'lesson.entered', courseId, lessonId: learningId, occurredAt: new Date().toISOString() }];
       if (document.getElementById(learningId)?.querySelector('[data-ready-section="practice"],.risk-practice,.special-education-practice')) {
-        record = await requestProgress('/api/academy/progress/events', { method: 'POST', body: JSON.stringify({ id: `practice-required:${courseId}:${learningId}`, type: 'practice.required', courseId, practiceId: `${learningId}:practice`, required: true }) });
+        events.push({ id: `practice-required:${courseId}:${learningId}`, type: 'practice.required', courseId, practiceId: `${learningId}:practice`, required: true });
       }
-      applyServerProgress(record);
-      document.body.dataset.academyProgressSave = 'saved';
+      await saveLearningEvents(events);
     } catch (_) { document.body.dataset.academyProgressSave = 'failed'; }
   };
   const recordPracticeResult = async (learningId, passed, score = passed ? 100 : 0) => {
     const courseId = progressCourseByLearning.get(learningId);
     if (!academyServerReady || !courseId) return;
     try {
-      applyServerProgress(await requestProgress('/api/academy/progress/events', { method: 'POST', body: JSON.stringify({ id: progressEventId(), type: 'practice.result', courseId, practiceId: `${learningId}:practice`, required: true, passed, score }) }));
-      document.body.dataset.academyProgressSave = 'saved';
+      await saveLearningEvents([{ id: progressEventId(), type: 'practice.result', courseId, practiceId: `${learningId}:practice`, required: true, passed, score }]);
     } catch (_) { document.body.dataset.academyProgressSave = 'failed'; }
   };
   const markLearningCompleted = async (learningId, trigger = null) => {
@@ -2994,9 +3029,7 @@
     }
     if (trigger) { trigger.disabled = true; trigger.textContent = '저장 중…'; }
     try {
-      const record = await requestProgress('/api/academy/progress/events', { method: 'POST', body: JSON.stringify({ id: progressEventId(), type: 'lesson.completed', courseId, lessonId: learningId, occurredAt: new Date().toISOString() }) });
-      applyServerProgress(record);
-      document.body.dataset.academyProgressSave = 'saved';
+      await saveLearningEvents([{ id: progressEventId(), type: 'lesson.completed', courseId, lessonId: learningId, occurredAt: new Date().toISOString() }]);
       refreshProgressUI();
     } catch (_) {
       if (trigger) { trigger.disabled = false; trigger.textContent = '저장 실패 · 다시 시도'; }
@@ -3047,7 +3080,41 @@
     },
     inspect() { return JSON.parse(JSON.stringify({ progress: academyProgress, serverReady: academyServerReady, user: academyServerUser })); }
   });
-  syncAcademyProgress();
+  const academyProgressReady = syncAcademyProgress();
+  let returningToWork = false;
+  workReturnLink?.addEventListener('click', async (event) => {
+    event.preventDefault();
+    if (returningToWork) return;
+    returningToWork = true;
+    workReturnLink.setAttribute('aria-disabled', 'true');
+    workReturnControl.setAttribute('aria-busy', 'true');
+    workReturnStatus.hidden = false;
+    workReturnStatus.textContent = '학습 저장 확인 중…';
+    try {
+      await academyProgressReady;
+      if (!academyServerReady) await syncAcademyProgress();
+      while (pendingLearningSaves.size) await Promise.allSettled([...pendingLearningSaves]);
+      const failed = [...failedLearningSaves.values()];
+      for (const events of failed) await saveLearningEvents(events);
+      const route = location.hash.slice(1);
+      const lesson = lessonCatalog.find((item) => item.route === route) || lessonsByChapter.get(route)?.[0];
+      if (!academyServerReady && academyServerUser) throw new Error('progress_unavailable');
+      if (lesson) {
+        if (!academyServerReady) throw new Error('progress_unavailable');
+        await markLearningEntered(lesson.chapter);
+      }
+      while (pendingLearningSaves.size) await Promise.allSettled([...pendingLearningSaves]);
+      if (failedLearningSaves.size) throw new Error('progress_unsaved');
+      workReturnStatus.hidden = true;
+      window.location.assign(workReturnLink.href);
+    } catch (_) {
+      workReturnStatus.textContent = '학습 저장을 확인하지 못했습니다. 연결을 확인한 뒤 WORK로 돌아가기를 다시 눌러 주세요.';
+    } finally {
+      returningToWork = false;
+      workReturnLink.removeAttribute('aria-disabled');
+      workReturnControl.removeAttribute('aria-busy');
+    }
+  });
   document.querySelector('[data-learning-admin-filters]')?.addEventListener('submit', (event) => {
     event.preventDefault();
     renderLearningAdmin(event.currentTarget).catch(() => { document.body.dataset.academyProgressSave = 'failed'; });
@@ -3062,6 +3129,7 @@
   };
 
   const renderAcademyFlow = () => {
+    requestAnimationFrame(mountWorkReturn);
     const route = location.hash.slice(1) || 'home';
     syncDesktopHomeShell(route);
     document.body.dataset.academyView = route;
