@@ -50,8 +50,12 @@
   const workReturnLink = workReturnControl?.querySelector('[data-work-return]');
   const workReturnStatus = workReturnControl?.querySelector('[role="status"]');
   const mountWorkReturn = () => {
-    if (!workReturnControl) return;
+    if (!workReturnControl || document.body.classList.contains('unified-learning')) return;
     document.querySelectorAll('.has-work-return').forEach((header) => header.classList.remove('has-work-return'));
+    if (document.body.classList.contains('is-catalog-home')) {
+      const actions = entryHome?.querySelector('[data-catalog-work-actions]');
+      if (actions) { actions.append(workReturnControl); return; }
+    }
     const selectors = desktopHomeMedia.matches
       ? '.desktop-academy-global-header,.figma-home-header,.figma-course-global-header'
       : '.figma-home-header,.figma-mobile-course-landing > header,.mobile-golden-compact-header,.platform-mobile-header,.site-header';
@@ -105,27 +109,10 @@
   let activeStickyChapterHeader = null;
   document.querySelectorAll('.academy-hero,.home-discovery,.library-section,.book-overview,.learning-mode-section,.book-complete-view,.book-platform-link,.my-academy-card').forEach((element) => element.remove());
   const entryHome = homeSection?.querySelector('.academy-flow-home');
-  if (entryHome) {
-    [...homeSection.children].forEach((child) => { if (child !== entryHome) child.remove(); });
-    entryHome.className = 'academy-flow-home figma-academy-home';
-    const homeCourseState = [
-      { status: '이수완료', title: 'ONOFF Safety Platform 이해', summary: '제품과 Workflow 이해 · 4개 학습', desktopDescription: '안전 관리 플랫폼의 전체적인 설계 사상 및 작업 선택부터 실제 서명까지의 핵심 Workflow를 익힙니다.', progress: '진행상황: 100%', cta: '복습하기 →' },
-      { status: '학습진행', tag: '핵심 과정', summary: '위험 발견 및 수준 결정 가이드 · 4개 학습', desktopDescription: '산업현장의 잠재적 유해·위험요인을 사전에 스스로 발견하여 그 크기를 결정하고 감소대책을 세웁니다.', progress: '진행상황: 50%', cta: '이어 학습하기 →' },
-      { status: '대기중', tag: '실무 서식', summary: '현장 양식 기반 실제 문서 작성 실습 · 4개 학습', desktopDescription: '다양한 업종별 표준 예시 시나리오를 바탕으로 위험성평가 서식을 누락없이 정확히 작성해 봅니다.', progress: '진행상황: 0%', cta: '시작하기 →' },
-      { status: '대기중', summary: '안전 규정 숙지 및 현장 준수 · 4개 학습', desktopDescription: '제조 및 정비 등 모든 위험 공정의 안전 수칙을 시각화하고 올바른 이행 상태를 기록하는 법을 학습합니다.' },
-      { status: '대기중', summary: 'Tool Box Meeting 안전 소통 지침 · 3개 학습', desktopDescription: '작업 개시 전 현장 부근에서 감독자를 중심으로 한 10분 미팅을 실질적으로 안전하게 소통하는 가이드입니다.' },
-      { status: '고위험', tag: '고위험군', summary: '로봇, 전력, 화학 물질별 특화 수칙 · 4 Topics', desktopDescription: '산업용 로봇 작업, 전기 작업, 유해물질 취급, 중량물 인양 등 위험도 상위 분야 전문 행동 수칙을 마스터합니다.' }
-    ];
-    entryHome.innerHTML = `<header class="figma-home-header"><div><i>O</i><strong>ONOFF Academy</strong></div><nav><a href="#home">학습 라이브러리</a><a href="#my-academy">나의 강의실</a><span>안전 자료실</span><b>● 홍길동 작업자</b></nav><em></em></header><section class="figma-home-hero"><p>PREMIUM INDUSTRIAL SAFETY SYSTEM</p><small>ONOFF ACADEMY</small><h1><span>안전을 이해하고, 현장에서 실행하는 방법을 배웁니다.</span><b>안전을 이해하고,<br>현장에서 실행하는 법</b></h1><div class="figma-home-desktop-meta"><span>전체 6개 과정 · 23개 학습 챕터 완비</span><i></i><span data-academy-total-progress>내 학습 진행률 0%</span><b data-academy-total-progress-bar></b></div><blockquote>“안전한 작업은 시작하기 전에 결정됩니다.”</blockquote></section><main class="figma-home-content"><section class="figma-home-courses" aria-labelledby="figma-home-courses-title"><header><h2 id="figma-home-courses-title"><span>전체 학습 과정</span><b>과정 목록 (6)</b></h2><a href="#home">필수 이수 과정 보기 →</a></header><div>${entryCourseCatalog.map((course,index) => { const state = homeCourseState[index]; const priorityClass = course.id === 'risk' ? ' is-core' : course.id === 'special' ? ' is-red is-high-risk' : ''; return `<a class="figma-home-course${priorityClass}" href="#${course.route}" data-progress-course="${course.id}"><div class="figma-home-course-cover" aria-hidden="true"><span></span><img src="assets/academy-home/course-${course.number}.png" alt=""><i></i><b></b><img src="assets/academy-home/cover-overlay.png" alt=""></div><div class="figma-home-course-details"><header><span>${course.number}</span><small class="desktop-tag">${state.tag || course.tag}</small><strong>${state.title || course.title}</strong><small class="mobile-status" data-course-state>대기중</small></header><p class="desktop-description">${state.desktopDescription}</p><p class="mobile-summary">${state.summary}</p><footer><em>${course.id === 'special' ? '4 대 주제 핵심 교육' : `${course.chapters.length} 챕터 구성`}</em><b class="desktop-cta" data-course-cta>시작하기 <i aria-hidden="true">→</i></b><span data-course-progress>진행상황: 0%</span><b class="mobile-cta" data-course-cta>시작하기 →</b></footer></div></a>`; }).join('')}</div></section><aside class="figma-home-report"><h2>나의 학업 리포트</h2><dl><div><dt>수강 중인 과정</dt><dd data-home-active-courses>0개 과정</dd></div><div><dt>남은 평가 시험</dt><dd data-home-pending-assessments>0개 대기</dd></div></dl><div><strong>TBM 매뉴얼 개정안 알림</strong><p>최근 고용노동부 지침에 따른 중대재해 감축 대책 가이드라인 자료가 업데이트 되었습니다.</p></div><a href="#tbm-course">이어서 안전학습하기</a></aside></main>`;
-    const homeUserLabel = entryHome.querySelector('.figma-home-header nav b');
-    if (homeUserLabel) homeUserLabel.innerHTML = `● <span data-academy-user-name>${academyUserLabel}</span>`;
-    const reservedHomeLink = entryHome.querySelector('.figma-home-header a[href="#my-academy"]');
-    if (reservedHomeLink) reservedHomeLink.outerHTML = '<span aria-disabled="true" title="V2 예정">나의 강의실</span>';
-    entryHome.querySelector('.figma-home-header nav span:not([aria-disabled])')?.setAttribute('aria-disabled', 'true');
-    entryHome.querySelector('.figma-home-header nav span:not([title])')?.setAttribute('title', 'V2 예정');
-    entryHome.querySelector('.figma-home-header nav b')?.setAttribute('title', 'V2 예정');
-    entryHome.querySelector('.figma-home-report > a')?.setAttribute('data-academy-continue', '');
-  }
+  const catalogHome = entryHome ? AcademyLearningCatalog.mount(entryHome, {
+    courses: entryCourseCatalog, onRefresh: () => syncAcademyProgress()
+  }) : null;
+  if (entryHome) [...homeSection.children].forEach(child => { if (child !== entryHome) child.remove(); });
   const desktopLandingCatalog = {
     platform: {
       time: '1시간 30분', audience: '모든 신규·기존 현장 작업자',
@@ -335,31 +322,46 @@
   const academyImageViewer = document.createElement('dialog');
   academyImageViewer.className = 'academy-image-viewer';
   academyImageViewer.setAttribute('aria-labelledby', 'academy-image-viewer-title');
-  academyImageViewer.innerHTML = `<header class="academy-image-viewer-toolbar"><button type="button" data-image-viewer-back><span>←</span> 돌아가기</button><h2 id="academy-image-viewer-title">학습 이미지</h2><div><small>ESC</small><button type="button" data-image-viewer-close>닫기 <span>✕</span></button></div></header><div class="academy-image-viewer-separator"></div><div class="academy-image-viewer-canvas"><img alt=""></div>`;
+  academyImageViewer.innerHTML = `<header class="academy-image-viewer-toolbar"><button type="button" data-image-viewer-back><span>←</span> 돌아가기</button><h2 id="academy-image-viewer-title">학습 이미지</h2><div><small>ESC</small><button type="button" data-image-viewer-close>닫기 <span>✕</span></button></div><div class="academy-image-viewer-controls" role="group" aria-label="이미지 배율"><button type="button" data-image-zoom-out aria-label="이미지 축소">−</button><output data-image-zoom aria-live="polite">100%</output><button type="button" data-image-zoom-in aria-label="이미지 확대">+</button><button type="button" data-image-fit>화면 맞춤</button></div></header><div class="academy-image-viewer-separator"></div><div class="academy-image-viewer-canvas" tabindex="0" role="group" aria-label="학습 이미지. 확대 후 드래그하거나 방향키로 이동하세요."><img alt=""></div>`;
   document.body.append(academyImageViewer);
   const academyViewerImage = academyImageViewer.querySelector('img');
   const academyViewerTitle = academyImageViewer.querySelector('h2');
+  const academyViewerCanvas = academyImageViewer.querySelector('.academy-image-viewer-canvas');
+  const academyViewerViewport = AcademyImageViewport.create(academyViewerCanvas, academyViewerImage, (zoom) => {
+    academyImageViewer.querySelector('[data-image-zoom]').textContent = Math.round(zoom * 100) + '%';
+    academyImageViewer.querySelector('[data-image-zoom-out]').disabled = zoom <= 1;
+    academyImageViewer.querySelector('[data-image-zoom-in]').disabled = zoom >= 8;
+  });
+  academyImageViewer.querySelector('[data-image-zoom-out]').addEventListener('click', () => academyViewerViewport.zoomBy(1 / 1.5));
+  academyImageViewer.querySelector('[data-image-zoom-in]').addEventListener('click', () => academyViewerViewport.zoomBy(1.5));
+  academyImageViewer.querySelector('[data-image-fit]').addEventListener('click', () => academyViewerViewport.reset());
   let academyViewerTrigger = null;
   let academyViewerHistoryActive = false;
   let academyViewerScrollY = 0;
   const closeAcademyImageViewer = ({ fromHistory = false } = {}) => {
     if (!academyImageViewer.open) return;
     academyImageViewer.close();
+    academyViewerViewport.reset();
     document.body.classList.remove('is-academy-image-viewer-open');
     if (!fromHistory && academyViewerHistoryActive) history.back();
     academyViewerHistoryActive = false;
-    window.scrollTo({ top: academyViewerScrollY, behavior: 'auto' });
+    document.body.style.removeProperty('--academy-viewer-scroll');
+    window.scrollTo({ top: academyViewerScrollY, behavior: 'instant' });
     academyViewerTrigger?.focus({ preventScroll: true });
   };
   const openAcademyImageViewer = ({ src, alt, title, trigger }) => {
     if (!src || !academyViewerImage || !academyViewerTitle) return;
     academyViewerTrigger = trigger;
     academyViewerScrollY = window.scrollY;
+    window.scrollTo({ top: academyViewerScrollY, behavior: 'instant' });
+    document.body.style.setProperty('--academy-viewer-scroll', -academyViewerScrollY + 'px');
     academyViewerImage.src = src;
     academyViewerImage.alt = alt || title || '확대된 학습 이미지';
     academyViewerTitle.textContent = title || alt || '학습 이미지';
     document.body.classList.add('is-academy-image-viewer-open');
     academyImageViewer.showModal();
+    academyViewerViewport.reset();
+    academyViewerCanvas.focus({ preventScroll: true });
     history.pushState({ academyImageViewer: true }, '');
     academyViewerHistoryActive = true;
   };
@@ -2722,14 +2724,18 @@
   });
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   const documentScroller = document.querySelector('.document');
+  let viewScrollRevision = 0;
   const resetViewScroll = () => {
+    const revision = ++viewScrollRevision;
     window.scrollTo(0, 0);
     if (documentScroller) documentScroller.scrollTop = 0;
     requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (revision !== viewScrollRevision) return;
       window.scrollTo(0, 0);
       if (documentScroller) documentScroller.scrollTop = 0;
     }));
     window.setTimeout(() => {
+      if (revision !== viewScrollRevision) return;
       window.scrollTo(0, 0);
       if (documentScroller) documentScroller.scrollTop = 0;
     }, 120);
@@ -2804,11 +2810,13 @@
   };
   let academyProgress = loadProgress();
   let academyServerReady = false;
+  let academyCatalogRecord = null;
   let academyServerUser = null;
   const pendingLearningSaves = new Set();
   const failedLearningSaves = new Map();
   const applyServerProgress = (record) => {
     if (!record?.courses) return;
+    academyCatalogRecord = record;
     entryCourseCatalog.forEach((course) => {
       const serverCourse = record.courses[course.id];
       if (!serverCourse) return;
@@ -2835,12 +2843,12 @@
     [...params].forEach(([key, value]) => { if (!value) params.delete(key); });
     const { rows } = await requestProgress(`/api/academy/admin/progress?${params}`);
     const titles = Object.fromEntries(entryCourseCatalog.map((course) => [course.id, course.title]));
-    const states = { NOT_STARTED: '미시작', IN_PROGRESS: '진행 중', COMPLETED: '완료' };
+    const states = { NOT_STARTED: '미시작', IN_PROGRESS: '진행 중', COMPLETED: '학습 완료' };
     const summary = root.querySelector('[data-learning-admin-summary]');
     const byCourse = Object.groupBy ? Object.groupBy(rows, (row) => row.courseId) : rows.reduce((groups, row) => ((groups[row.courseId] ||= []).push(row), groups), {});
     summary.replaceChildren(...Object.entries(byCourse).map(([courseId, courseRows]) => {
       const article = document.createElement('article');
-      const completionRate = courseRows.length ? Math.round((courseRows.filter((row) => row.officiallyCompleted).length / courseRows.length) * 100) : 0;
+      const completionRate = courseRows.length ? Math.round((courseRows.filter((row) => row.officiallyCompleted === true).length / courseRows.length) * 100) : 0;
       const averageProgress = courseRows.length ? Math.round(courseRows.reduce((sum, row) => sum + row.progressPercent, 0) / courseRows.length) : 0;
       const strong = document.createElement('strong'); strong.textContent = titles[courseId] || courseId;
       const small = document.createElement('small'); small.textContent = `평균 진척 ${averageProgress}% · 이수율 ${completionRate}%`;
@@ -2849,7 +2857,8 @@
     const body = root.querySelector('[data-learning-admin-rows]');
     body.replaceChildren(...rows.map((row) => {
       const tr = document.createElement('tr');
-      [row.name, row.organization || '—', titles[row.courseId] || row.courseId, `${row.progressPercent}%`, states[row.state] || row.state, row.officiallyCompleted ? '이수' : '미이수', row.lastActivityAt ? new Date(row.lastActivityAt).toLocaleString('ko-KR') : '—'].forEach((value) => {
+      const official = row.officiallyCompleted === true ? '이수' : '미이수';
+      [row.name, row.organization || '—', titles[row.courseId] || row.courseId, `${row.progressPercent}%`, states[row.state] || row.state, official, row.lastActivityAt ? new Date(row.lastActivityAt).toLocaleString('ko-KR') : '—'].forEach((value) => {
         const td = document.createElement('td'); td.textContent = value; tr.append(td);
       });
       return tr;
@@ -2865,6 +2874,7 @@
         let record;
         for (const event of events) record = await requestProgress('/api/academy/progress/events', { method: 'POST', body: JSON.stringify(event) });
         applyServerProgress(record);
+        refreshProgressUI();
         failedLearningSaves.delete(key);
         document.body.dataset.academyProgressSave = failedLearningSaves.size ? 'failed' : 'saved';
       } catch (error) {
@@ -2905,6 +2915,7 @@
     } catch (_) {
       academyServerReady = false;
       document.body.dataset.academyProgressStorage = 'unavailable';
+      refreshProgressUI();
     }
   };
   const saveProgress = () => {
@@ -2926,17 +2937,28 @@
     return { completed, percent: Math.round((completed / progressLearningIds.length) * 100), state, target, total: progressLearningIds.length };
   };
   const statePresentation = {
-    NOT_STARTED: { course: '대기중', learning: '미진입', cta: '시작하기' },
-    IN_PROGRESS: { course: '학습진행', learning: '학습중', cta: '이어 학습하기' },
-    COMPLETED: { course: '이수완료', learning: '✓ 완료', cta: '복습하기' }
+    NOT_STARTED: { learning: '미진입', cta: '시작하기' },
+    IN_PROGRESS: { learning: '학습중', cta: '이어 학습하기' },
+    COMPLETED: { learning: '✓ 완료', cta: '복습하기' }
+  };
+  const refreshCatalogProgress = () => {
+    catalogHome?.update({
+      courses: entryCourseCatalog.map(course => ({ ...course, lessonIds: getProgressLearningIds(course) })),
+      record: academyServerReady ? academyCatalogRecord : null, ready: academyServerReady,
+      user: academyServerReady ? academyServerUser : null,
+      connection: academyServerReady ? 'ready' : document.body.dataset.academyProgressStorage === 'unavailable' ? 'unavailable' : 'loading'
+    });
   };
   const refreshProgressUI = () => {
+    refreshCatalogProgress();
     let totalCompleted = 0;
     let totalLearnings = 0;
     let activeCourses = 0;
     let pendingAssessments = 0;
     entryCourseCatalog.forEach((course) => {
       const summary = getCourseSummary(course);
+      const serverCourse = academyServerReady ? academyCatalogRecord?.courses?.[course.id] : null;
+      const courseStatus = AcademyLearningCatalog.courseStatusLabel(serverCourse?.state ?? summary.state, serverCourse?.officiallyCompleted);
       totalCompleted += summary.completed;
       totalLearnings += summary.total;
       if (summary.state !== 'NOT_STARTED') activeCourses += 1;
@@ -2944,7 +2966,7 @@
       document.querySelectorAll(`[data-progress-course="${course.id}"]`).forEach((scope) => {
         scope.classList.remove('is-course-not-started', 'is-course-in-progress', 'is-course-completed');
         scope.classList.add(`is-course-${summary.state.toLowerCase().replace('_', '-')}`);
-        scope.querySelectorAll('[data-course-state]').forEach((element) => { element.textContent = statePresentation[summary.state].course; });
+        scope.querySelectorAll('[data-course-state]').forEach((element) => { element.textContent = courseStatus; });
         scope.querySelectorAll('[data-course-progress]').forEach((element) => {
           element.textContent = element.closest('.figma-home-course') ? `진행상황: ${summary.percent}%` : `${summary.percent}% · ${summary.completed}/${summary.total} 완료`;
         });
@@ -3030,7 +3052,6 @@
     if (trigger) { trigger.disabled = true; trigger.textContent = '저장 중…'; }
     try {
       await saveLearningEvents([{ id: progressEventId(), type: 'lesson.completed', courseId, lessonId: learningId, occurredAt: new Date().toISOString() }]);
-      refreshProgressUI();
     } catch (_) {
       if (trigger) { trigger.disabled = false; trigger.textContent = '저장 실패 · 다시 시도'; }
       document.body.dataset.academyProgressSave = 'failed';
@@ -3129,11 +3150,14 @@
   };
 
   const renderAcademyFlow = () => {
+    ++viewScrollRevision;
+    AcademyLearningShell.clear();
     requestAnimationFrame(mountWorkReturn);
     const route = location.hash.slice(1) || 'home';
     syncDesktopHomeShell(route);
     document.body.dataset.academyView = route;
-    resetViewScroll();
+    document.body.classList.toggle('is-catalog-home', Boolean(catalogHome?.isRoute(route)));
+    if (!catalogHome?.isRoute(route)) { resetViewScroll(); catalogHome?.showRoute(route); }
     const selectedLesson = lessonCatalog.find((lesson) => lesson.route === route)
       || lessonsByChapter.get(route)?.[0]
       || null;
@@ -3166,7 +3190,7 @@
     document.body.classList.toggle('is-toc-view', route.endsWith('-book-toc'));
     document.body.dataset.lessonType = selectedLesson?.title.toLowerCase() || '';
     const chapterRoute = selectedLesson?.chapter || (route === 'workflow-action' || route.startsWith('scene-') ? 'workflow' : route);
-    const homeRoutes = new Set(['home', 'library', 'safety-book', 'safety-book-mode', 'safety-book-complete', 'continue-reading', 'my-academy', ...bookRouteRegistry.keys()]);
+    const homeRoutes = new Set(['home', 'library', 'safety-book', 'safety-book-mode', 'safety-book-complete', 'continue-reading', 'my-academy', 'academy-resources', ...bookRouteRegistry.keys()]);
     const isHomeRoute = homeRoutes.has(route);
     if (route === 'workflow-action') applyLearningMode('action');
     const actionPresentation = selectedLearningMode === 'action' && (route === 'workflow-action' || route.startsWith('scene-'));
@@ -3243,6 +3267,19 @@
         completeLabel.hidden = isDesktopLearning ? false : chapterLessons.at(-1) !== selectedLesson;
       }
     }
+    if (selectedLesson && desktopLearningCatalog[selectedLesson.book]) {
+      const course = entryCourseCatalog.find(item => item.id === selectedLesson.book);
+      const sequence = desktopLearningCatalog[course.id].sequence;
+      const chapter = document.getElementById(selectedLesson.chapter);
+      const entry = sequence.find(([id]) => id === selectedLesson.chapter);
+      if (chapter && entry) {
+        AcademyLearningShell.mount({
+          chapter, lesson: selectedLesson, course, work: workReturnControl, sticky: lessonStickyStack,
+          floating: floatingLessonNavigation, title: entry[2], items: sequence.map(([id,,label]) => [id,label])
+        });
+        refreshProgressUI();
+      }
+    }
     if (!homeSection || !isHomeRoute) {
       resetViewScroll();
       return;
@@ -3252,13 +3289,14 @@
       : bookRouteRegistry.get(route)
       || (route === 'my-academy' ? 'my-academy' : 'home');
     [...homeSection.children].forEach((child) => {
-      if (child.matches('.academy-flow-home')) child.hidden = route !== 'home';
+      if (child.matches('.academy-flow-home')) child.hidden = !catalogHome?.isRoute(route);
       else if (child.matches('.academy-hero,.home-discovery')) child.hidden = true;
       else if (child.matches('.library-section')) child.hidden = visiblePart !== 'library';
       else if (child.matches('.book-home')) child.hidden = child.id !== visiblePart;
       else if (child.matches('.my-academy-card')) child.hidden = visiblePart !== 'my-academy';
       else if (child.matches('.academy-home-footer')) child.hidden = route !== 'home';
     });
+    catalogHome?.showRoute(route);
     const book = document.querySelector(`#${visiblePart}`);
     if (book?.classList.contains('book-home')) {
       const bookView = route === 'safety-book';
@@ -3277,7 +3315,11 @@
   window.addEventListener('hashchange', renderAcademyFlow);
   desktopHomeMedia.addEventListener('change', renderAcademyFlow);
   desktopHomeMedia.addEventListener('change', syncPurePlatformDesktopContent);
-  window.addEventListener('pageshow', resetViewScroll);
+  window.addEventListener('pageshow', () => {
+    const route = location.hash.slice(1) || 'home';
+    if (catalogHome?.isRoute(route)) catalogHome.showRoute(route);
+    else resetViewScroll();
+  });
   applyLearningMode(selectedLearningMode);
   refreshProgressUI();
   renderAcademyFlow();

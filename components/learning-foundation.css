@@ -1,0 +1,45 @@
+/* Shared pilot tokens. Also consumed by the NPN sample. */
+:root {
+ --platform-font:Inter,Pretendard,"Noto Sans KR","Apple SD Gothic Neo","Segoe UI",sans-serif;
+ --platform-navy:#101d30; --platform-ink:#1a1c1e; --platform-blue:#1b59f8;
+ --platform-canvas:#f8f9fa; --platform-line:#e1e2e5; --platform-insight:#ebf1ff; --platform-corner:8px;
+ --learning-container:72rem; --learning-content:38rem; --learning-simulation:46rem;
+}
+body.unified-learning {margin:0;background:var(--platform-canvas);font-family:var(--platform-font);height:auto;overflow:auto;}
+.unified-learning .academy-shell,.unified-learning .document,.unified-learning .document-frame {
+ display:block!important;position:static!important;width:100%!important;max-width:var(--learning-container)!important;height:auto!important;min-width:0!important;overflow:visible!important;margin-inline:auto!important;padding:0!important;
+}
+.unified-mast {position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;padding:0 max(16px,calc((100vw - var(--learning-container))/2));background:var(--platform-navy);color:white;}
+.unified-mast>a {color:white;font-weight:700;text-decoration:none;}
+.unified-tools {display:flex;align-items:center;gap:6px;}
+.unified-tools .work-return-control {position:static!important;display:flex!important;margin:0!important;}
+.unified-title,.unified-learning .unified-chapter {box-sizing:border-box;width:100%;max-width:var(--learning-container);margin:0 auto!important;padding:16px!important;}
+.unified-title {padding-bottom:0!important;}
+.unified-title span {font-size:13px;color:var(--ak-muted);}
+.unified-title h1 {margin:6px 0 0;font:700 clamp(21px,2vw,28px)/1.3 var(--platform-font);color:var(--platform-navy);letter-spacing:-.025em;}
+.unified-chapter :is(article,div):has(> :is(main,[class*="workspace"])) {grid-template-columns:minmax(0,1fr)!important;}
+.unified-chapter :is(main,[class*="workspace"]){min-width:0;max-width:100%;}
+.unified-learning .unified-intro {display:block!important;margin:0 0 10px;background:white;border:1px solid var(--platform-line);border-radius:var(--platform-corner);}
+.unified-intro summary,.unified-toc :is(button,a) {min-height:44px;align-content:center;padding-inline:12px;cursor:pointer;}
+body.unified-learning nav.unified-foot {display:flex!important;position:static!important;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;min-width:0;width:auto;max-width:100%;margin:16px auto;padding:8px;background:var(--platform-canvas);border-top:1px solid var(--platform-line);}
+body.unified-learning nav.unified-foot>:is(a,button,span) {display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:6px 12px;font:600 14px/1.4 var(--platform-font);border-radius:var(--platform-corner);border:1px solid var(--platform-line);background:white;color:var(--platform-navy);text-decoration:none;}
+body.unified-learning nav.unified-foot>a:last-child {background:var(--platform-blue);color:white;}
+.unified-toc {width:min(28rem,94vw);max-height:80dvh;border:1px solid var(--platform-line);border-radius:var(--platform-corner);padding:16px;}
+.unified-toc form {display:flex;align-items:center;justify-content:space-between;}
+.unified-toc a {display:block;color:var(--platform-ink);}
+.unified-toc [aria-current] {font-weight:700;color:var(--platform-blue);}
+.unified-learning :focus-visible {outline:2px solid var(--platform-blue);outline-offset:2px;}
+@media(min-width:800px){.unified-title,.unified-learning .unified-chapter {padding-inline:24px!important;}}
+
+.unified-mast>a,.unified-tools {white-space:nowrap;}
+.unified-tools .work-return-link,.unified-menu summary {display:flex;align-items:center;min-height:44px;}
+.unified-menu {position:relative;}
+.unified-menu summary {min-width:44px;justify-content:center;cursor:pointer;}
+.unified-menu>div {position:absolute;z-index:5;top:100%;right:0;display:grid;min-width:6rem;padding:6px;background:white;border:1px solid var(--platform-line);}
+.unified-menu button {min-height:44px;}
+body.unified-learning nav.unified-foot>:is(a,button,span){width:auto!important;flex:0 1 auto;}
+@media(min-width:800px){
+ .unified-chapter [data-figma-source] :where(section,header,article,div,figure,ol,ul) {box-sizing:border-box;min-width:0;max-width:100%;}
+ .unified-chapter [data-figma-source] :is(section,[data-ready-section]) {padding-inline:clamp(16px,3vw,36px)!important;}
+}
+.unified-mast {padding-inline:max(8px,calc((100% - var(--learning-container))/2));} .unified-mast>a {white-space:normal;line-height:1.2;min-width:0;}

@@ -50,3 +50,21 @@ npm run dev
 - Desktop / Mobile 반응형
 - A4 Print 지원
 - Search 확장을 고려한 Chapter Index
+
+## 공통 UX QA
+
+Node.js 22.13 이상에서 실행합니다. Windows PowerShell 예시입니다.
+
+```powershell
+npm ci
+npx playwright install chromium
+npm test
+npm run test:ux
+npm run test:ux:proof
+```
+
+`test:ux`는 실제 Chromium에서 320·390·717·1024·1366·1440·1920px를 검사합니다. 기존 6개 과정에서 검색, 진입, 목차, 이어하기, 서버 진척을 확인하고, 신규 교육 Fixture가 기존 공통 컴포넌트를 쓰는지 검사합니다. `test:ux:proof`는 격리 브라우저 응답에서 스크롤바 공간 예약을 제거해 1px 단언의 실패를 확인하고, 현재 CSS에서 통과하는지 확인합니다. 1366·1440px 검증은 스크롤바가 실제로 공간을 차지하는 환경을 요구합니다.
+
+설치된 Edge를 화면에 표시해 검증하려면 `$env:ACADEMY_BROWSER_CHANNEL = 'msedge'` 설정 후 `npm run test:ux -- --headed` 또는 `npm run test:ux:proof -- --headed`를 실행합니다.
+
+QA는 임의의 루프백 포트와 임시 LMS 기록을 사용합니다. WORK 복귀는 격리 응답으로 확인합니다. 신규 과정 Fixture는 브라우저에서만 등록되며 서버 과정과 기존 과목에는 영향을 주지 않습니다. 측정 JSON과 대표 브라우저 캡처는 `.academy-data/ux-qa/`에 저장됩니다. 별도 디렉터리가 필요하면 `ACADEMY_QA_OUTPUT`을 사용합니다.

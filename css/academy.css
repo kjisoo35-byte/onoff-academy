@@ -3122,7 +3122,7 @@ body[data-academy-view="home"] .figma-academy-home { width: 100%; max-width: non
   .figma-home-course:is(:hover,:focus-visible) .desktop-cta > i { transform: none; }
 }
 
-body.is-academy-image-viewer-open { overflow: hidden; }
+body.is-academy-image-viewer-open { position: fixed; top: var(--academy-viewer-scroll, 0px); width: 100%; overflow: hidden; }
 .academy-image-viewer[open] { width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; display: grid; grid-template-rows: auto 2px minmax(0,1fr); color: #fff; background: rgba(0,0,0,.92); border: 0; }
 .academy-image-viewer::backdrop { background: rgba(0,0,0,.92); }
 .academy-image-viewer-toolbar { min-height: 58px; padding: 12px 40px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; background: #101d30; }
@@ -3133,8 +3133,15 @@ body.is-academy-image-viewer-open { overflow: hidden; }
 .academy-image-viewer-toolbar small { color: #738099; font-size: 11px; }
 .academy-image-viewer-toolbar [data-image-viewer-close] { padding-inline: 16px; color: #fff; background: rgba(38,51,77,.8); font-size: 14px; }
 .academy-image-viewer-separator { background: rgba(51,77,128,.4); }
-.academy-image-viewer-canvas { min-height: 0; padding: 40px 80px; display: grid; place-items: center; overflow: auto; overscroll-behavior: contain; }
-.academy-image-viewer-canvas img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; background: #141a26; border-radius: 8px; }
+.academy-image-viewer-canvas { position: relative; min-width: 0; min-height: 0; padding: 0; overflow: hidden; overscroll-behavior: none; touch-action: none; user-select: none; -webkit-user-select: none; outline-offset: -3px; }
+.academy-image-viewer-canvas img { position: absolute; left: 50%; top: 50%; max-width: none; max-height: none; display: block; transform-origin: center; pointer-events: none; background: #141a26; border-radius: 4px; }
+.academy-image-viewer-canvas.can-pan { cursor: grab; }
+.academy-image-viewer-canvas.is-dragging { cursor: grabbing; }
+.academy-image-viewer-toolbar .academy-image-viewer-controls { grid-column: 1 / -1; justify-self: center; display: flex; align-items: center; gap: 8px; }
+.academy-image-viewer-controls output { min-width: 54px; text-align: center; font-variant-numeric: tabular-nums; }
+.academy-image-viewer-controls button:disabled { opacity: .35; cursor: default; }
+.academy-image-viewer-controls button:focus-visible { outline: 2px solid #8eb8ff; }
+.academy-image-viewer[open] { overflow: hidden; overscroll-behavior: none; }
 .manual-section figure img[role="button"] { cursor: zoom-in; }
 
 .figma-course-landing { width: 100%; margin: 0; background: #fff; }
@@ -3274,8 +3281,8 @@ body.is-academy-image-viewer-open { overflow: hidden; }
   .academy-image-viewer-toolbar small { display: none; }
   .academy-image-viewer-toolbar [data-image-viewer-close] { width: 48px; padding: 0; gap: 4px; background: rgba(38,51,77,.6); font-size: 12px; }
   .academy-image-viewer-separator { background: rgba(51,77,128,.5); }
-  .academy-image-viewer-canvas { padding: 16px 0; align-content: center; }
-  .academy-image-viewer-canvas img { width: 100%; max-height: none; border-radius: 4px; }
+  .academy-image-viewer-canvas { padding: 0; }
+  .academy-image-viewer-toolbar .academy-image-viewer-controls { gap: 6px; }
   .figma-course-hero { min-height: 500px; padding: 76px 24px 42px; align-content: end; }
   .figma-course-hero::before { inset: 0; background-position: center; }
   .figma-course-hero::after { background: linear-gradient(180deg,#071a37 0%,rgba(7,26,55,.2) 24%,rgba(7,26,55,.72) 57%,#071a37 91%); }

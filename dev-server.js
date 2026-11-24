@@ -224,4 +224,4 @@ if (watchEnabled) {
   });
 }
 
-server.listen(port, '127.0.0.1', () => console.log(`ONOFF Academy: http://127.0.0.1:${port}`));
+server.listen(port, '127.0.0.1', () => console.log(`ONOFF Academy: http://127.0.0.1:${server.address().port}`));
