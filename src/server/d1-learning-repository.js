@@ -7,7 +7,12 @@ const COURSE_CATALOG = Object.freeze({
   special: ['special-robot-work', 'special-live-work-75v', 'special-hazardous-chemicals', 'special-cargo-handling']
 });
 
+const SENSOR_COURSE_ID = 'sensor-npn';
+export const SENSOR_PROGRESS_READ_ONLY = 'sensor_progress_read_only';
+export const includesSensorProgress = legacy => Object.hasOwn(legacy?.courses ?? {}, SENSOR_COURSE_ID);
+
 const error = (message, statusCode = 400) => Object.assign(new Error(message), { statusCode });
+const sensorProgressReadOnly = () => error(SENSOR_PROGRESS_READ_ONLY, 409);
 const safeIso = (value, fallback) => {
   const parsed = value ? new Date(value) : null;
   return parsed && !Number.isNaN(parsed.getTime()) ? parsed.toISOString() : fallback;
@@ -50,6 +55,7 @@ export class D1LearningRepository {
   }
 
   async apply(identity, event) {
+    if (event?.courseId === SENSOR_COURSE_ID) throw sensorProgressReadOnly();
     if (!event?.id || !event.type) throw error('invalid_event');
     await this.ensure(identity);
     for (let attempt = 0; attempt < 8; attempt += 1) {
@@ -89,9 +95,12 @@ export class D1LearningRepository {
   }
 
   async importLegacy(identity, legacy) {
+    const courses = legacy?.courses && typeof legacy.courses === 'object' ? Object.entries(legacy.courses) : [];
+    if (includesSensorProgress(legacy) && !courses.some(([courseId]) => Object.hasOwn(COURSE_CATALOG, courseId))) {
+      throw sensorProgressReadOnly();
+    }
     let record = await this.get(identity);
-    if (!legacy?.courses || typeof legacy.courses !== 'object') return record;
-    for (const [courseId, course] of Object.entries(legacy.courses)) for (const [lessonId, lesson] of Object.entries(course?.learnings || {})) {
+    for (const [courseId, course] of courses.filter(([courseId]) => courseId !== SENSOR_COURSE_ID)) for (const [lessonId, lesson] of Object.entries(course?.learnings || {})) {
       if (!record.courses[courseId]?.lessons[lessonId] || lesson.state === 'NOT_STARTED') continue;
       record = await this.apply(identity, { id: `legacy:${identity.id}:${courseId}:${lessonId}:${lesson.state}`, type: lesson.state === 'COMPLETED' ? 'lesson.completed' : 'lesson.entered', courseId, lessonId, occurredAt: lesson.completedAt || legacy.updatedAt || this.now() });
     }
