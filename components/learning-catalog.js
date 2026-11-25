@@ -19,7 +19,7 @@
     special: { category: 'safety', description: '로봇·전기·유해물질·중량물 작업 안전을 배웁니다.' }
   });
   const examples = Object.freeze([Object.freeze({
-    key: 'example-sensors', registered: false, category: 'electrical',
+    key: 'example-sensors', replacedBy: 'sensor-npn', registered: false, category: 'electrical',
     title: '센서 기초와 현장 데이터 읽기',
     description: '센서의 동작 원리부터 신호 확인까지, 현장 데이터의 기초를 배웁니다.',
     lessonIds: [], chapters: []
@@ -29,7 +29,7 @@
       ...course, ...metadata[course.id], key: course.id, registered: true,
       category: metadata[course.id]?.category || course.category || 'safety',
       lessonIds: course.lessonIds || course.chapters.map(chapter => chapter[0])
-    })), ...sampleCourses];
+    })), ...sampleCourses.filter(example => !courses.some(course => course.id === example.replacedBy))];
   }
   function courseStatusLabel(state, officiallyCompleted) {
     if (officiallyCompleted === true) return '공식 이수 완료';

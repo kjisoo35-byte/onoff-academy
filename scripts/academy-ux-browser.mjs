@@ -175,14 +175,14 @@ async function catalogJourney(base, width) {
     const page = await context.newPage();
     const pageErrors = [];
     const browserEvents = [];
-    page.on('pageerror', error => pageErrors.push(error.message));
+    page.on('pageerror', error => { pageErrors.push(error.message); console.error(error.stack); });
     page.on('request', request => {
       if (request.url() === base + '/api/academy/progress/events') browserEvents.push(request.postDataJSON());
     });
     await page.goto(base + '/index.html#home');
     await waitReady(page);
     await checkChrome(page, 'home');
-    assert.equal(await page.locator('.catalog-course[data-catalog-course]').count(), 6);
+    assert.equal(await page.locator('.catalog-course[data-catalog-course]').count(), Object.keys(COURSE_CATALOG).length);
     const shift = await checkShift(page, width, 'catalog');
     await switchCategory(page, 'all', 7);
     const search = page.getByRole('searchbox', { name: '교육과정 검색' });
@@ -289,7 +289,8 @@ async function courseStatusJourney(base) {
       });
       assert.ok(response.ok, type);
     };
-    for (const [courseId, lessons] of Object.entries(COURSE_CATALOG)) {
+    for (const courseId of Object.keys(routes)) {
+      const lessons = COURSE_CATALOG[courseId];
       // Pending and official have the same lesson data and differ only by the server's Practice result.
       if (scenario.state === 'COMPLETED') {
         await post(courseId, 'practice.required', { practiceId: 'qa-assessment', required: true });
@@ -301,7 +302,8 @@ async function courseStatusJourney(base) {
     const response = await fetch(base + '/api/academy/progress/me', { headers });
     assert.ok(response.ok);
     const { courses } = await response.json();
-    for (const [courseId, course] of Object.entries(courses)) {
+    for (const courseId of Object.keys(routes)) {
+      const course = courses[courseId];
       assert.equal(course.state, scenario.state, user + ' ' + courseId);
       assert.equal(course.officiallyCompleted, scenario.official, user + ' ' + courseId);
     }

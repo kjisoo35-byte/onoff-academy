@@ -1,13 +1,13 @@
 const test=require('node:test');const assert=require('node:assert/strict');
 const {catalog,courseState,filter,continuation}=require('../components/learning-catalog.js');
 const {COURSE_CATALOG}=require('../lib/learning-progress.js');
-const source=Object.entries(COURSE_CATALOG).map(([id,lessonIds])=>({id,title:id,description:id,route:id+'-course',lessonIds,chapters:lessonIds.map((id,index)=>[id,'학습 '+(index+1)])}));
+const source=Object.entries(COURSE_CATALOG).map(([id,lessonIds])=>({id,category:id==='sensor-npn'?'electrical':undefined,title:id,description:id,route:id+'-course',lessonIds,chapters:lessonIds.map((id,index)=>[id,'학습 '+(index+1)])}));
 const courses=catalog(source);
 function record(overrides={}){return {courses:Object.fromEntries(source.map(c=>[c.id,{state:'NOT_STARTED',progressPercent:0,officiallyCompleted:false,lastLessonId:null,lessons:Object.fromEntries(c.lessonIds.map(id=>[id,{state:'NOT_STARTED'}])),...overrides[c.id]}]))};}
-test('existing six course IDs and 23 server lesson IDs stay intact; sensor is only an example',()=>{
- assert.equal(source.flatMap(c=>c.lessonIds).length,23);assert.deepEqual(courses.filter(c=>c.registered).map(c=>c.id),source.map(c=>c.id));
+test('six existing course IDs and 23 lessons stay intact beside the registered sensor course',()=>{
+ assert.equal(source.filter(c=>c.id!=='sensor-npn').flatMap(c=>c.lessonIds).length,23);assert.equal(COURSE_CATALOG['sensor-npn'].length,8);assert.deepEqual(courses.filter(c=>c.registered).map(c=>c.id),source.map(c=>c.id));
  for(const c of courses.filter(c=>c.registered))assert.deepEqual(c.lessonIds,COURSE_CATALOG[c.id]);
- const sensor=courses.find(c=>!c.registered);assert.equal(sensor.id,undefined);assert.equal(sensor.route,undefined);assert.deepEqual(sensor.lessonIds,[]);assert.ok(!courses.find(c=>c.id==='platform').title.includes('센서'));
+ assert.equal(courses.filter(c=>!c.registered).length,0);assert.ok(courses.find(c=>c.id==='sensor-npn').registered);assert.ok(!courses.find(c=>c.id==='platform').title.includes('센서'));
 });
 test('only authoritative server percentages and official completion become known state',()=>{
  const c=courses[0],r=record({platform:{state:'COMPLETED',progressPercent:100,officiallyCompleted:false}});

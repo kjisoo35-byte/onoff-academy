@@ -1,32 +1,11 @@
 import test from 'node:test';
+import { TestD1 } from './fixtures/d1.mjs';
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import path from 'node:path';
-import { DatabaseSync } from 'node:sqlite';
-import { fileURLToPath } from 'node:url';
 import { D1LearningRepository } from '../src/server/d1-learning-repository.js';
 import { authenticateAcademySession, beginAcademyLogin, issueAcademySession } from '../src/server/academy-auth.js';
 import { signTestAssertion, verifyWorkAcademyAssertion } from '../src/server/work-auth.js';
 import { onRequest } from '../functions/api/academy/[[path]].js';
 
-const directory = path.dirname(fileURLToPath(import.meta.url));
-class D1Statement {
-  constructor(statement) { this.statement = statement; this.values = []; }
-  bind(...values) { this.values = values; return this; }
-  run() { const result = this.statement.run(...this.values); return { success: true, meta: { changes: Number(result.changes) } }; }
-  first() { return this.statement.get(...this.values) || null; }
-  all() { return { success: true, results: this.statement.all(...this.values) }; }
-}
-class TestD1 {
-  constructor({ identityMigration = true } = {}) {
-    this.sqlite = new DatabaseSync(':memory:');
-    this.sqlite.exec(fs.readFileSync(path.resolve(directory, '../migrations/0001_learning_progress.sql'), 'utf8'));
-    if (identityMigration) this.applyIdentityMigration();
-  }
-  applyIdentityMigration() { this.sqlite.exec(fs.readFileSync(path.resolve(directory, '../migrations/0002_identity_links.sql'), 'utf8')); }
-  prepare(sql) { return new D1Statement(this.sqlite.prepare(sql)); }
-  async batch(statements) { this.sqlite.exec('BEGIN'); try { const results = statements.map(statement => statement.run()); this.sqlite.exec('COMMIT'); return results; } catch (error) { this.sqlite.exec('ROLLBACK'); throw error; } }
-}
 const learner = { id: 'worker-1', name: '작업자 1', role: 'learner', organization: '생산1팀', workLine: 'A', shiftGroup: '주간' };
 
 test('identity migration은 기존 WORK user_id와 학습 기록 연결을 보존한다', async () => {

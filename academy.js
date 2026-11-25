@@ -1,5 +1,8 @@
 (() => {
   'use strict';
+  const sensor = window.AcademySensorCourse;
+  const sensorCourse = sensor.course;
+  sensor.addSections(document.getElementById('home').parentElement);
   const chapters = [...document.querySelectorAll('.manual-section[id]')];
   const links = [...document.querySelectorAll('.nav-link[href^="#"]')];
   const sidebar = document.querySelector('.sidebar');
@@ -33,6 +36,7 @@
     { id: 'tbm', route: 'tbm-course', view: 'tbm-landing', number: '05', tag: '매일 진행', title: 'TBM (Tool Box Meeting)', description: '작업 개시 전 감독자를 중심으로 현장에서 직접 소통하는 10분 밀착 미팅의 핵심 가이드를 익힙니다.', hero: 'assets/course-heroes/tbm.png', finalHero: 'assets/course-heroes/final-tbm.png', time: '30분', standard: '서명 참여율', chapters: [['tbm-purpose','TBM의 목적과 기본 원칙','컨디션과 보호구 확인'],['tbm-nine-steps','위험 공유와 사고사례','작업별 위험요인 공유'],['tbm-scenario','대응 준비와 작업 시작','비상행동과 미팅 마감']], landingChapters: [['tbm-purpose','TBM이란 무엇인가','TBM의 의미와 목적, 전체 운영 흐름을 이해합니다.'],['tbm-nine-steps','사람 확인과 준비','작업 참여자와 건강상태, 준비체조와 보호구를 확인합니다.'],['tbm-scenario','위험 공유와 사고사례','작업자가 위험을 직접 공유하고 사고사례를 오늘의 예방 기준으로 연결합니다.'],['tbm-life-rules','대응 준비와 작업 시작','안전구호, 비상대피와 연락체계, 작업 역할을 확인하고 작업을 시작합니다.']] },
     { id: 'special', route: 'special-course', view: 'special-landing', number: '06', tag: '고위험군 특화', title: '특별안전교육 (Special Safety)', description: '로봇, 고전압, 유해물질, 중량물 등 사고 위험이 높은 전문 분야의 행동수칙을 학습합니다.', hero: 'assets/course-heroes/special-safety.png', finalHero: 'assets/course-heroes/final-special.png', time: '90분', standard: '최종 시험 90점', accent: 'red', chapters: [['special-robot-work','Robot Safety — 산업용 로봇 작업','협착 방지와 LOTO'],['special-live-work-75v','Electrical Safety — 전기작업','정전작업과 고전압 차단'],['special-hazardous-chemicals','Chemical Safety — 유해물질 취급','MSDS와 보호구'],['special-cargo-handling','Material Handling — 중량물 취급','운반장비와 인양 안전']] }
   ];
+  entryCourseCatalog.push(sensorCourse);
   entryCourseCatalog.forEach((course) => bookRouteRegistry.set(course.route, course.view));
   const mobileLandingCatalog = {
     platform: { header: 'Course Platform', tag: '기초 필수', status: '진행률 50%', description: '안전 관리 플랫폼의 전체적인 설계 사상 및 작업 선택부터 실제 서명까지의 핵심 Workflow를 모바일 환경에서 학습합니다.', metrics: [['⏱️','총 학습 시간','60분'],['📝','학습 수','4개 학습'],['🏆','이수 기준','퀴즈 80점']], section: '학습 목록', note: "학습 03 'Safety Start' 학습 대기 중", cta: '이어서 안전 학습하기', ctaRoute: 'daily-work', rows: [['15분','complete'],['15분','complete'],['20분','current'],['10분','upcoming']] },
@@ -170,7 +174,7 @@
     const chapters = course.landingChapters || course.chapters;
     return `<section class="academy-course-section academy-course-curriculum figma-course-curriculum"><header><h2>커리큘럼 및 학습 목차</h2><span data-course-progress>0% · 0/${course.chapters.length} 완료</span></header><ol>${chapters.map(([route,title,description],index) => { const introduction = course.id === 'tbm' && route === 'tbm-purpose'; const label = introduction ? 'INTRO' : String(course.id === 'tbm' ? index : index + 1).padStart(2,'0'); return `<li class="is-not-started${introduction?' is-introduction':''}"${introduction?'':' data-progress-learning="'+route+'"'}><a href="#${route}"><span>${label}</span><div><strong>${introduction?'INTRO':'학습 '+label} — ${title}</strong><p>${description}</p></div><em${introduction?'':' data-learning-state'}>${introduction?'과정 소개':'미진입'}</em></a></li>`; }).join('')}</ol></section>`;
   };
-  const renderDesktopCourseInfo = (course,data) => `<aside class="academy-course-info figma-course-info"><small>COURSE INFORMATION</small><dl><div><dt>권장 학습시간</dt><dd>${data.time}</dd></div><div><dt>대상자</dt><dd>${data.audience}</dd></div><div><dt>진행 상태</dt><dd data-course-state>대기중</dd></div></dl><div><strong>필수 안전 점검 과정</strong><p>이수 기준: ${course.standard}</p></div><a href="#${course.chapters[0][0]}" data-course-continue>바로 학습하기 <i>→</i></a></aside>`;
+  const renderDesktopCourseInfo = (course,data) => `<aside class="academy-course-info figma-course-info"><small>COURSE INFORMATION</small><dl><div><dt>권장 학습시간</dt><dd>${data.time}</dd></div><div><dt>대상자</dt><dd>${data.audience}</dd></div><div><dt>진행 상태</dt><dd data-course-state>대기중</dd></div></dl>${course.standard ? `<div><strong>필수 안전 점검 과정</strong><p>이수 기준: ${course.standard}</p></div>` : ""}<a href="#${course.chapters[0][0]}" data-course-continue>바로 학습하기 <i>→</i></a></aside>`;
   const renderDesktopCourseBody = (course,data) => {
     const actions = data.actions ? `<section class="figma-tbm-actions" aria-labelledby="tbm-actions-title"><h2 id="tbm-actions-title">TBM 핵심 3단계 ACTION</h2><div>${data.actions.map(([title,en,description],index) => `<article><span>${index+1}</span><div><strong>${title} <small>${en}</small></strong><p>${description}</p></div></article>`).join('')}</div></section>` : '';
     const workflow = course.id === 'practical' ? `<section class="figma-practical-workflow"><div><small>FIELD DOCUMENT WORKFLOW</small><h2>FORM 기반 위험성평가 작성 흐름</h2><ol><li><b>01</b><span>위험요인 분류</span></li><li><b>02</b><span>빈도 × 강도</span></li><li><b>03</b><span>감소대책 수립</span></li><li><b>04</b><span>완료 확인</span></li></ol></div><figure><img src="assets/risk-practical/forms/form-04.png" alt="FORM-04 유해·위험요인 파악 실제 양식"><figcaption>FORM-04 · 유해·위험요인 파악</figcaption></figure></section>` : '';
@@ -194,6 +198,8 @@
     section.insertAdjacentHTML('afterbegin', `<article class="figma-mobile-course-landing${course.id === 'practical' ? ' is-light' : ''}${course.id === 'special' ? ' is-special' : ''}"><header><a href="#home">← <span>ONOFF Home</span></a><strong>${mobile.header}</strong></header><section><div><small>${mobile.tag}</small><em data-course-state>대기중</em></div><h1>${mobile.title || course.title}</h1><p>${mobile.description}</p></section><dl>${mobile.metrics.map(([icon,label,value]) => `<div><span>${icon}</span><dt>${label}</dt><dd>${value}</dd></div>`).join('')}</dl><div class="figma-mobile-curriculum"><h2>${mobile.section}</h2><ol>${mobileRows}</ol></div><footer><small data-course-progress>0% · 0/${course.chapters.length} 완료</small><a href="#${mobile.ctaRoute}" data-course-continue>시작하기</a></footer></article>`);
     homeSection?.append(section);
   };
+  mobileLandingCatalog[sensorCourse.id] = sensor.mobile;
+  desktopLandingCatalog[sensorCourse.id] = sensor.desktop;
   entryCourseCatalog.forEach(renderCourseLanding);
   const riskPracticalLearning = [
     {
@@ -415,6 +421,9 @@
     ,{ id: 'risk-practical-03', book: 'practical', part: '2', chapter: '03', title: '감소대책과 재평가', progressTotal: 4 }
     ,{ id: 'risk-practical-04', book: 'practical', part: '2', chapter: '04', title: '개선 실행과 완료 확인', progressTotal: 4 }
   ];
+  bookChapterForm.push(...sensorCourse.chapters.map(([id, title], index) => ({
+    id, title, chapter: String(index + 1), book: sensorCourse.id
+  })));
   bookChapterForm.forEach((item) => {
     const chapter = document.getElementById(item.id);
     if (!chapter) return;
@@ -436,6 +445,10 @@
     sop: { number: '04', label: 'SOP', sequence: [['sop-purpose','01','SOP의 이해','190:117'],['sop-reading','02','작업 준비와 실행','190:414'],['sop-structure','03','변경과 비정상 상황','190:650'],['sop-platform','04','ONOFF Platform 연결','191:117']] },
     tbm: { number: '05', label: 'TBM', sequence: [['tbm-purpose','INTRO','TBM Intro','243:575'],['tbm-nine-steps','01','사람 확인과 준비','243:576'],['tbm-scenario','02','위험 공유와 사고사례','243:577'],['tbm-life-rules','03','대응 준비와 작업 시작','243:578']] },
     special: { number: '06', label: 'SPECIAL SAFETY', sequence: [['special-education-intro','INTRO','특별안전교육 공통 Intro','236:437'],['special-robot-work','01','Robot Safety','236:438'],['special-live-work-75v','02','Electrical Safety','236:439'],['special-hazardous-chemicals','03','Chemical Safety','236:440'],['special-cargo-handling','04','Material Handling','236:441'],['special-daily-work','COMPLETE','Course Complete','236:442']] }
+  };
+  desktopLearningCatalog[sensorCourse.id] = {
+    number: sensorCourse.number, label: sensorCourse.tag,
+    sequence: sensorCourse.chapters.map(([id, title], index) => [id, String(index + 1), title])
   };
   Object.entries(desktopLearningCatalog).forEach(([courseId,course]) => course.sequence.forEach(([chapterId,learningNumber,title],index) => {
     const chapter = document.getElementById(chapterId);
@@ -849,7 +862,7 @@
   const mountRemainingReadyDesktopLearning = () => {
     if (!desktopHomeMedia.matches) return;
     Object.entries(desktopLearningCatalog).forEach(([courseId,course]) => course.sequence.forEach(([chapterId,learningNumber,title,figmaNode],index) => {
-      if (courseId === 'platform' || courseId === 'risk' || (courseId === 'special' && ['special-education-intro','special-robot-work','special-live-work-75v','special-hazardous-chemicals','special-cargo-handling','special-daily-work'].includes(chapterId)) || (courseId === 'tbm' && ['tbm-purpose','tbm-nine-steps','tbm-scenario','tbm-life-rules'].includes(chapterId)) || (courseId === 'sop' && ['sop-purpose','sop-reading','sop-structure','sop-platform'].includes(chapterId)) || (courseId === 'practical' && ['risk-practical-01','risk-practical-02','risk-practical-03','risk-practical-04'].includes(chapterId))) return;
+      if (courseId === sensorCourse.id || courseId === 'platform' || courseId === 'risk' || (courseId === 'special' && ['special-education-intro','special-robot-work','special-live-work-75v','special-hazardous-chemicals','special-cargo-handling','special-daily-work'].includes(chapterId)) || (courseId === 'tbm' && ['tbm-purpose','tbm-nine-steps','tbm-scenario','tbm-life-rules'].includes(chapterId)) || (courseId === 'sop' && ['sop-purpose','sop-reading','sop-structure','sop-platform'].includes(chapterId)) || (courseId === 'practical' && ['risk-practical-01','risk-practical-02','risk-practical-03','risk-practical-04'].includes(chapterId))) return;
       const chapter = document.getElementById(chapterId);
       const legacyStart = chapter?.querySelector(':scope > .book-chapter-start');
       if (!chapter || !legacyStart || chapter.querySelector(':scope > .figma-ready-desktop-learning')) return;
@@ -1586,7 +1599,10 @@
   }
   document.querySelector('#workflow #scene-workflow .chapter-block:nth-of-type(2)')?.remove();
   document.querySelector('#workflow .chapter-block[aria-labelledby="principle-title"]')?.remove();
-  const lessonCatalog = [
+  const sensorLessons = sensorCourse.chapters.map(([chapter, title]) => ({
+    chapter, title, book: sensorCourse.id, key: 'scene', selector: '.sensor-experience'
+  }));
+  const lessonCatalog = [...sensorLessons,
     { chapter: 'philosophy', key: 'why', title: 'WHY', selector: '.prose' },
     { chapter: 'workflow', key: 'summary', title: 'Workflow Summary', selector: '#workflow-summary' },
     { chapter: 'workflow', key: 'preparation', title: '준비 단계', selector: '#workflow-preparation' },
@@ -2858,7 +2874,9 @@
     body.replaceChildren(...rows.map((row) => {
       const tr = document.createElement('tr');
       const official = row.officiallyCompleted === true ? '이수' : '미이수';
-      [row.name, row.organization || '—', titles[row.courseId] || row.courseId, `${row.progressPercent}%`, states[row.state] || row.state, official, row.lastActivityAt ? new Date(row.lastActivityAt).toLocaleString('ko-KR') : '—'].forEach((value) => {
+      const practice = row.practice;
+      const assessment = practice ? practice.passed ? `통과 (${practice.attempts}회)` : practice.attempts ? `미통과 (${practice.attempts}회)` : '미응시' : '—';
+      [row.name, row.organization || '—', titles[row.courseId] || row.courseId, `${row.progressPercent}%`, states[row.state] || row.state, official, assessment, row.lastActivityAt ? new Date(row.lastActivityAt).toLocaleString('ko-KR') : '—'].forEach((value) => {
         const td = document.createElement('td'); td.textContent = value; tr.append(td);
       });
       return tr;
@@ -2951,6 +2969,7 @@
   };
   const refreshProgressUI = () => {
     refreshCatalogProgress();
+    sensorSimulation.refreshAssessment();
     let totalCompleted = 0;
     let totalLearnings = 0;
     let activeCourses = 0;
@@ -3039,8 +3058,24 @@
     if (!academyServerReady || !courseId) return;
     try {
       await saveLearningEvents([{ id: progressEventId(), type: 'practice.result', courseId, practiceId: `${learningId}:practice`, required: true, passed, score }]);
-    } catch (_) { document.body.dataset.academyProgressSave = 'failed'; }
+    } catch (_) {
+      document.body.dataset.academyProgressSave = 'failed';
+    }
   };
+  const sensorSimulation = sensor.createSimulation(answer => {
+    const owner = academyServerUser?.id;
+    const event = { id: progressEventId(), type: 'practice.result', courseId: sensorCourse.id,
+      practiceId: sensor.practiceId, answer };
+    return async () => {
+      if (!academyServerReady || owner !== academyServerUser?.id) return false;
+      try {
+        await saveLearningEvents([event]);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    };
+  }, () => academyServerReady ? academyCatalogRecord?.courses?.[sensorCourse.id]?.practices?.[sensor.practiceId] : null);
   const markLearningCompleted = async (learningId, trigger = null) => {
     const courseId = progressCourseByLearning.get(learningId);
     if (!courseId) return;
@@ -3228,7 +3263,7 @@
         : selectedLesson.book === 'practical' ? 'risk-practical-course'
         : selectedLesson.book === 'sop' ? 'sop-course'
         : selectedLesson.book === 'special' ? 'special-course'
-        : 'platform-course';
+        : (entryCourseCatalog.find(course => course.id === selectedLesson.book)?.route || 'platform-course');
       const chapterHeader = document.querySelector(`#${selectedLesson.chapter} .book-chapter-start`);
       if (isDesktopLearning) {
         const desktopCourse = desktopLearningCatalog[selectedLesson.book];
@@ -3277,6 +3312,7 @@
           chapter, lesson: selectedLesson, course, work: workReturnControl, sticky: lessonStickyStack,
           floating: floatingLessonNavigation, title: entry[2], items: sequence.map(([id,,label]) => [id,label])
         });
+        if (course.id === sensorCourse.id) sensorSimulation.mount(chapter);
         refreshProgressUI();
       }
     }

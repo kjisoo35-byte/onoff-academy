@@ -1,6 +1,6 @@
 import { verifyWorkAcademyAssertion, verifyWorkAcademyAssertionToken } from '../../../src/server/work-auth.js';
 import { authenticateAcademySession, beginAcademyLogin, clearAcademySessionCookie, clearLoginStateCookie, issueAcademySession, revokeAcademySession } from '../../../src/server/academy-auth.js';
-import { D1LearningRepository, includesSensorProgress, SENSOR_PROGRESS_READ_ONLY } from '../../../src/server/d1-learning-repository.js';
+import { D1LearningRepository } from '../../../src/server/d1-learning-repository.js';
 
 const json = (payload, status = 200, headers = {}) => new Response(JSON.stringify(payload), {
   status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...headers }
@@ -60,9 +60,7 @@ export async function onRequest(context) {
     }
     if (pathname === '/progress/import' && request.method === 'POST') {
       if (!sameOrigin(request)) return json({ error: 'forbidden' }, 403);
-      const legacy = await body(request);
-      const headers = includesSensorProgress(legacy) ? { 'x-academy-progress-error': SENSOR_PROGRESS_READ_ONLY } : {};
-      return json(await repository.importLegacy(identity, legacy), 200, headers);
+      return json(await repository.importLegacy(identity, await body(request)));
     }
     if (pathname === '/admin/progress' && request.method === 'GET') {
       if (identity.role !== 'administrator') return json({ error: 'forbidden' }, 403);
