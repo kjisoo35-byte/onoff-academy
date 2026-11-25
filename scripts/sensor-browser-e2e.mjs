@@ -8,8 +8,10 @@ import { chromium } from 'playwright';
 import { onRequest } from '../functions/api/academy/[[path]].js';
 import { signTestAssertion } from '../src/server/work-auth.js';
 import { TestD1 } from '../test/fixtures/d1.mjs';
+import { verifyInteractionLayout } from './interaction-layout-qa.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
+const assetRoot = path.resolve(process.env.ACADEMY_SENSOR_ASSET_ROOT || root);
 const output = path.resolve(process.env.ACADEMY_QA_OUTPUT || path.join(root, '.academy-data', 'sensor-qa'));
 await fs.mkdir(output, { recursive: true });
 const id = 'sensor-npn';
@@ -58,8 +60,8 @@ const server = createServer(async (req, res) => {
       res.writeHead(response.status, headers).end(Buffer.from(await response.arrayBuffer()));
       return;
     }
-    const file = path.resolve(root, '.' + decodeURIComponent(url.pathname));
-    if (!file.startsWith(root + path.sep) || !mime[path.extname(file)]) { res.writeHead(404).end(); return; }
+    const file = path.resolve(assetRoot, '.' + decodeURIComponent(url.pathname));
+    if (!file.startsWith(assetRoot + path.sep) || !mime[path.extname(file)]) { res.writeHead(404).end(); return; }
     res.writeHead(200, { 'content-type': mime[path.extname(file)] }).end(await fs.readFile(file));
   } catch (error) {
     states.push({ serverError: error.message });
@@ -85,9 +87,9 @@ const view = (page, route) => page.waitForFunction(route => document.body.datase
 const saved = page => page.waitForFunction(() => document.body.dataset.academyProgressSave === 'saved');
 let browser;
 
-async function session(width, subject) {
+async function session(width, subject, height = 900) {
   const context = await browser.newContext({
-    viewport: { width, height: 900 }, isMobile: width < 800, hasTouch: width < 800, serviceWorkers: 'block'
+    viewport: { width, height }, isMobile: width < 800, hasTouch: width < 800, serviceWorkers: 'block'
   });
   context.setDefaultTimeout(10000);
   await context.addCookies([{ name: 'fixture_actor', value: subject, url: base }]);
@@ -285,11 +287,7 @@ async function seedAdminScenario(name, answer) {
   } finally { await context.close(); }
 }
 
-try {
-  browser = await chromium.launch({
-    channel: process.env.ACADEMY_BROWSER_CHANNEL || undefined,
-    headless: !process.argv.includes('--headed')
-  });
+async function runIntegrity() {
   for (const width of (process.env.ACADEMY_SENSOR_QA_WIDTHS || '390,717,1366').split(',').map(Number)) await journey(width);
   const other = await session(390, 'sensor-other');
   assert.equal((await progress(other.context)).courses[id].progressPercent, 0);
@@ -336,6 +334,16 @@ try {
   await admin.context.close();
   assert.ok(states.every(result => !result.serverError));
   console.log(JSON.stringify({ status: 'PASS (isolated LMS)', productionAssessment: 'HOLD', states, output }));
+}
+
+try {
+  browser = await chromium.launch({
+    channel: process.env.ACADEMY_BROWSER_CHANNEL || undefined,
+    headless: !process.argv.includes('--headed')
+  });
+  const baseline = process.argv.includes('--layout-baseline');
+  if (!baseline && !process.argv.includes('--layout')) await runIntegrity();
+  await verifyInteractionLayout({ session, base, lessons, output, baseline });
 } finally {
   await fs.writeFile(path.join(output, 'results.json'), JSON.stringify(states, null, 2));
   await browser?.close();

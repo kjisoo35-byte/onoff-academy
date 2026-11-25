@@ -48,6 +48,7 @@ Book Architecture의 기준 계층은 `Book → Part → Chapter → Scene`입�
 | Step Block | `ak-step-block` | 하나의 구체적 학습 단계 |
 | Workflow | `ak-workflow` | 단계 간 순서와 완료 조건 |
 | Image / Video | `ak-media` | 실사·Illustration·Screenshot·Video 공통 Frame |
+| Interaction Workspace | `ak-interaction-workspace` + `ak-media ak-interaction-card` | 시뮬레이션 그림·조작·결과를 공유 배치 |
 | Tip / Warning | `ak-callout` | 맥락형 보조 정보 |
 | FAQ | `ak-faq` | 질문과 답변 |
 | Quiz | `ak-quiz` | 이해 확인 Block 구조 |
@@ -57,6 +58,12 @@ Book Architecture의 기준 계층은 `Book → Part → Chapter → Scene`입�
 | CTA | `ak-cta` | Academy 내부 다음 행동 |
 | Platform Link | `ak-platform-link` | 학습 후 실제 업무 수행 |
 | Footer | `ak-footer` | Book·Chapter·갱신 정보 |
+
+### Interaction Workspace
+
+`ak-interaction-card` 안에 제목과 `ak-interaction-layout`을 둡니다. 레이아웃은 `ak-interaction-figure`/ `ak-interaction-stage`와 `ak-interaction-panel`을 포함합니다. 패널의 `ak-interaction-controls`는 `ak-interaction-feedback`보다 먼저 배치합니다. 펼치기와 심화 설명은 `ak-interaction-details`에 둡니다.
+
+그림 슬롯은 레이아웃과 viewport 높이로 크기를 정합니다. 상태 전환은 슬롯 안의 그림과 피드백만 갱신하고, 그림의 원본 비율과 조작 위치를 유지합니다. `AcademyInteractionWorkspace.attach(card)`로 연결하고 상태 갱신 전에 `beforeUpdate()`를 호출합니다. 학습 화면을 이동하거나 상세를 의도적으로 전환할 때는 `reset()`을 호출합니다. 내용이 짧아질 때 현재 스크롤 위치가 유지되는 데 필요한 높이만 보존합니다. 상호작용 구현은 과정이 소유하며 선택 상태·Practice·서버 저장 계약은 기존 경로를 따릅니다. 센서 E2E(`npm run test:sensor`)에서 공통 QA도 실행합니다. 배치만 집중 검증하려면 `npm run test:sensor -- --layout`을 사용합니다.
 
 ## Learning Information
 

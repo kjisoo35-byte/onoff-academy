@@ -1,40 +1,15 @@
-/* The course uses the Academy shell. These rules only arrange the circuit and controls. */
+/* The course reuses the Academy shell and Interaction Card. */
 .sensor-lesson .desktop-learning-hero { display: none !important; }
 .sensor-experience, .sensor-lesson .chapter-complete-label {
-  width: min(100%, var(--learning-simulation));
+  width: min(100%, var(--learning-interaction));
   margin-inline: auto;
 }
-.sensor-lead { margin: 0 0 16px; line-height: 1.65; }
-.sensor-workspace { color: var(--platform-ink); }
+.unified-learning .sensor-lesson .sensor-experience.academy-lesson { padding-block: 0; }
+.sensor-lead { margin: 0 0 var(--ak-space-2); line-height: 1.65; }
 .sensor-workspace [hidden] { display: none !important; }
-.sensor-workspace .ak-media {
-  display: block;
-  margin: 0 0 16px;
-  padding: clamp(12px, 3vw, 20px);
-  border: 1px solid var(--platform-line);
-  border-radius: var(--platform-corner);
-  background: white;
+.sensor-details {
+  background: var(--ak-surface);
+  color: var(--platform-ink);
+  font: .875rem/1.6 var(--platform-font);
 }
-.sensor-workspace h2 { margin: 0 0 12px; font: 700 17px/1.4 var(--platform-font); }
-.sensor-workspace #drawing svg, .sensor-details svg { display: block; width: 100%; height: auto; }
-.sensor-workspace figcaption { margin-top: 12px; text-align: start; line-height: 1.6; }
-.sensor-actions { display: grid; gap: 12px; }
-.sensor-choices { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 8px; }
-.sensor-workspace button {
-  min-height: 44px;
-  max-width: 100%;
-  padding: 8px 12px;
-  font: 600 14px/1.4 var(--platform-font);
-  border: 1px solid var(--platform-line);
-  border-radius: var(--platform-corner);
-  color: var(--platform-navy);
-  background: white;
-  cursor: pointer;
-}
-.sensor-workspace button[aria-pressed="true"] { color: var(--platform-blue); border-color: var(--platform-blue); background: var(--platform-insight); }
-.sensor-workspace button:disabled { cursor: default; }
-.sensor-workspace summary { cursor: pointer; padding-block: 10px; }
-.sensor-workspace #detector { margin-top: 12px; }
-.sensor-workspace .ak-callout { padding: 12px; line-height: 1.6; }
-.sensor-workspace .ak-callout p { margin: 4px 0 0; }
-.sensor-details { background: white; color: var(--platform-ink); font: 14px/1.6 var(--platform-font); }
+.sensor-details svg { display: block; width: 100%; height: auto; }

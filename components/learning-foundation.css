@@ -3,7 +3,7 @@
  --platform-font:Inter,Pretendard,"Noto Sans KR","Apple SD Gothic Neo","Segoe UI",sans-serif;
  --platform-navy:#101d30; --platform-ink:#1a1c1e; --platform-blue:#1b59f8;
  --platform-canvas:#f8f9fa; --platform-line:#e1e2e5; --platform-insight:#ebf1ff; --platform-corner:8px;
- --learning-container:72rem; --learning-content:38rem; --learning-simulation:46rem;
+ --learning-container:72rem; --learning-content:38rem; --learning-simulation:46rem; --learning-interaction:64rem;
 }
 body.unified-learning {margin:0;background:var(--platform-canvas);font-family:var(--platform-font);height:auto;overflow:auto;}
 .unified-learning .academy-shell,.unified-learning .document,.unified-learning .document-frame {
@@ -43,3 +43,110 @@ body.unified-learning nav.unified-foot>:is(a,button,span){width:auto!important;f
  .unified-chapter [data-figma-source] :is(section,[data-ready-section]) {padding-inline:clamp(16px,3vw,36px)!important;}
 }
 .unified-mast {padding-inline:max(8px,calc((100% - var(--learning-container))/2));} .unified-mast>a {white-space:normal;line-height:1.2;min-width:0;}
+
+/* Interactive media shares the card, controls and feedback across learning scenes. */
+.ak-interaction-workspace {
+  container: interaction / inline-size;
+  width: min(100%, var(--learning-interaction));
+  margin-inline: auto;
+  overflow-anchor: none;
+}
+.ak-media.ak-interaction-card {
+  box-sizing: border-box;
+  margin: 0;
+  padding: clamp(10px, 2cqi, 18px);
+  background: var(--ak-surface);
+  overflow: visible;
+}
+.ak-interaction-title,
+.ak-interaction-controls h2,
+.ak-interaction-feedback h3 {
+  margin: 0;
+  color: var(--platform-navy);
+  font: 700 1rem/1.4 var(--platform-font);
+}
+.ak-interaction-title { margin-block-end: var(--ak-space-2); }
+.ak-interaction-layout {
+  display: grid;
+  align-items: start;
+  gap: var(--ak-space-2);
+}
+.ak-interaction-layout > *,
+.ak-interaction-panel > * { min-inline-size: 0; }
+.ak-interaction-figure { margin: 0; }
+.ak-media-frame.ak-interaction-stage {
+  position: relative;
+  inline-size: 100%;
+  aspect-ratio: var(--interaction-stage-ratio, 4 / 3);
+  max-block-size: clamp(14rem, 46svh, 24rem);
+  background: var(--platform-canvas);
+  border-radius: var(--ak-radius-sm);
+  overflow: hidden;
+}
+/* The stage owns the dimensions, even if the next graphic has a different viewBox. */
+.ak-interaction-stage > :is(svg, img, canvas) {
+  position: absolute;
+  inset: 0;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+}
+.ak-interaction-panel,
+.ak-interaction-controls,
+.ak-interaction-feedback {
+  display: grid;
+  align-content: start;
+  gap: var(--ak-space-1);
+}
+.ak-interaction-controls [hidden],
+.ak-interaction-feedback [hidden],
+.ak-interaction-details [hidden] { display: none; }
+.ak-interaction-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ak-space-1);
+}
+.ak-interaction-card button {
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 6px var(--ak-space-2);
+  border: 1px solid var(--platform-line);
+  border-radius: var(--platform-corner);
+  background: var(--ak-surface);
+  color: var(--platform-navy);
+  font: 600 .875rem/1.4 var(--platform-font);
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+.ak-interaction-card button[aria-pressed="true"] {
+  color: var(--platform-blue);
+  border-color: var(--platform-blue);
+  background: var(--platform-insight);
+}
+.ak-interaction-card button:disabled { cursor: default; }
+.ak-interaction-card summary {
+  min-height: 44px;
+  align-content: center;
+  cursor: pointer;
+}
+.ak-interaction-feedback { font: .875rem/1.55 var(--platform-font); }
+.ak-interaction-feedback :is(.ak-interaction-status, [role="status"]) { margin: 0; }
+.ak-interaction-feedback .ak-callout { padding: var(--ak-space-1) var(--ak-space-2); }
+.ak-interaction-feedback .ak-callout p { margin-block-start: 2px; }
+.ak-interaction-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: var(--ak-space-1);
+  margin-block-start: var(--ak-space-2);
+}
+.ak-interaction-details details { inline-size: 100%; }
+@container interaction (min-width: 48rem) {
+  .ak-interaction-layout {
+    grid-template-columns: minmax(0, 2fr) minmax(15rem, 1fr);
+    gap: var(--ak-space-3);
+  }
+}

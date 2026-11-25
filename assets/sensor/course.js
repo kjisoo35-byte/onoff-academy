@@ -87,33 +87,44 @@ window.AcademySensorCourse = (() => {
       frame.append(section);
     }
   };
-  const slots = {"views":"<div id=\"guide-tools\" hidden>\n  <div id=\"guide-views\"></div>\n</div>","target":"<div id=\"guide-dock\"><section id=\"detector\" hidden aria-label=\"감지 대상 조작\"><div id=\"switches\"></div></section></div>","modes":"<div id=\"detail-modes\" hidden></div>","review":"<button type=\"button\" id=\"review-view\" data-action=\"detail\" aria-controls=\"drawing\" aria-expanded=\"false\" hidden>전체 회로 다시 보기</button>","wires":"<details id=\"wire-details\" hidden>\n  <summary>배선·COM·심화 보기</summary>\n  <div id=\"wire-options\" class=\"choices\" role=\"group\" aria-label=\"강조할 배선\"></div>\n  <p id=\"wire-note\" aria-live=\"polite\"></p>\n<button type=\"button\" data-action=\"com\" id=\"com-open\" class=\"deeper\" aria-haspopup=\"dialog\">COM은 무엇일까?</button></details>","notes":"<details id=\"review-notes\" hidden><summary>다섯 문장으로 다시 읽기</summary><ul class=\"summary\"><li>센서는 갈색과 청색을 통해 전원을 받습니다.</li><li>대상을 감지하면 센서 내부 출력 상태가 변합니다.</li><li>NPN 출력이 켜지면 0V 방향의 경로가 연결됩니다.</li><li>호환 PLC는 입력회로의 전류를 X0 ON/OFF로 해석합니다.</li><li>매뉴얼 회로도는 실물 배선과 같은 연결 관계를 보여줍니다.</li></ul></details>","more":"<details id=\"principle\" hidden><summary>작동 원리</summary><p id=\"principle-text\"></p></details><button type=\"button\" id=\"detail-toggle\" class=\"deeper\" data-action=\"detail\" aria-controls=\"detail-modes drawing\" aria-expanded=\"false\" hidden>상세 회로 보기</button><button type=\"button\" class=\"deeper\" data-action=\"deep\"><span id=\"deep-label\">더 깊이 알아보기</span> <span aria-hidden=\"true\">↗</span></button>"};
+  const slots = {"views":"<div id=\"guide-tools\" hidden>\n  <div id=\"guide-views\"></div>\n</div>","target":"<div id=\"guide-dock\"><section id=\"detector\" hidden aria-label=\"감지 대상 조작\"><div id=\"switches\"></div></section></div>","modes":"<div id=\"detail-modes\" hidden></div>","review":"<button type=\"button\" id=\"review-view\" data-action=\"detail\" aria-controls=\"drawing\" aria-expanded=\"false\" hidden>전체 회로 다시 보기</button>","wires":"<details id=\"wire-details\" hidden>\n  <summary>배선·COM·심화 보기</summary>\n  <div id=\"wire-options\" class=\"ak-interaction-choices\" role=\"group\" aria-label=\"강조할 배선\"></div>\n  <p id=\"wire-note\" aria-live=\"polite\"></p>\n<button type=\"button\" data-action=\"com\" id=\"com-open\" class=\"deeper\" aria-haspopup=\"dialog\">COM은 무엇일까?</button></details>","notes":"<details id=\"review-notes\" hidden><summary>다섯 문장으로 다시 읽기</summary><ul class=\"summary\"><li>센서는 갈색과 청색을 통해 전원을 받습니다.</li><li>대상을 감지하면 센서 내부 출력 상태가 변합니다.</li><li>NPN 출력이 켜지면 0V 방향의 경로가 연결됩니다.</li><li>호환 PLC는 입력회로의 전류를 X0 ON/OFF로 해석합니다.</li><li>매뉴얼 회로도는 실물 배선과 같은 연결 관계를 보여줍니다.</li></ul></details>","more":"<details id=\"principle\" hidden><summary>작동 원리</summary><p id=\"principle-text\"></p></details><button type=\"button\" id=\"detail-toggle\" class=\"deeper\" data-action=\"detail\" aria-controls=\"detail-modes drawing\" aria-expanded=\"false\" hidden>상세 회로 보기</button><button type=\"button\" class=\"deeper\" data-action=\"deep\"><span id=\"deep-label\">더 깊이 알아보기</span> <span aria-hidden=\"true\">↗</span></button>"};
   function createSimulation(preparePractice, readPractice) {
     // One active workspace keeps the diagram controls and their IDs unique.
     const workspace = document.createElement('div');
     function encode(value) {
       return String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
     }
-    workspace.className = 'sensor-workspace';
-    workspace.innerHTML = `<figure class="ak-media">
-      <h2 id="figtitle"></h2>${slots.views}${slots.modes}
-      <div id="drawing"></div>${slots.target}
-      <figcaption id="sensor-caption" aria-live="polite"></figcaption>
-    </figure>
-    <div class="sensor-actions">
-      <h2 id="controlTitle"></h2><div id="controls"></div>
-      <div id="sensor-feedback" class="ak-callout" hidden><strong id="why-title"></strong><p id="explain"></p></div>
-      <div id="sensor-save" hidden><p role="status" id="sensor-save-status"></p><button type="button" data-action="retry" id="sensor-retry" hidden>다시 저장</button></div>
-      ${slots.more}${slots.wires}${slots.review}${slots.notes}
-    </div>
+    workspace.className = 'sensor-workspace ak-interaction-workspace';
+    workspace.innerHTML = `<section class="ak-media ak-interaction-card" aria-labelledby="figtitle">
+      <h2 class="ak-interaction-title" id="figtitle"></h2>
+      <div class="ak-interaction-layout">
+        <figure class="ak-interaction-figure" aria-describedby="sensor-caption">
+          <div class="ak-media-frame ak-interaction-stage" id="drawing"></div>
+        </figure>
+        <div class="ak-interaction-panel">
+          <div class="ak-interaction-controls">
+            ${slots.views}${slots.modes}
+            <h2 id="controlTitle"></h2>${slots.target}<div id="controls"></div>
+          </div>
+          <div class="ak-interaction-feedback">
+            <p class="ak-interaction-status" id="sensor-caption" aria-live="polite"></p>
+            <div id="sensor-feedback" class="ak-callout" hidden><strong id="why-title"></strong><p id="explain"></p></div>
+            <div id="review-summary" hidden></div>
+            <div id="sensor-save" hidden><p role="status" id="sensor-save-status"></p><button type="button" data-action="retry" id="sensor-retry" hidden>다시 저장</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="ak-interaction-details">${slots.more}${slots.wires}${slots.review}${slots.notes}</div>
+    </section>
     <dialog class="unified-toc sensor-details" aria-labelledby="sensor-detail-title">
       <form method="dialog"><strong id="sensor-detail-title"></strong><button>닫기</button></form>
       <div id="sensor-detail-body"></div>
     </dialog>`;
+    const layout = window.AcademyInteractionWorkspace.attach(workspace.querySelector('.ak-interaction-card'));
     const $ = id => workspace.querySelector('#' + id);
     const btn = (action, value, text, selected = false) =>
       `<button type="button" data-action="${encode(action)}" data-value="${encode(value)}" aria-pressed="${selected}">${encode(text)}</button>`;
-    const group = (name, buttons) => `<div class="sensor-choices" role="group" aria-label="${encode(name)}">${buttons.join('')}</div>`;
+    const group = (name, buttons) => `<div class="ak-interaction-choices" role="group" aria-label="${encode(name)}">${buttons.join('')}</div>`;
     function viewSwitcher(container, label, action, values) {
       container.innerHTML = group(label, values.map(([value, text]) => btn(action, value, text)));
       return value => {
@@ -149,7 +160,9 @@ window.AcademySensorCourse = (() => {
     if(step===2)return on?'스위치가 닫혀 흑색 출력선이 0V에 연결돼요.':'스위치가 열려 흑색 출력선과 0V 사이가 끊어져 있어요.';
     return on?'입력 전류가 흘러 PLC가 X0를 ON으로 읽어요.':'입력 전류가 흐르지 않아 X0는 OFF예요.';
   }
-  function update(){
+  function update({ preserveViewport = true } = {}) {
+    if (preserveViewport) layout.beforeUpdate();
+    else layout.reset();
     const oldFocus=document.activeElement;
     const {action,value}=oldFocus?.dataset||{};
     const restoreControl=$('controls').contains(oldFocus)||$('switches').contains(oldFocus);
@@ -177,8 +190,8 @@ window.AcademySensorCourse = (() => {
     $('principle').hidden=scene!==2;
     $('why-title').textContent='어떻게 작동할까요?';
     $('deep-label').textContent='더 깊이 알아보기';
-    $('controlTitle').hidden=guided||comparing||scene===7||scene===2;
-    let controls='',explain='',caption='',art;
+    $('controlTitle').hidden=guided||comparing||scene===7||scene===2||scene===8;
+    let controls='',explain='',caption='',summary='',art;
     const practice = scene === 7 ? readPractice() : null;
     const opts={on:state.on,mode:'panel'};
     switch(scene){
@@ -235,7 +248,7 @@ window.AcademySensorCourse = (() => {
         $('review-view').setAttribute('aria-expanded',String(detailed));
         $('review-view').textContent=detailed?'전체 회로 접기':'전체 회로 다시 보기';
         $('figtitle').textContent=detailed?'전원 분배와 전체 입력회로':'3번 장면의 두 갈래 연결';
-        controls='<ol class="summary"><li>갈색 +24V와 청색 0V가 센서에 전원을 공급해요.</li><li>물체를 감지하면 내부 NPN 스위치가 닫혀요.</li><li>입력 전류가 흐르면 PLC는 X0를 ON으로 읽어요.</li></ol>';
+        summary='<h3>'+encode(scenes[scene - 1][3])+'</h3><ol class="summary"><li>갈색 +24V와 청색 0V가 센서에 전원을 공급해요.</li><li>물체를 감지하면 내부 NPN 스위치가 닫혀요.</li><li>입력 전류가 흐르면 PLC는 X0를 ON으로 읽어요.</li></ol>';
         caption=state.on?'물체가 가까워요. NPN이 닫혀 X0가 ON이에요.':'물체가 멀어요. NPN이 열려 X0가 OFF예요.';
 
         break;
@@ -243,6 +256,8 @@ window.AcademySensorCourse = (() => {
     }
     $('drawing').innerHTML = art || SampleCircuit.panel(opts);
     $('sensor-caption').textContent = caption;
+    $('review-summary').hidden = !summary;
+    $('review-summary').innerHTML = summary;
     $('sensor-save').hidden = scene !== 7;
     if (scene === 7) {
       const message = savingPractice ? '평가 결과 저장 중…'
@@ -295,11 +310,11 @@ window.AcademySensorCourse = (() => {
       case 'guide':state.guide=Number(value);state.detail=false;break;
       case 'detail': {
         if(scene===8){
-          state.reviewDetail=!state.reviewDetail;update();
+          state.reviewDetail=!state.reviewDetail;update({ preserveViewport: false });
           $('review-view').focus({preventScroll:true});
           return;
         }
-        state.detail=!state.detail;update();
+        state.detail=!state.detail;update({ preserveViewport: false });
         const target=(state.detail?$('detail-modes'):$('guide-tools')).querySelector('[aria-pressed="true"]');
         target.focus({preventScroll:true});
         const frame=target.getBoundingClientRect();
@@ -325,11 +340,13 @@ window.AcademySensorCourse = (() => {
       const index = course.chapters.findIndex(([id]) => id === chapter.id);
       if (index < 0) return;
       scene = index + 1;
-      if (workspace.parentElement !== chapter.querySelector('.sensor-experience')) {
-        chapter.querySelector('.sensor-experience').append(workspace);
+      const experience = chapter.querySelector('.sensor-experience');
+      const moved = workspace.parentElement !== experience;
+      if (moved) {
+        experience.append(workspace);
         $('principle').open = false;
       }
-      update();
+      update({ preserveViewport: !moved });
     };
     return { mount, refreshAssessment: () => { if (scene === 7) update(); } };
   }
