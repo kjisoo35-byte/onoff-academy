@@ -15,6 +15,8 @@ window.AcademyLearningShell = (() => {
   }
   function temporary(node) { undo.push(() => node.remove()); return node; }
   function mount({chapter, lesson, course, items, work, sticky, floating, title}) {
+    const stage = chapter.querySelector(':scope > [data-learning-stage]');
+    const stageIntro = stage?.querySelector('[data-stage-intro]');
     const navs = [...chapter.querySelectorAll('nav')].filter(visible);
     const original = navs.findLast(nav => nav.matches('.chapter-reading-nav,[class*="bottom-nav"],[class$="-nav"],.platform-figma-navigation,[aria-label*="이동"]'))
       || chapter.querySelector('.chapter-reading-nav') || floating;
@@ -28,7 +30,9 @@ window.AcademyLearningShell = (() => {
     const originalHeading = [...chapter.querySelectorAll('h1'), ...sticky.querySelectorAll('h1')].find(visible);
     heading.querySelector('h1').textContent = originalHeading?.textContent.trim() || title;
     const chapterLead = sticky.querySelector('.book-chapter-start > span');
-    if (visible(chapterLead)) {
+    if (stageIntro) {
+      move(stageIntro, heading);
+    } else if (visible(chapterLead)) {
       const description = document.createElement('details');
       const summary = document.createElement('summary');
       summary.textContent = '학습 설명';
@@ -69,7 +73,9 @@ window.AcademyLearningShell = (() => {
       ...chapter.querySelectorAll('.platform-mobile-header,.mobile-golden-compact-header,aside[class*="sidebar"]'),document.querySelector('.site-footer')]) {
       if(visible(el))move(el);
     }
-    if(contentHeader?.isConnected){
+    if (stageIntro && contentHeader?.matches('.desktop-learning-hero')) {
+      move(contentHeader);
+    } else if (contentHeader?.isConnected) {
       const detail=temporary(document.createElement('details'));detail.className='unified-intro';
       detail.innerHTML='<summary>학습 소개</summary>';contentHeader.before(detail);move(contentHeader,detail);
     }
@@ -82,6 +88,16 @@ window.AcademyLearningShell = (() => {
       (el.getAttribute('href')==='#'+course.route||el.hasAttribute('data-platform-toc-open')||/학습 목록|목차/.test(el.textContent)));
     if(listAction){listAction.before(toc);move(listAction);}else original.prepend(toc);
     undo.push(()=>toc.remove());
+    if (stage) {
+      heading.classList.add('unified-stage-title');
+      chapter.classList.add('unified-stage-chapter');
+      undo.push(() => chapter.classList.remove('unified-stage-chapter'));
+      const actions = temporary(document.createElement('div'));
+      actions.className = 'unified-stage-actions';
+      chapter.append(actions);
+      move(chapter.querySelector('.chapter-complete-label'), actions);
+      move(original, actions);
+    }
     document.body.classList.add('unified-learning');
     chapter.classList.add('unified-chapter');undo.push(()=>chapter.classList.remove('unified-chapter'));
   }

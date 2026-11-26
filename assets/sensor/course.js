@@ -79,8 +79,10 @@ window.AcademySensorCourse = (() => {
       section.hidden = true;
       const article = document.createElement('article');
       article.className = 'sensor-experience';
+      article.dataset.learningStage = '';
       const description = document.createElement('p');
       description.className = 'sensor-lead';
+      description.dataset.stageIntro = '';
       description.textContent = lead;
       article.append(description);
       section.append(article);
@@ -101,7 +103,7 @@ window.AcademySensorCourse = (() => {
         <figure class="ak-interaction-figure" aria-describedby="sensor-caption">
           <div class="ak-media-frame ak-interaction-stage" id="drawing"></div>
         </figure>
-        <div class="ak-interaction-panel">
+        <div class="ak-interaction-panel" role="group" aria-label="조작 및 결과" tabindex="0">
           <div class="ak-interaction-controls">
             ${slots.views}${slots.modes}
             <h2 id="controlTitle"></h2>${slots.target}<div id="controls"></div>

@@ -9,6 +9,7 @@ import { onRequest } from '../functions/api/academy/[[path]].js';
 import { signTestAssertion } from '../src/server/work-auth.js';
 import { TestD1 } from '../test/fixtures/d1.mjs';
 import { verifyInteractionLayout } from './interaction-layout-qa.mjs';
+import { verifyLearningStage } from './learning-stage-qa.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const assetRoot = path.resolve(process.env.ACADEMY_SENSOR_ASSET_ROOT || root);
@@ -342,8 +343,10 @@ try {
     headless: !process.argv.includes('--headed')
   });
   const baseline = process.argv.includes('--layout-baseline');
-  if (!baseline && !process.argv.includes('--layout')) await runIntegrity();
-  await verifyInteractionLayout({ session, base, lessons, output, baseline });
+  const stageOnly = process.argv.includes('--stage');
+  if (!baseline && !stageOnly && !process.argv.includes('--layout')) await runIntegrity();
+  if (!baseline) await verifyLearningStage({ session, base, lessons, output });
+  if (!stageOnly) await verifyInteractionLayout({ session, base, lessons, output, baseline });
 } finally {
   await fs.writeFile(path.join(output, 'results.json'), JSON.stringify(states, null, 2));
   await browser?.close();

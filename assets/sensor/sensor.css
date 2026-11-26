@@ -1,11 +1,4 @@
-/* The course reuses the Academy shell and Interaction Card. */
-.sensor-lesson .desktop-learning-hero { display: none !important; }
-.sensor-experience, .sensor-lesson .chapter-complete-label {
-  width: min(100%, var(--learning-interaction));
-  margin-inline: auto;
-}
-.unified-learning .sensor-lesson .sensor-experience.academy-lesson { padding-block: 0; }
-.sensor-lead { margin: 0 0 var(--ak-space-2); line-height: 1.65; }
+/* Sensor-specific visibility and the existing details dialog. */
 .sensor-workspace [hidden] { display: none !important; }
 .sensor-details {
   background: var(--ak-surface);

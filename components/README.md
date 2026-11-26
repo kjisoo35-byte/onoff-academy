@@ -61,6 +61,8 @@ Book Architecture의 기준 계층은 `Book → Part → Chapter → Scene`입�
 
 ### Interaction Workspace
 
+체험형 Lesson은 Chapter의 직접 자식인 본문 요소에 `data-learning-stage`, 그 안의 기존 안내문에 `data-stage-intro`를 지정합니다. 공통 Learning Shell이 안내를 공통 제목으로 이동하고, 기존 완료 버튼과 이전·목차·다음을 공통 하단 영역에 배치합니다. [공통 QA 계약](../docs/07_UNIFIED_LEARNING_UX.md#체험형-학습)을 따릅니다.
+
 `ak-interaction-card` 안에 제목과 `ak-interaction-layout`을 둡니다. 레이아웃은 `ak-interaction-figure`/ `ak-interaction-stage`와 `ak-interaction-panel`을 포함합니다. 패널의 `ak-interaction-controls`는 `ak-interaction-feedback`보다 먼저 배치합니다. 펼치기와 심화 설명은 `ak-interaction-details`에 둡니다.
 
 그림 슬롯은 레이아웃과 viewport 높이로 크기를 정합니다. 상태 전환은 슬롯 안의 그림과 피드백만 갱신하고, 그림의 원본 비율과 조작 위치를 유지합니다. `AcademyInteractionWorkspace.attach(card)`로 연결하고 상태 갱신 전에 `beforeUpdate()`를 호출합니다. 학습 화면을 이동하거나 상세를 의도적으로 전환할 때는 `reset()`을 호출합니다. 내용이 짧아질 때 현재 스크롤 위치가 유지되는 데 필요한 높이만 보존합니다. 상호작용 구현은 과정이 소유하며 선택 상태·Practice·서버 저장 계약은 기존 경로를 따릅니다. 센서 E2E(`npm run test:sensor`)에서 공통 QA도 실행합니다. 배치만 집중 검증하려면 `npm run test:sensor -- --layout`을 사용합니다.

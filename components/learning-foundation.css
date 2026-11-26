@@ -150,3 +150,87 @@ body.unified-learning nav.unified-foot>:is(a,button,span){width:auto!important;f
     gap: var(--ak-space-3);
   }
 }
+
+/* An opt-in lesson uses the existing Shell, completion control and chapter navigation. */
+body.unified-learning :is(.unified-stage-title, .unified-chapter.unified-stage-chapter) {
+  max-width: var(--learning-interaction);
+}
+.unified-stage-title > [data-stage-intro] {
+  margin: var(--ak-space-1) 0 0;
+  color: var(--platform-ink);
+  line-height: 1.5;
+}
+body.unified-learning .unified-stage-chapter > [data-learning-stage] {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+body.unified-learning .unified-chapter.unified-stage-chapter {
+  padding-block: var(--ak-space-2) !important;
+}
+
+.unified-stage-actions {
+  display: grid;
+  align-items: center;
+  gap: var(--ak-space-2);
+  margin-block-start: var(--ak-space-2);
+  padding-block-start: var(--ak-space-2);
+  border-block-start: 1px solid var(--platform-line);
+}
+body.unified-learning .unified-stage-actions > .chapter-complete-label {
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.unified-stage-actions [data-learning-complete] {
+  min-width: 8.25rem;
+  min-height: 44px;
+}
+body.unified-learning .unified-stage-actions > nav.unified-foot {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-items: stretch;
+  align-items: stretch;
+  gap: var(--ak-space-1);
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+body.unified-learning .unified-stage-actions > nav.unified-foot > :is(a,button,span) {
+  justify-self: stretch;
+  min-width: 44px;
+  margin: 0;
+  padding-inline: var(--ak-space-1);
+  text-align: center;
+}
+
+@media (min-width: 860px) {
+  .unified-stage-title > [data-stage-intro] { min-block-size: 2lh; }
+  .unified-stage-chapter { --learning-stage-figure: clamp(13rem, calc(100svh - 25rem), 24rem); }
+  .unified-stage-chapter .ak-media-frame.ak-interaction-stage {
+    block-size: var(--learning-stage-figure);
+    max-block-size: none;
+  }
+  .unified-stage-chapter .ak-interaction-panel {
+    box-sizing: border-box;
+    max-block-size: var(--learning-stage-figure);
+    padding: 3px;
+    overflow: auto;
+    scrollbar-gutter: stable;
+  }
+  .unified-stage-chapter .ak-interaction-details { min-block-size: 44px; }
+  .unified-stage-chapter .ak-interaction-details details:not([open]) { inline-size: auto; }
+  .unified-stage-actions { grid-template-columns: max-content minmax(0, 1fr); }
+  body.unified-learning .unified-stage-actions > nav.unified-foot {
+    width: min(100%, 27rem);
+    justify-self: end;
+  }
+}
